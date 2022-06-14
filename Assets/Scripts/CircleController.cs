@@ -12,9 +12,12 @@ public class CircleController : MonoBehaviour
     private GameObject beastlyCircle;
     private GameObject beastHolder;
     private GameObject tooth;
-    private GameObject vignette;
     private SpriteRenderer hole;
     private GameObject toothShadow;
+    private CanvasGroup page1;
+    private CanvasGroup page2;
+    private CanvasGroup page3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +25,10 @@ public class CircleController : MonoBehaviour
         beastHolder = GameObject.Find("beastHolder");
         tooth = GameObject.Find("tooth");
         toothShadow = GameObject.Find("toothShadow");
-        vignette = GameObject.Find("MassiveVignette");
+        page1 = GameObject.Find("Page1").GetComponent<CanvasGroup>();
+        page2 = GameObject.Find("Page2").GetComponent<CanvasGroup>();
+        page3 = GameObject.Find("Page3").GetComponent<CanvasGroup>();
+
         hole = GameObject.Find("Hole").GetComponent<SpriteRenderer>();
 
         StartCoroutine(Clone());
@@ -31,10 +37,13 @@ public class CircleController : MonoBehaviour
 
 
     }
+
+   
     IEnumerator IntroScript()
 
 
     {
+        
 
         var zeroScale = new Vector3(0, 0, 0);
         
@@ -51,10 +60,19 @@ public class CircleController : MonoBehaviour
         StartCoroutine(ScaleOverSeconds(tooth, toothScale, 10));
         yield return new WaitForSeconds(10);
         StartCoroutine(ScaleOverSeconds(tooth, finalToothScale, 10));
-        StartCoroutine(ScaleOverSeconds(vignette, tinyScale, 10));
         yield return new WaitForSeconds(10);
-        hole.color = new Color(0, 0, 0, 1);
-        StartCoroutine(LoadScene("Animations"));
+        StartCoroutine(FadeHole());
+        yield return new WaitForSeconds(2);
+        StartCoroutine(FadeIn(2f,page1));
+        yield return new WaitForSeconds(8);
+        StartCoroutine(FadeOut(2f, page1));
+        yield return new WaitForSeconds(2);
+        StartCoroutine(FadeIn(2f, page2));
+        yield return new WaitForSeconds(8);
+        StartCoroutine(FadeOut(2f, page2));
+        yield return new WaitForSeconds(2);
+        StartCoroutine(FadeIn(2f, page3));
+        //StartCoroutine(LoadScene("Animations"));
 
 
 
@@ -77,6 +95,23 @@ public class CircleController : MonoBehaviour
 
         }
         yield return new WaitForEndOfFrame();
+    }
+
+    private IEnumerator FadeHole()
+    {
+        float elapsedTime = 0;
+        float seconds = 5f;
+        
+        while (elapsedTime < seconds) {
+            float t = elapsedTime / seconds;
+            t = t * t * (3f - 2f * t);
+            Color c = Color.black;
+            c.a = Mathf.Lerp(0, 1, t);
+            hole.color = c;// Color.Lerp(trans, black, t);
+            Debug.Log(c);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
     public IEnumerator ScaleOverSeconds(GameObject objectToScale, Vector3 scaleTo, float seconds)
@@ -102,5 +137,24 @@ public class CircleController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         
+    }
+
+    public IEnumerator FadeIn(float t, CanvasGroup cg)
+    {
+        for (float f = 0; f <= t; f += Time.deltaTime)
+        {
+            cg.alpha = Mathf.Lerp(0f, 1f, f / 2);
+            yield return null;
+        }
+        cg.alpha = 1;
+    }
+    public IEnumerator FadeOut(float t, CanvasGroup cg)
+    {
+        for (float f = t; f >= 0; f -= Time.deltaTime)
+        {
+            cg.alpha = Mathf.Lerp(0f, 1f, f / 2);
+            yield return null;
+        }
+        cg.alpha = 0;
     }
 }

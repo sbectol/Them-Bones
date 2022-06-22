@@ -70,7 +70,7 @@ public class TextMover : MonoBehaviour
 
         
 
-        for (int i = 1; i < 14; i++)
+        for (int i = 1; i < 13; i++)
         {
             parts[i].alpha = 0;
         }

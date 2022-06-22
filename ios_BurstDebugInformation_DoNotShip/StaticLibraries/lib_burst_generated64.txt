@@ -137,6 +137,7 @@ Library: lib_burst_generated64
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.Services.Core.Telemetry.dll
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.VisualScripting.State.dll
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.VisualScripting.Core.dll
+--root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Assembly-CSharp.dll
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.Services.Core.Environments.Internal.dll
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.Burst.dll
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.2D.Animation.Runtime.dll
@@ -154,7 +155,6 @@ Library: lib_burst_generated64
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.Services.Core.Device.dll
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.Services.Core.Threading.dll
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.2D.Tilemap.Extras.dll
---root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Assembly-CSharp.dll
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.Services.Core.Networking.dll
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.Services.Core.dll
 --root-assembly=/Users/simonbeech/Documents/GitHub/Them Bones/Temp/StagingArea/Data/Managed/Unity.InternalAPIEngineBridge.001.dll

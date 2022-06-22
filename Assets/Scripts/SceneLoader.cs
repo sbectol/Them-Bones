@@ -9,7 +9,7 @@ public class SceneLoader : MonoBehaviour
     void Start()
     {
         Debug.Log("Loading");
-        StartCoroutine(LoadScene("Intro"));
+        StartCoroutine(LoadScene("Text"));
     }
 
     // Update is called once per frame

@@ -27,6 +27,7 @@ public class TextMover : MonoBehaviour
     private int journeyProgress;
     private int closest;
     private float minDistance = 1000;
+    private int[] found = new int[15];
     void Start()
     {
         Input.compass.enabled = true;
@@ -149,6 +150,13 @@ public class TextMover : MonoBehaviour
             }
         }
         Debug.Log("The closest is " + closest.ToString());
+
+        if(minDistance < 30 && minDistance>20)
+        {
+            Debug.Log("30m from" + closest);
+            Debug.Log("Firing Sequence");
+        }
+
         switch (journeyProgress)
         {
             case 1:
@@ -157,8 +165,8 @@ public class TextMover : MonoBehaviour
                 break;
         }
 
-        mainCamera.transform.Rotate(Vector3.forward, 10.0f * Time.deltaTime);
-        mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, endMarker1.position, speed * Time.deltaTime);
+        //mainCamera.transform.Rotate(Vector3.forward, 10.0f * Time.deltaTime);
+        //mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, endMarker1.position, speed * Time.deltaTime);
     }
 
     private IEnumerator GetLocation()

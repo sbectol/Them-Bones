@@ -9,11 +9,7 @@ public class TextMover : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private GameObject textObject1;
-    private GameObject textObject2;
-    private GameObject textObject3;
     private GameObject frame;
-    private GameObject tooth;
     private GameObject mainCamera;
     private CanvasGroup catBluePrint;
     private CanvasGroup[] parts = new CanvasGroup[15];
@@ -21,13 +17,18 @@ public class TextMover : MonoBehaviour
     private Vector2[] coordsCresswell = new Vector2[15];
     private Transform endMarker1;
     private Transform startMarker1;
+    private TMP_Text debugText;
     private float speed;
     private float latitude;
     private float longitude;
     private int journeyProgress;
     private int closest;
-    private float minDistance = 1000;
-    private int[] found = new int[15];
+    public float minDistance = 1000;
+    private CanvasGroup[] found = new CanvasGroup[15];
+    private bool checkingLocation;
+    private Animator cameraAnimator;
+    private Animator boxAnimator;
+
     void Start()
     {
         Input.compass.enabled = true;
@@ -50,13 +51,13 @@ public class TextMover : MonoBehaviour
         coordsCresswell[12] = new Vector2(53.26202995905914f, -1.19776725769043f);
         coordsCresswell[13] = new Vector2(53.26222248426966f, -1.1971557140350342f);
         coordsCresswell[14] = new Vector2(53.26242784353887f, -1.1964797973632812f);
-                                                                                                                                                           
+
 
         coordsCB[1] = new Vector2(53.291048960315216f, -3.7248343819867595f);  //Home
         coordsCB[2] = new Vector2(53.29135f, -3.71566f);  //Corner of Leisure Centre
         coordsCB[3] = new Vector2(53.29301f, -3.71410f);  //Stone Circle
         coordsCB[4] = new Vector2(53.29302f, -3.712158f); //Moel Eirias
-        coordsCB[5]= new Vector2(53.29172f, -3.71059f); //Lego
+        coordsCB[5] = new Vector2(53.29172f, -3.71059f); //Lego
         coordsCB[6] = new Vector2(53.28918f, -3.71349f);  //Lorry
         coordsCB[7] = new Vector2(53.29522328468637f, -3.716254282301825f);  //Porth Eirias Roof
         coordsCB[8] = new Vector2(53.29592243145316f, -3.7201209658271615f); //Crazy Seats
@@ -67,13 +68,13 @@ public class TextMover : MonoBehaviour
         coordsCB[11] = new Vector2(53.29979923676437f, -3.7315745163052583f);  // The Toad
         coordsCB[12] = new Vector2(53.29641334528825f, -3.7318060268120283f);   //War Memorial
         frame = GameObject.Find("frame");
-        textObject1 = GameObject.Find("Target1");
-        textObject2= GameObject.Find("Target2");
-        textObject3 = GameObject.Find("Target3");
-        tooth = GameObject.Find("Target4");
+        cameraAnimator = GameObject.Find("Main Camera").GetComponent<Animator>();
+        boxAnimator = GameObject.Find("BoxTop").GetComponent<Animator>();
+
         mainCamera = GameObject.Find("Main Camera");
-        mainCamera.transform.LookAt(textObject1.GetComponent<Transform>());
-       
+        debugText = GameObject.Find("Debug").GetComponent<TextMeshProUGUI>();
+        //mainCamera.transform.LookAt(textObject1.GetComponent<Transform>());
+
         startMarker1 = mainCamera.GetComponent<Transform>();
         endMarker1 = startMarker1;
         speed = 25f;
@@ -93,36 +94,79 @@ public class TextMover : MonoBehaviour
         parts[12] = GameObject.Find("Part12").GetComponent<CanvasGroup>();
         parts[13] = GameObject.Find("Part13").GetComponent<CanvasGroup>();
 
-        
+        found[1] = GameObject.Find("FoundObject1").GetComponent<CanvasGroup>();
+        found[2] = GameObject.Find("FoundObject2").GetComponent<CanvasGroup>();
+        found[3] = GameObject.Find("FoundObject3").GetComponent<CanvasGroup>();
+        found[4] = GameObject.Find("FoundObject4").GetComponent<CanvasGroup>();
+        found[5] = GameObject.Find("FoundObject5").GetComponent<CanvasGroup>();
+        found[6] = GameObject.Find("FoundObject6").GetComponent<CanvasGroup>();
+        found[7] = GameObject.Find("FoundObject7").GetComponent<CanvasGroup>();
+        found[8] = GameObject.Find("FoundObject8").GetComponent<CanvasGroup>();
+        found[9] = GameObject.Find("FoundObject9").GetComponent<CanvasGroup>();
+        found[10] = GameObject.Find("FoundObject10").GetComponent<CanvasGroup>();
+        found[11] = GameObject.Find("FoundObject11").GetComponent<CanvasGroup>();
+        found[12] = GameObject.Find("FoundObject12").GetComponent<CanvasGroup>();
+        found[13] = GameObject.Find("FoundObject13").GetComponent<CanvasGroup>();
+        found[14] = GameObject.Find("FoundObject14").GetComponent<CanvasGroup>();
+        PlayerPrefs.SetInt("journeyProgress", 0);
+
+
 
         for (int i = 1; i < 14; i++)
         {
             parts[i].alpha = 0;
         }
         journeyProgress = PlayerPrefs.GetInt("journeyProgress");
+        checkingLocation = true;
+        Debug.Log(journeyProgress);
 
         StartCoroutine(MoveSomeText());
     }
 
     IEnumerator MoveSomeText()
 
-        
-    {
-        yield return new WaitForSeconds(2);
-        endMarker1 = textObject1.GetComponent<Transform>();
-        yield return new WaitForSeconds(5);
-        endMarker1 = textObject2.GetComponent<Transform>();
-        yield return new WaitForSeconds(5);
-        endMarker1 = textObject3.GetComponent<Transform>();
-        yield return new WaitForSeconds(5);
 
-        endMarker1 = tooth.GetComponent<Transform>();
+    {
+
         yield return new WaitForSeconds(5);
         //StartCoroutine(LoadScene("Twirly"));
 
 
 
 
+    }
+
+    IEnumerator FireSequence(object[] parms)
+    {
+        debugText.text = (string)parms[5];
+        yield return new WaitForSeconds(3f);
+        debugText.text = (string)parms[6];
+
+        int progress = (int)parms[10];
+
+
+        Animator animator = (Animator)parms[0];
+        string sequence = (string)parms[1];
+        float delay = (float)parms[2];
+
+
+            animator.Play(sequence);
+        yield return new WaitForSeconds(delay);
+        animator = (Animator)parms[3];
+        sequence = (string)parms[4];
+        CanvasGroup cg = (CanvasGroup)parms[8];
+        animator.Play(sequence);
+        yield return new WaitForSeconds(delay);
+        debugText.text = (string)parms[7];
+        cg.alpha = 1;
+        cg = (CanvasGroup)parms[9];
+        cg.alpha = 1;
+        yield return new WaitForSeconds(delay);
+        
+        PlayerPrefs.SetInt("journeyProgress", progress);
+
+        checkingLocation = true;
+        Debug.Log("Checking aagin");
     }
     public IEnumerator LoadScene(string sceneName)
     {
@@ -133,8 +177,11 @@ public class TextMover : MonoBehaviour
     }
     void Update()
     {
-        latitude = Input.location.lastData.latitude;
-        longitude = Input.location.lastData.longitude;
+        if (checkingLocation)
+        {
+            latitude = Input.location.lastData.latitude;
+            longitude = Input.location.lastData.longitude;
+        }
         //Debug.Log(Distance(latitude, longitude, coordsCB[1].x, coordsCB[1].y));
         //find closest
         
@@ -144,17 +191,50 @@ public class TextMover : MonoBehaviour
         if(Distance(latitude, longitude, coordsCresswell[i].x, coordsCresswell[i].y) <= minDistance)
             {
                 closest = i;
-                minDistance = Distance(latitude, longitude, coordsCresswell[i].x, coordsCresswell[i].y);
-              
+                
+                
 
             }
         }
-        Debug.Log("The closest is " + closest.ToString());
 
-        if(minDistance < 30 && minDistance>20)
+        minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
+        Debug.Log("The closest is " + closest.ToString());
+       
+        minDistance = 25;
+
+        if(minDistance < 30 && minDistance > 20 && checkingLocation)
         {
             Debug.Log("30m from" + closest);
-            Debug.Log("Firing Sequence");
+            checkingLocation = false;
+            if (!checkingLocation) //oneshot
+            {
+                Debug.Log("Stopped checking gps and Firing Sequence " + PlayerPrefs.GetInt("journeyProgress").ToString());
+                if(PlayerPrefs.GetInt("journeyProgress") == 0) { 
+                string text1 = "Ahead, you can just make out an object on the ground.";
+                string text2 = "You decide to take a closer look";
+                string text3 = "In the box you find a sketch of a fearsome beast.\nYou decide to pin it up.\nMove automatically on to the animation page?";
+                object[] parms = new object[11] { cameraAnimator, "CameraMove1",5f, boxAnimator, "Lid", text1, text2, text3, catBluePrint, found[1], 1};
+                StartCoroutine(FireSequence(parms));
+                    
+                    
+
+                }
+
+                if (PlayerPrefs.GetInt("journeyProgress") == 1)
+                {
+                    string text1 = "Ok now approaching the 2nd waypoint";
+                    string text2 = "You decide to take a closer look";
+                    string text3 = "You find something else. This time part of the cat is added.";
+                    object[] parms = new object[11] { cameraAnimator, "CameraMove2", 5f, boxAnimator, "Lid", text1, text2, text3, found[2], parts[1],2 };
+                    StartCoroutine(FireSequence(parms));
+                    
+
+                }
+
+
+            }
+
+
         }
 
         switch (journeyProgress)
@@ -176,6 +256,7 @@ public class TextMover : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
         }
+        checkingLocation = true;
         latitude = Input.location.lastData.latitude;
         longitude = Input.location.lastData.longitude;
         yield break;

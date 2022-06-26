@@ -28,6 +28,8 @@ public class TextMover : MonoBehaviour
     private bool checkingLocation;
     private Animator cameraAnimator;
     private Animator boxAnimator;
+    private Animator boxAnimator2;
+    private Animator boxAnimator3;
 
     void Start()
     {
@@ -70,6 +72,8 @@ public class TextMover : MonoBehaviour
         frame = GameObject.Find("frame");
         cameraAnimator = GameObject.Find("Main Camera").GetComponent<Animator>();
         boxAnimator = GameObject.Find("BoxTop").GetComponent<Animator>();
+        boxAnimator2 = GameObject.Find("BoxTop2").GetComponent<Animator>();
+        boxAnimator3 = GameObject.Find("BoxTop3").GetComponent<Animator>();
 
         mainCamera = GameObject.Find("Main Camera");
         debugText = GameObject.Find("Debug").GetComponent<TextMeshProUGUI>();
@@ -224,10 +228,21 @@ public class TextMover : MonoBehaviour
                 {
                     string text1 = "Ok now approaching the 2nd waypoint";
                     string text2 = "You decide to take a closer look";
-                    string text3 = "You find something else. This time part of the cat is added.";
-                    object[] parms = new object[11] { cameraAnimator, "CameraMove2", 5f, boxAnimator, "Lid", text1, text2, text3, found[2], parts[1],2 };
+                    string text3 = "You find something else. This time, part of the cat is added.";
+                    object[] parms = new object[11] { cameraAnimator, "CameraMove2", 5f, boxAnimator2, "Lid2", text1, text2, text3, found[2], parts[1],2 };
                     StartCoroutine(FireSequence(parms));
                     
+
+                }
+
+                if (PlayerPrefs.GetInt("journeyProgress") == 2)
+                {
+                    string text1 = "Ok now approaching the 3rd waypoint";
+                    string text2 = "You decide to take a closer look";
+                    string text3 = "You find something else. Another part of the cat is added.";
+                    object[] parms = new object[11] { cameraAnimator, "CameraMove3", 5f, boxAnimator3, "Lid3", text1, text2, text3, found[3], parts[2], 0 };
+                    StartCoroutine(FireSequence(parms));
+
 
                 }
 

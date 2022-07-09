@@ -30,6 +30,8 @@ public class TextMover : MonoBehaviour
     private Animator boxAnimator;
     private Animator boxAnimator2;
     private Animator boxAnimator3;
+    private Animator boxAnimator4;
+    private Animator boxAnimator5;
 
     void Start()
     {
@@ -74,6 +76,9 @@ public class TextMover : MonoBehaviour
         boxAnimator = GameObject.Find("BoxTop").GetComponent<Animator>();
         boxAnimator2 = GameObject.Find("BoxTop2").GetComponent<Animator>();
         boxAnimator3 = GameObject.Find("BoxTop3").GetComponent<Animator>();
+        boxAnimator4 = GameObject.Find("BoxTop4").GetComponent<Animator>();
+        boxAnimator4 = GameObject.Find("BoxTop5").GetComponent<Animator>();
+
 
         mainCamera = GameObject.Find("Main Camera");
         debugText = GameObject.Find("Debug").GetComponent<TextMeshProUGUI>();
@@ -240,10 +245,58 @@ public class TextMover : MonoBehaviour
                     string text1 = "Ok now approaching the 3rd waypoint";
                     string text2 = "You decide to take a closer look";
                     string text3 = "You find something else. Another part of the cat is added.";
-                    object[] parms = new object[11] { cameraAnimator, "CameraMove3", 5f, boxAnimator3, "Lid3", text1, text2, text3, found[3], parts[2], 0 };
+                    object[] parms = new object[11] { cameraAnimator, "CameraMove3", 5f, boxAnimator3, "Lid3", text1, text2, text3, found[3], parts[2], 3 };
                     StartCoroutine(FireSequence(parms));
 
 
+                }
+
+                if (PlayerPrefs.GetInt("journeyProgress") == 3)
+                {
+                    string text1 = "Message saying 4th waypoint reached";
+                    string text2 = "You see another box";
+                    string text3 = "You find something else. Another part of the cat is added.";
+                    object[] parms = new object[11] { cameraAnimator, "CameraMove4", 5f, boxAnimator4, "Lid4", text1, text2, text3, found[4], parts[3], 4 };
+                    StartCoroutine(FireSequence(parms));
+
+
+                }
+
+                if (PlayerPrefs.GetInt("journeyProgress") == 4)
+                {
+                    string text1 = "Message saying 5th waypoint reached";
+                    string text2 = "You see another box";
+                    string text3 = "You find something else. Another part of the cat is added.";
+                    object[] parms = new object[11] { cameraAnimator, "CameraMove5", 5f, boxAnimator5, "Lid5", text1, text2, text3, found[5], parts[4], 5 };
+                    StartCoroutine(FireSequence(parms));
+
+                }
+
+                if (PlayerPrefs.GetInt("journeyProgress") == 5)
+                {
+                    string text1 = "Message saying 6th waypoint reached";
+                    string text2 = "You see another box";
+                    string text3 = "You find something else. Another part of the cat is added.";
+                    object[] parms = new object[11] { cameraAnimator, "CameraMove1", 5f, boxAnimator, "Lid", text1, text2, text3, found[6], parts[5], 6 };
+                    StartCoroutine(FireSequence(parms));
+
+                }
+
+                if (PlayerPrefs.GetInt("journeyProgress") == 6)
+                {
+                    string text1 = "Message saying 7th waypoint reached";
+                    string text2 = "You see another box";
+                    string text3 = "You find something else. Another part of the cat is added.";
+                    object[] parms = new object[11] { cameraAnimator, "CameraMove2", 5f, boxAnimator, "Lid2", text1, text2, text3, found[7], parts[6], 7 };
+                    StartCoroutine(FireSequence(parms));
+                }
+                if (PlayerPrefs.GetInt("journeyProgress") == 7)
+                {
+                    string text1 = "Message saying 8th waypoint reached";
+                    string text2 = "You see another box";
+                    string text3 = "You find something else. Another part of the cat is added.";
+                    object[] parms = new object[11] { cameraAnimator, "CameraMove3", 5f, boxAnimator, "Lid3", text1, text2, text3, found[8], parts[7], 0 };
+                    StartCoroutine(FireSequence(parms));
                 }
 
 

@@ -13,6 +13,9 @@ public class TextMover : MonoBehaviour
     private GameObject mainCamera;
     private CanvasGroup catBluePrint;
     private CanvasGroup[] parts = new CanvasGroup[15];
+    private SpriteRenderer[] slide = new SpriteRenderer[14];
+    private int slideIndex = 1;
+    private string[] slideAnimations = new string[14];
     private Vector2[] coordsCB = new Vector2[13];
     private Vector2[] coordsCresswell = new Vector2[15];
     private Transform endMarker1;
@@ -28,11 +31,7 @@ public class TextMover : MonoBehaviour
     private bool checkingLocation;
     private Animator cameraAnimator;
     private Animator boxAnimator;
-    private Animator boxAnimator2;
-    private Animator boxAnimator3;
-    private Animator boxAnimator4;
-    private Animator boxAnimator5;
-
+    private Animator slideHolder;
     void Start()
     {
         Input.compass.enabled = true;
@@ -74,10 +73,9 @@ public class TextMover : MonoBehaviour
         frame = GameObject.Find("frame");
         cameraAnimator = GameObject.Find("Main Camera").GetComponent<Animator>();
         boxAnimator = GameObject.Find("BoxTop").GetComponent<Animator>();
-        boxAnimator2 = GameObject.Find("BoxTop2").GetComponent<Animator>();
-        boxAnimator3 = GameObject.Find("BoxTop3").GetComponent<Animator>();
-        boxAnimator4 = GameObject.Find("BoxTop4").GetComponent<Animator>();
-        boxAnimator4 = GameObject.Find("BoxTop5").GetComponent<Animator>();
+      
+        slideHolder = GameObject.Find("SlideHolder").GetComponent<Animator>();
+        
 
 
         mainCamera = GameObject.Find("Main Camera");
@@ -119,7 +117,28 @@ public class TextMover : MonoBehaviour
         found[14] = GameObject.Find("FoundObject14").GetComponent<CanvasGroup>();
         PlayerPrefs.SetInt("journeyProgress", 0);
 
+        slide[1] = GameObject.Find("Slide1").GetComponent<SpriteRenderer>();
+        slide[2] = GameObject.Find("Slide2").GetComponent<SpriteRenderer>();
+        slide[3] = GameObject.Find("Slide3").GetComponent<SpriteRenderer>();
+        slide[4] = GameObject.Find("Slide4").GetComponent<SpriteRenderer>();
+        slide[5] = GameObject.Find("Slide5").GetComponent<SpriteRenderer>();
+        slide[6] = GameObject.Find("Slide6").GetComponent<SpriteRenderer>();
+        slide[7] = GameObject.Find("Slide7").GetComponent<SpriteRenderer>();
+        slide[8] = GameObject.Find("Slide8").GetComponent<SpriteRenderer>();
+        slide[9] = GameObject.Find("Slide9").GetComponent<SpriteRenderer>();
+        slide[10] = GameObject.Find("Slide10").GetComponent<SpriteRenderer>();
+        slide[11] = GameObject.Find("Slide11").GetComponent<SpriteRenderer>();
+        slide[12] = GameObject.Find("Slide12").GetComponent<SpriteRenderer>();
+        slide[13] = GameObject.Find("Slide13").GetComponent<SpriteRenderer>();
+        AnimationClip[] animationClips = slideHolder.runtimeAnimatorController.animationClips;
+        int j = 1;
+        foreach (AnimationClip animClip in animationClips)
+        {
+            Debug.Log(animClip.name + ": " + j);
+            slideAnimations[j] = animClip.name;
+            j++;
 
+        }
 
         for (int i = 1; i < 14; i++)
         {
@@ -129,7 +148,9 @@ public class TextMover : MonoBehaviour
         checkingLocation = true;
         Debug.Log(journeyProgress);
 
-        StartCoroutine(MoveSomeText());
+        //StartCoroutine(MoveSomeText());
+        StartCoroutine(RotateDisc());
+        
     }
 
     IEnumerator MoveSomeText()
@@ -144,38 +165,62 @@ public class TextMover : MonoBehaviour
 
 
     }
-
+    IEnumerator RotateDisc() {
+        for(int i = 1; i < 14; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            slideIndex = i;
+            slideHolder.Play(slideAnimations[i]);
+        }
+       
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn2");
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn3");
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn4");
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn5");
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn6");
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn7");
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn8");
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn9");
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn10");
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn11");
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn12");
+        //yield return new WaitForSeconds(1f);
+        //slideHolder.Play("SlideHolderTurn13");
+        //yield return new WaitForSeconds(1f);
+    }
     IEnumerator FireSequence(object[] parms)
     {
-        debugText.text = (string)parms[5];
-        yield return new WaitForSeconds(3f);
-        debugText.text = (string)parms[6];
+        
 
-        int progress = (int)parms[10];
-
-
+        
         Animator animator = (Animator)parms[0];
         string sequence = (string)parms[1];
         float delay = (float)parms[2];
-
-
-            animator.Play(sequence);
-        yield return new WaitForSeconds(delay);
-        animator = (Animator)parms[3];
-        sequence = (string)parms[4];
-        CanvasGroup cg = (CanvasGroup)parms[8];
         animator.Play(sequence);
-        yield return new WaitForSeconds(delay);
-        debugText.text = (string)parms[7];
-        cg.alpha = 1;
-        cg = (CanvasGroup)parms[9];
-        cg.alpha = 1;
+        //yield return new WaitForSeconds(delay);
+        //CanvasGroup cg = (CanvasGroup)parms[8];
+        //animator.Play(sequence);
+        //yield return new WaitForSeconds(delay);
+        //cg.alpha = 1;
+        //cg = (CanvasGroup)parms[9];
+        //cg.alpha = 1;
         yield return new WaitForSeconds(delay);
         
-        PlayerPrefs.SetInt("journeyProgress", progress);
+        
 
         checkingLocation = true;
-        Debug.Log("Checking aagin");
+        Debug.Log("Checking again");
     }
     public IEnumerator LoadScene(string sceneName)
     {
@@ -186,6 +231,41 @@ public class TextMover : MonoBehaviour
     }
     void Update()
     {
+
+
+        if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
+        {
+            Debug.Log("Touch");
+            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit raycastHit;
+            if (Physics.Raycast(raycast, out raycastHit))
+            {
+                Debug.Log("Something Hit " + raycastHit.collider.name);
+                if (raycastHit.collider.name == "cats")
+                {
+                    Debug.Log("Clicked the cat circle");
+                    
+                    object[] parms = new object[3] { cameraAnimator, "CameraMove1", 5f};
+                    StartCoroutine(FireSequence(parms));
+
+                }
+                if (raycastHit.collider.name == "Box")
+                {
+                    Debug.Log("Clicked box");
+                    
+                }
+                if (raycastHit.collider.name == "BoxTop")
+                {
+                    object[] parms = new object[3] { boxAnimator, "Lid", 5f };
+                    StartCoroutine(FireSequence(parms));
+                }
+
+
+
+              
+            }
+        }
+
         if (checkingLocation)
         {
             latitude = Input.location.lastData.latitude;
@@ -218,86 +298,19 @@ public class TextMover : MonoBehaviour
             if (!checkingLocation) //oneshot
             {
                 Debug.Log("Stopped checking gps and Firing Sequence " + PlayerPrefs.GetInt("journeyProgress").ToString());
-                if(PlayerPrefs.GetInt("journeyProgress") == 0) { 
-                string text1 = "Ahead, you can just make out an object on the ground.";
-                string text2 = "You decide to take a closer look";
-                string text3 = "In the box you find a sketch of a fearsome beast.\nYou decide to pin it up.\nMove automatically on to the animation page?";
-                object[] parms = new object[11] { cameraAnimator, "CameraMove1",5f, boxAnimator, "Lid", text1, text2, text3, catBluePrint, found[1], 1};
-                StartCoroutine(FireSequence(parms));
-                    
-                    
-
-                }
-
-                if (PlayerPrefs.GetInt("journeyProgress") == 1)
-                {
-                    string text1 = "Ok now approaching the 2nd waypoint";
-                    string text2 = "You decide to take a closer look";
-                    string text3 = "You find something else. This time, part of the cat is added.";
-                    object[] parms = new object[11] { cameraAnimator, "CameraMove2", 5f, boxAnimator2, "Lid2", text1, text2, text3, found[2], parts[1],2 };
-                    StartCoroutine(FireSequence(parms));
-                    
-
-                }
-
-                if (PlayerPrefs.GetInt("journeyProgress") == 2)
-                {
-                    string text1 = "Ok now approaching the 3rd waypoint";
-                    string text2 = "You decide to take a closer look";
-                    string text3 = "You find something else. Another part of the cat is added.";
-                    object[] parms = new object[11] { cameraAnimator, "CameraMove3", 5f, boxAnimator3, "Lid3", text1, text2, text3, found[3], parts[2], 3 };
-                    StartCoroutine(FireSequence(parms));
+                //if (PlayerPrefs.GetInt("journeyProgress") == 0)
+                //{
+                //    string text1 = "Ahead, you can just make out an object on the ground.";
+                //    string text2 = "You decide to take a closer look";
+                //    string text3 = "In the box you find a sketch of a fearsome beast.\nYou decide to pin it up.\nMove automatically on to the animation page?";
+                //    object[] parms = new object[11] { cameraAnimator, "CameraMove1", 5f, boxAnimator, "Lid", text1, text2, text3, catBluePrint, found[1], 1 };
+                //    StartCoroutine(FireSequence(parms));
 
 
-                }
 
-                if (PlayerPrefs.GetInt("journeyProgress") == 3)
-                {
-                    string text1 = "Message saying 4th waypoint reached";
-                    string text2 = "You see another box";
-                    string text3 = "You find something else. Another part of the cat is added.";
-                    object[] parms = new object[11] { cameraAnimator, "CameraMove4", 5f, boxAnimator4, "Lid4", text1, text2, text3, found[4], parts[3], 4 };
-                    StartCoroutine(FireSequence(parms));
+                //}
 
-
-                }
-
-                if (PlayerPrefs.GetInt("journeyProgress") == 4)
-                {
-                    string text1 = "Message saying 5th waypoint reached";
-                    string text2 = "You see another box";
-                    string text3 = "You find something else. Another part of the cat is added.";
-                    object[] parms = new object[11] { cameraAnimator, "CameraMove5", 5f, boxAnimator5, "Lid5", text1, text2, text3, found[5], parts[4], 5 };
-                    StartCoroutine(FireSequence(parms));
-
-                }
-
-                if (PlayerPrefs.GetInt("journeyProgress") == 5)
-                {
-                    string text1 = "Message saying 6th waypoint reached";
-                    string text2 = "You see another box";
-                    string text3 = "You find something else. Another part of the cat is added.";
-                    object[] parms = new object[11] { cameraAnimator, "CameraMove1", 5f, boxAnimator, "Lid", text1, text2, text3, found[6], parts[5], 6 };
-                    StartCoroutine(FireSequence(parms));
-
-                }
-
-                if (PlayerPrefs.GetInt("journeyProgress") == 6)
-                {
-                    string text1 = "Message saying 7th waypoint reached";
-                    string text2 = "You see another box";
-                    string text3 = "You find something else. Another part of the cat is added.";
-                    object[] parms = new object[11] { cameraAnimator, "CameraMove2", 5f, boxAnimator, "Lid2", text1, text2, text3, found[7], parts[6], 7 };
-                    StartCoroutine(FireSequence(parms));
-                }
-                if (PlayerPrefs.GetInt("journeyProgress") == 7)
-                {
-                    string text1 = "Message saying 8th waypoint reached";
-                    string text2 = "You see another box";
-                    string text3 = "You find something else. Another part of the cat is added.";
-                    object[] parms = new object[11] { cameraAnimator, "CameraMove3", 5f, boxAnimator, "Lid3", text1, text2, text3, found[8], parts[7], 0 };
-                    StartCoroutine(FireSequence(parms));
-                }
+                
 
 
             }

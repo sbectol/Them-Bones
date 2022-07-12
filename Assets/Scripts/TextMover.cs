@@ -27,7 +27,13 @@ public class TextMover : MonoBehaviour
     private int journeyProgress;
     private int closest;
     public float minDistance = 1000;
-    private CanvasGroup[] found = new CanvasGroup[15];
+
+    private Vector2 fingerDownPosition;
+    private Vector2 fingerUpPosition;
+    private bool fingerUp;
+    private bool stationary;
+    private bool fingerStationary;
+
     private bool checkingLocation;
     private Animator cameraAnimator;
     private Animator boxAnimator;
@@ -101,35 +107,22 @@ public class TextMover : MonoBehaviour
         parts[12] = GameObject.Find("Part12").GetComponent<CanvasGroup>();
         parts[13] = GameObject.Find("Part13").GetComponent<CanvasGroup>();
 
-        found[1] = GameObject.Find("FoundObject1").GetComponent<CanvasGroup>();
-        found[2] = GameObject.Find("FoundObject2").GetComponent<CanvasGroup>();
-        found[3] = GameObject.Find("FoundObject3").GetComponent<CanvasGroup>();
-        found[4] = GameObject.Find("FoundObject4").GetComponent<CanvasGroup>();
-        found[5] = GameObject.Find("FoundObject5").GetComponent<CanvasGroup>();
-        found[6] = GameObject.Find("FoundObject6").GetComponent<CanvasGroup>();
-        found[7] = GameObject.Find("FoundObject7").GetComponent<CanvasGroup>();
-        found[8] = GameObject.Find("FoundObject8").GetComponent<CanvasGroup>();
-        found[9] = GameObject.Find("FoundObject9").GetComponent<CanvasGroup>();
-        found[10] = GameObject.Find("FoundObject10").GetComponent<CanvasGroup>();
-        found[11] = GameObject.Find("FoundObject11").GetComponent<CanvasGroup>();
-        found[12] = GameObject.Find("FoundObject12").GetComponent<CanvasGroup>();
-        found[13] = GameObject.Find("FoundObject13").GetComponent<CanvasGroup>();
-        found[14] = GameObject.Find("FoundObject14").GetComponent<CanvasGroup>();
+        
         PlayerPrefs.SetInt("journeyProgress", 0);
 
-        slide[1] = GameObject.Find("Slide1").GetComponent<SpriteRenderer>();
-        slide[2] = GameObject.Find("Slide2").GetComponent<SpriteRenderer>();
-        slide[3] = GameObject.Find("Slide3").GetComponent<SpriteRenderer>();
-        slide[4] = GameObject.Find("Slide4").GetComponent<SpriteRenderer>();
-        slide[5] = GameObject.Find("Slide5").GetComponent<SpriteRenderer>();
-        slide[6] = GameObject.Find("Slide6").GetComponent<SpriteRenderer>();
-        slide[7] = GameObject.Find("Slide7").GetComponent<SpriteRenderer>();
-        slide[8] = GameObject.Find("Slide8").GetComponent<SpriteRenderer>();
-        slide[9] = GameObject.Find("Slide9").GetComponent<SpriteRenderer>();
-        slide[10] = GameObject.Find("Slide10").GetComponent<SpriteRenderer>();
-        slide[11] = GameObject.Find("Slide11").GetComponent<SpriteRenderer>();
-        slide[12] = GameObject.Find("Slide12").GetComponent<SpriteRenderer>();
-        slide[13] = GameObject.Find("Slide13").GetComponent<SpriteRenderer>();
+        //slide[1] = GameObject.Find("Slide1").GetComponent<SpriteRenderer>();
+        //slide[2] = GameObject.Find("Slide2").GetComponent<SpriteRenderer>();
+        //slide[3] = GameObject.Find("Slide3").GetComponent<SpriteRenderer>();
+        //slide[4] = GameObject.Find("Slide4").GetComponent<SpriteRenderer>();
+        //slide[5] = GameObject.Find("Slide5").GetComponent<SpriteRenderer>();
+        //slide[6] = GameObject.Find("Slide6").GetComponent<SpriteRenderer>();
+        //slide[7] = GameObject.Find("Slide7").GetComponent<SpriteRenderer>();
+        //slide[8] = GameObject.Find("Slide8").GetComponent<SpriteRenderer>();
+        //slide[9] = GameObject.Find("Slide9").GetComponent<SpriteRenderer>();
+        //slide[10] = GameObject.Find("Slide10").GetComponent<SpriteRenderer>();
+        //slide[11] = GameObject.Find("Slide11").GetComponent<SpriteRenderer>();
+        //slide[12] = GameObject.Find("Slide12").GetComponent<SpriteRenderer>();
+        //slide[13] = GameObject.Find("Slide13").GetComponent<SpriteRenderer>();
         AnimationClip[] animationClips = slideHolder.runtimeAnimatorController.animationClips;
         int j = 1;
         foreach (AnimationClip animClip in animationClips)
@@ -139,9 +132,11 @@ public class TextMover : MonoBehaviour
             j++;
 
         }
-
+        Color transparent = new(0, 0, 0, 0);
         for (int i = 1; i < 14; i++)
         {
+            slide[i] = GameObject.Find("Slide" + i).GetComponent<SpriteRenderer>();
+            //slide[i].color = transparent;
             parts[i].alpha = 0;
         }
         journeyProgress = PlayerPrefs.GetInt("journeyProgress");
@@ -171,33 +166,18 @@ public class TextMover : MonoBehaviour
             yield return new WaitForSeconds(1f);
             slideIndex = i;
             slideHolder.Play(slideAnimations[i]);
+            //StartCoroutine(FadeOut(slide[i], 0.5f));
         }
+        for (int i = 1; i < 14; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            //StartCoroutine(FadeIn(slide[i], 0.5f));
+            slideIndex = i;
+            slideHolder.Play(slideAnimations[i]);
+            
+        }
+
        
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn2");
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn3");
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn4");
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn5");
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn6");
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn7");
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn8");
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn9");
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn10");
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn11");
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn12");
-        //yield return new WaitForSeconds(1f);
-        //slideHolder.Play("SlideHolderTurn13");
-        //yield return new WaitForSeconds(1f);
     }
     IEnumerator FireSequence(object[] parms)
     {
@@ -231,7 +211,34 @@ public class TextMover : MonoBehaviour
     }
     void Update()
     {
+        foreach (Touch touch in Input.touches)
+        {
+            if (touch.phase == TouchPhase.Began)
+            {
+                fingerUpPosition = touch.position;
+                fingerDownPosition = touch.position;
+                fingerUp = false;
 
+            }
+
+            if (touch.phase == TouchPhase.Moved)
+            {
+                fingerDownPosition = touch.position;
+                DetectSwipe();
+            }
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                fingerDownPosition = touch.position;
+                fingerUp = true;
+                DetectSwipe();
+            }
+
+            if (touch.phase == TouchPhase.Stationary)
+            {
+                fingerStationary = true;
+            }
+        }
 
         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
         {
@@ -246,7 +253,11 @@ public class TextMover : MonoBehaviour
                     Debug.Log("Clicked the cat circle");
                     
                     object[] parms = new object[3] { cameraAnimator, "CameraMove1", 5f};
+                    slideHolder.StopPlayback();
+                    StartCoroutine(FadeIn(slide[slideIndex], 0.5f));
                     StartCoroutine(FireSequence(parms));
+
+
 
                 }
                 if (raycastHit.collider.name == "Box")
@@ -358,4 +369,83 @@ public class TextMover : MonoBehaviour
 
 
     }
+
+    IEnumerator FadeIn(SpriteRenderer MyRenderer, float duration)
+    {
+        float counter = 0;
+        //Get current color
+        Color spriteColor = MyRenderer.material.color;
+
+        while (counter < duration)
+        {
+            counter += Time.deltaTime;
+            //Fade from 1 to 0
+            float alpha = Mathf.Lerp(0, 1, counter / duration);
+
+
+            //Change alpha only
+            MyRenderer.color = new Color(spriteColor.r, spriteColor.g, spriteColor.b, alpha);
+            //Wait for a frame
+            yield return null;
+        }
+    }
+    IEnumerator FadeOut(SpriteRenderer MyRenderer, float duration)
+    {
+        float counter = 0;
+        //Get current color
+        Color spriteColor = MyRenderer.material.color;
+
+        while (counter < duration)
+        {
+            counter += Time.deltaTime;
+            //Fade from 1 to 0
+            float alpha = Mathf.Lerp(1, 0, counter / duration);
+
+
+            //Change alpha only
+            MyRenderer.color = new Color(spriteColor.r, spriteColor.g, spriteColor.b, alpha);
+            //Wait for a frame
+            yield return null;
+        }
+    }
+
+    private void DetectSwipe()
+    {
+        if (SwipeDistanceCheckMet())
+        {
+            if (IsVerticalSwipe())
+            {
+                var direction = fingerDownPosition.y - fingerUpPosition.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
+                Debug.Log(direction);
+            }
+            else
+            {
+                var direction = fingerDownPosition.x - fingerUpPosition.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
+                Debug.Log(direction);
+            }
+            fingerUpPosition = fingerDownPosition;
+        }
+    }
+
+    private bool IsVerticalSwipe()
+    {
+        return VerticalMovementDistance() > HorizontalMovementDistance();
+    }
+
+    private bool SwipeDistanceCheckMet()
+    {
+        return VerticalMovementDistance() > 10 || HorizontalMovementDistance() > 10;
+    }
+
+    private float VerticalMovementDistance()
+    {
+        return Mathf.Abs(fingerDownPosition.y - fingerUpPosition.y);
+    }
+
+    private float HorizontalMovementDistance()
+    {
+        return Mathf.Abs(fingerDownPosition.x - fingerUpPosition.x);
+    }
+
+
 }

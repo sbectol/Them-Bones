@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using SpriteGlow;
 
 public class TextMover : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class TextMover : MonoBehaviour
     private int journeyProgress;
     private int closest;
     public float minDistance = 1000;
+    private SpriteGlowEffect skull;
 
     private Vector2 fingerDownPosition;
     private Vector2 fingerUpPosition;
@@ -34,7 +36,7 @@ public class TextMover : MonoBehaviour
     private bool stationary;
     private bool fingerStationary;
 
-    private bool checkingLocation;
+    private bool checkingLocation = true;
     private Animator cameraAnimator;
     private Animator boxAnimator;
     private Animator slideHolder;
@@ -81,7 +83,9 @@ public class TextMover : MonoBehaviour
         boxAnimator = GameObject.Find("BoxTop").GetComponent<Animator>();
       
         slideHolder = GameObject.Find("SlideHolder").GetComponent<Animator>();
+        skull = GameObject.Find("frame").GetComponent<SpriteGlowEffect>();
         
+
 
 
         mainCamera = GameObject.Find("Main Camera");
@@ -144,7 +148,7 @@ public class TextMover : MonoBehaviour
         Debug.Log(journeyProgress);
 
         //StartCoroutine(MoveSomeText());
-        StartCoroutine(RotateDisc());
+        //StartCoroutine(RotateDisc());
         
     }
 
@@ -221,11 +225,11 @@ public class TextMover : MonoBehaviour
 
             }
 
-            if (touch.phase == TouchPhase.Moved)
-            {
-                fingerDownPosition = touch.position;
-                DetectSwipe();
-            }
+            //if (touch.phase == TouchPhase.Moved)
+            //{
+            //    fingerDownPosition = touch.position;
+            //    DetectSwipe();
+            //}
 
             if (touch.phase == TouchPhase.Ended)
             {
@@ -248,19 +252,23 @@ public class TextMover : MonoBehaviour
             if (Physics.Raycast(raycast, out raycastHit))
             {
                 Debug.Log("Something Hit " + raycastHit.collider.name);
-                if (raycastHit.collider.name == "cats")
+                if (raycastHit.collider.name == "cat1")
                 {
-                    Debug.Log("Clicked the cat circle");
                     
                     object[] parms = new object[3] { cameraAnimator, "CameraMove1", 5f};
-                    slideHolder.StopPlayback();
-                    StartCoroutine(FadeIn(slide[slideIndex], 0.5f));
+                    StartCoroutine(FadeOut(slide[1], 0.5f));
                     StartCoroutine(FireSequence(parms));
 
 
 
                 }
-                if (raycastHit.collider.name == "Box")
+                if (raycastHit.collider.name == "Slide1")
+                {
+                    Debug.Log("Slide 1");
+                    object[] parms = new object[3] { cameraAnimator, "CameraMove2", 5f };
+                    StartCoroutine(FireSequence(parms));
+                }
+                    if (raycastHit.collider.name == "Box")
                 {
                     Debug.Log("Clicked box");
                     
@@ -287,7 +295,7 @@ public class TextMover : MonoBehaviour
         
         for (int i = 1; i < 15; i++)
         {
-            
+           
         if(Distance(latitude, longitude, coordsCresswell[i].x, coordsCresswell[i].y) <= minDistance)
             {
                 closest = i;
@@ -298,47 +306,39 @@ public class TextMover : MonoBehaviour
         }
 
         minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
-        Debug.Log("The closest is " + closest.ToString());
-       
-        minDistance = 25;
+        debugText.text = "minDistance is " + minDistance.ToString() +" The closest is " + closest.ToString();
 
-        if(minDistance < 30 && minDistance > 20 && checkingLocation)
+
+        
+        if (minDistance > 100f && checkingLocation)
         {
-            Debug.Log("30m from" + closest);
-            checkingLocation = false;
-            if (!checkingLocation) //oneshot
-            {
-                Debug.Log("Stopped checking gps and Firing Sequence " + PlayerPrefs.GetInt("journeyProgress").ToString());
-                //if (PlayerPrefs.GetInt("journeyProgress") == 0)
-                //{
-                //    string text1 = "Ahead, you can just make out an object on the ground.";
-                //    string text2 = "You decide to take a closer look";
-                //    string text3 = "In the box you find a sketch of a fearsome beast.\nYou decide to pin it up.\nMove automatically on to the animation page?";
-                //    object[] parms = new object[11] { cameraAnimator, "CameraMove1", 5f, boxAnimator, "Lid", text1, text2, text3, catBluePrint, found[1], 1 };
-                //    StartCoroutine(FireSequence(parms));
-
-
-
-                //}
-
-                
-
-
-            }
-
-
+            Debug.Log("Over 100m from" + closest);
+            skull.GlowBrightness = 1f;
+            skull.OutlineWidth = 0;
         }
 
-        switch (journeyProgress)
+        if (minDistance < 100f && minDistance > 75f && checkingLocation)
         {
-            case 1:
-                break;
-            case 2:
-                break;
+                Debug.Log("100m from" + closest);
+                skull.GlowBrightness = 2f;
+                skull.OutlineWidth = 3;
+        }
+        if (minDistance < 75f && minDistance > 50f  && checkingLocation)
+        {
+            Debug.Log("75m from" + closest);
+            skull.GlowBrightness = 3f;
+            skull.OutlineWidth = 3;
+        }
+        if (minDistance < 50f && minDistance > 0f && checkingLocation)
+        {
+            Debug.Log("50m from" + closest);
+            skull.GlowBrightness = 4f;
+            skull.OutlineWidth = 3;
         }
 
-        //mainCamera.transform.Rotate(Vector3.forward, 10.0f * Time.deltaTime);
-        //mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, endMarker1.position, speed * Time.deltaTime);
+
+
+
     }
 
     private IEnumerator GetLocation()
@@ -417,11 +417,36 @@ public class TextMover : MonoBehaviour
             {
                 var direction = fingerDownPosition.y - fingerUpPosition.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
                 Debug.Log(direction);
+                
             }
             else
             {
                 var direction = fingerDownPosition.x - fingerUpPosition.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
                 Debug.Log(direction);
+                if (direction == SwipeDirection.Left)
+                {
+
+                    slideHolder.SetFloat("direction", 1);
+                    slideHolder.Play(slideAnimations[slideIndex]);
+                    slideIndex++;
+                    if(slideIndex>13)
+                    {
+                        slideIndex = 1;
+                    }
+                }
+                if (direction == SwipeDirection.Right)
+                {
+
+                    if (slideIndex < 1)
+                    {
+                        slideIndex = 13;
+                    }
+
+                    slideHolder.SetFloat("direction", -1);
+                    slideHolder.Play(slideAnimations[slideIndex]);
+                    slideIndex--;
+                    
+                }
             }
             fingerUpPosition = fingerDownPosition;
         }

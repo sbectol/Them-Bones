@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Text.unity
     guid: 0c14344ad1ad24228898e731f99f41ed
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Twirly.unity
     guid: 964bc0e6bcc734c139c7420044175a48
   - enabled: 0

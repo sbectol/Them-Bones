@@ -113,6 +113,21 @@ public class TextMover : MonoBehaviour
 
         
         PlayerPrefs.SetInt("journeyProgress", 0);
+        PlayerPrefs.SetInt("Found1", 0);
+        PlayerPrefs.SetInt("Found2", 0);
+        PlayerPrefs.SetInt("Found3", 0);
+        PlayerPrefs.SetInt("Found4", 0);
+        PlayerPrefs.SetInt("Found5", 0);
+        PlayerPrefs.SetInt("Found6", 0);
+        PlayerPrefs.SetInt("Found7", 0);
+        PlayerPrefs.SetInt("Found8", 0);
+        PlayerPrefs.SetInt("Found9", 0);
+        PlayerPrefs.SetInt("Found10", 0);
+        PlayerPrefs.SetInt("Found11", 0);
+        PlayerPrefs.SetInt("Found12", 0);
+        PlayerPrefs.SetInt("Found13", 0);
+        PlayerPrefs.SetInt("Found14", 0);
+
 
         //slide[1] = GameObject.Find("Slide1").GetComponent<SpriteRenderer>();
         //slide[2] = GameObject.Find("Slide2").GetComponent<SpriteRenderer>();
@@ -252,7 +267,7 @@ public class TextMover : MonoBehaviour
             if (Physics.Raycast(raycast, out raycastHit))
             {
                 Debug.Log("Something Hit " + raycastHit.collider.name);
-                if (raycastHit.collider.name == "cat1")
+                if (raycastHit.collider.name == "newcat1")
                 {
                     
                     object[] parms = new object[3] { cameraAnimator, "CameraMove1", 5f};
@@ -308,32 +323,143 @@ public class TextMover : MonoBehaviour
         minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
         debugText.text = "minDistance is " + minDistance.ToString() +" The closest is " + closest.ToString();
 
+        int closestisFound = 0;
 
-        
-        if (minDistance > 100f && checkingLocation)
+        switch (closest)
         {
-            Debug.Log("Over 100m from" + closest);
+            case 1:
+                closestisFound = PlayerPrefs.GetInt("Found1");
+                break;
+            case 2:
+                closestisFound = PlayerPrefs.GetInt("Found2");
+                break;
+            case 3:
+                closestisFound = PlayerPrefs.GetInt("Found3");
+                break;
+            case 4:
+                closestisFound = PlayerPrefs.GetInt("Found4");
+                break;
+            case 5:
+                closestisFound = PlayerPrefs.GetInt("Found5");
+                break;
+            case 6:
+                closestisFound = PlayerPrefs.GetInt("Found6");
+                break;
+            case 7:
+                closestisFound = PlayerPrefs.GetInt("Found7");
+                break;
+            case 8:
+                closestisFound = PlayerPrefs.GetInt("Found8");
+                break;
+            case 9:
+                closestisFound = PlayerPrefs.GetInt("Found9");
+                break;
+            case 10:
+                closestisFound = PlayerPrefs.GetInt("Found10");
+                break;
+            case 11:
+                closestisFound = PlayerPrefs.GetInt("Found11");
+                break;
+            case 12:
+                closestisFound = PlayerPrefs.GetInt("Found12");
+                break;
+            case 13:
+                closestisFound = PlayerPrefs.GetInt("Found13");
+                break;
+            case 14:
+                closestisFound = PlayerPrefs.GetInt("Found14");
+                break;
+
+        }
+
+    
+
+
+        if (closestisFound ==1)
+        {
             skull.GlowBrightness = 1f;
             skull.OutlineWidth = 0;
         }
 
-        if (minDistance < 100f && minDistance > 75f && checkingLocation)
+        
+        
+        if (minDistance > 100f && checkingLocation)
         {
-                Debug.Log("100m from" + closest);
-                skull.GlowBrightness = 2f;
-                skull.OutlineWidth = 3;
+            skull.GlowBrightness = 1f;
+            skull.OutlineWidth = 0;
         }
-        if (minDistance < 75f && minDistance > 50f  && checkingLocation)
+
+        if (minDistance < 100f && minDistance > 75f && checkingLocation && closestisFound == 0 )
         {
-            Debug.Log("75m from" + closest);
-            skull.GlowBrightness = 3f;
-            skull.OutlineWidth = 3;
+            skull.GlowBrightness = 2f;
+            skull.OutlineWidth = 2;
         }
-        if (minDistance < 50f && minDistance > 0f && checkingLocation)
+        if (minDistance < 75f && minDistance > 50f  && checkingLocation && closestisFound == 0)
         {
-            Debug.Log("50m from" + closest);
-            skull.GlowBrightness = 4f;
-            skull.OutlineWidth = 3;
+            skull.GlowBrightness = 2f;
+            skull.OutlineWidth = 5;
+        }
+        if (minDistance < 50f && minDistance > 25f && checkingLocation && closestisFound == 0)
+        {
+            skull.GlowBrightness = 2f;
+            skull.OutlineWidth = 7;
+        }
+        if (minDistance < 25f && minDistance > 10f && checkingLocation && closestisFound == 0)
+        {   
+            skull.GlowBrightness = 2f;
+            skull.OutlineWidth = 8;
+        }
+        if (minDistance < 10f && checkingLocation && closestisFound == 0)
+        {   
+            skull.GlowBrightness = 2f;
+            skull.OutlineWidth = 10;
+            switch (closest)
+            {
+                case 1:
+                    PlayerPrefs.SetInt("Found1", 1);
+                    break;
+                case 2:
+                    PlayerPrefs.SetInt("Found2", 1);
+                    break;
+                case 3:
+                    PlayerPrefs.SetInt("Found3", 1);
+                    break;
+                case 4:
+                    PlayerPrefs.SetInt("Found4", 1);
+                    break;
+                case 5:
+                    PlayerPrefs.SetInt("Found5", 1);
+                    break;
+                case 6:
+                    PlayerPrefs.SetInt("Found6", 1);
+                    break;
+                case 7:
+                    PlayerPrefs.SetInt("Found7", 1);
+                    break;
+                case 8:
+                    PlayerPrefs.SetInt("Found8", 1);
+                    break;
+                case 9:
+                    PlayerPrefs.SetInt("Found9", 1);
+                    break;
+                case 10:
+                    PlayerPrefs.SetInt("Found10", 1);
+                    break;
+                case 11:
+                    PlayerPrefs.SetInt("Found11", 1);
+                    break;
+                case 12:
+                    PlayerPrefs.SetInt("Found12", 1);
+                    break;
+                case 13:
+                    PlayerPrefs.SetInt("Found13", 1);
+                    break;
+                case 14:
+                    PlayerPrefs.SetInt("Found14", 1);
+                    break;
+
+            }
+
         }
 
 

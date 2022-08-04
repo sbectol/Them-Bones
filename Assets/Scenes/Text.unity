@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 63348877}
   - component: {fileID: 63348878}
   m_Layer: 0
-  m_Name: Slide4
+  m_Name: Slide_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 278519466}
   - component: {fileID: 278519467}
   m_Layer: 0
-  m_Name: Slide6
+  m_Name: Slide_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -774,7 +774,7 @@ GameObject:
   - component: {fileID: 320449040}
   - component: {fileID: 320449039}
   m_Layer: 0
-  m_Name: newcat11
+  m_Name: cat_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -872,7 +872,7 @@ GameObject:
   - component: {fileID: 461228464}
   - component: {fileID: 461228465}
   m_Layer: 0
-  m_Name: Slide13
+  m_Name: Slide_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -970,7 +970,7 @@ GameObject:
   - component: {fileID: 552173787}
   - component: {fileID: 552173788}
   m_Layer: 0
-  m_Name: newcat2
+  m_Name: cat_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1247,6 +1247,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDistance: 1000
+  spriteArray:
+  - {fileID: 21300000, guid: 95d4d6623651f4b7a9367464ea727aad, type: 3}
+  - {fileID: 21300000, guid: 36c883fe20e864c5b9a008fa15708e44, type: 3}
+  - {fileID: 21300000, guid: 52571666664a545e39f88b1f4f96bffe, type: 3}
+  - {fileID: 21300000, guid: 2c9d8a86303b8419f92126f700ad0445, type: 3}
+  - {fileID: 21300000, guid: 8c343affe1c3944849babf3717ba1c7a, type: 3}
+  - {fileID: 21300000, guid: 2e64e785ef78e4b929950b9816e5f584, type: 3}
+  - {fileID: 21300000, guid: 608e7d4a03fd14a1abdacc7023de3471, type: 3}
+  - {fileID: 21300000, guid: f87af6cefb37949968e1857f61576031, type: 3}
+  - {fileID: 21300000, guid: 0249748f33d114bec89c3a7e3db2bb07, type: 3}
+  - {fileID: 21300000, guid: 7b38ec692c0674d918a0d69424264bed, type: 3}
+  - {fileID: 21300000, guid: b6e5842a0d7c74d389dbdb119e60ea4e, type: 3}
+  - {fileID: 21300000, guid: f9c33e91ed98b4a5c84889994d2aa8a1, type: 3}
+  - {fileID: 21300000, guid: b6e5842a0d7c74d389dbdb119e60ea4e, type: 3}
+  - {fileID: 21300000, guid: d0ce257fb9e214f098c9db1f3eaefe3a, type: 3}
 --- !u!95 &631034386
 Animator:
   serializedVersion: 4
@@ -1355,7 +1370,7 @@ GameObject:
   - component: {fileID: 640217422}
   - component: {fileID: 640217423}
   m_Layer: 0
-  m_Name: Slide1
+  m_Name: Slide_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1453,7 +1468,7 @@ GameObject:
   - component: {fileID: 658939328}
   - component: {fileID: 658939327}
   m_Layer: 0
-  m_Name: newcat9
+  m_Name: cat_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1679,7 +1694,7 @@ GameObject:
   - component: {fileID: 714195372}
   - component: {fileID: 714195373}
   m_Layer: 0
-  m_Name: Slide9
+  m_Name: Slide_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1777,7 +1792,7 @@ GameObject:
   - component: {fileID: 730827856}
   - component: {fileID: 730827855}
   m_Layer: 0
-  m_Name: newcat13
+  m_Name: cat_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2013,7 +2028,7 @@ GameObject:
   - component: {fileID: 873736270}
   - component: {fileID: 873736271}
   m_Layer: 0
-  m_Name: Slide11
+  m_Name: Slide_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2111,7 +2126,7 @@ GameObject:
   - component: {fileID: 874631554}
   - component: {fileID: 874631555}
   m_Layer: 0
-  m_Name: Slide5
+  m_Name: Slide_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2209,7 +2224,7 @@ GameObject:
   - component: {fileID: 960785861}
   - component: {fileID: 960785860}
   m_Layer: 0
-  m_Name: newcat12
+  m_Name: cat_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2307,7 +2322,7 @@ GameObject:
   - component: {fileID: 971490750}
   - component: {fileID: 971490751}
   m_Layer: 0
-  m_Name: Slide3
+  m_Name: Slide_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2499,7 +2514,7 @@ GameObject:
   - component: {fileID: 1039585005}
   - component: {fileID: 1039585004}
   m_Layer: 0
-  m_Name: newcat8
+  m_Name: cat_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2818,6 +2833,7 @@ GameObject:
   - component: {fileID: 1285448607}
   - component: {fileID: 1285448608}
   - component: {fileID: 1285448609}
+  - component: {fileID: 1285448610}
   m_Layer: 3
   m_Name: frame
   m_TagString: Untagged
@@ -2910,6 +2926,19 @@ MonoBehaviour:
   alphaThreshold: 0.615
   drawOutside: 1
   enableInstancing: 0
+--- !u!65 &1285448610
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285448606}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 21.08, y: 18.280312, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1327653556
 GameObject:
   m_ObjectHideFlags: 0
@@ -3031,7 +3060,7 @@ GameObject:
   - component: {fileID: 1411436875}
   - component: {fileID: 1411436876}
   m_Layer: 0
-  m_Name: Slide12
+  m_Name: Slide_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3697,7 +3726,7 @@ GameObject:
   - component: {fileID: 1607750473}
   - component: {fileID: 1607750474}
   m_Layer: 0
-  m_Name: Slide10
+  m_Name: Slide_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4032,7 +4061,7 @@ GameObject:
   - component: {fileID: 1675711134}
   - component: {fileID: 1675711133}
   m_Layer: 0
-  m_Name: newcat7
+  m_Name: cat_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4130,7 +4159,7 @@ GameObject:
   - component: {fileID: 1684140192}
   - component: {fileID: 1684140191}
   m_Layer: 0
-  m_Name: newcat5
+  m_Name: cat_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4317,7 +4346,7 @@ GameObject:
   - component: {fileID: 1733636280}
   - component: {fileID: 1733636281}
   m_Layer: 0
-  m_Name: Slide2
+  m_Name: Slide_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4521,7 +4550,7 @@ GameObject:
   - component: {fileID: 1839920691}
   - component: {fileID: 1839920692}
   m_Layer: 0
-  m_Name: Slide7
+  m_Name: Slide_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4619,7 +4648,7 @@ GameObject:
   - component: {fileID: 1877734248}
   - component: {fileID: 1877734247}
   m_Layer: 0
-  m_Name: newcat4
+  m_Name: cat_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4717,7 +4746,7 @@ GameObject:
   - component: {fileID: 1887210014}
   - component: {fileID: 1887210013}
   m_Layer: 0
-  m_Name: newcat10
+  m_Name: cat_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4815,7 +4844,7 @@ GameObject:
   - component: {fileID: 1902998745}
   - component: {fileID: 1902998746}
   m_Layer: 0
-  m_Name: newcat1
+  m_Name: cat_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5091,7 +5120,7 @@ GameObject:
   - component: {fileID: 2010722481}
   - component: {fileID: 2010722480}
   m_Layer: 0
-  m_Name: newcat6
+  m_Name: cat_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5278,7 +5307,7 @@ GameObject:
   - component: {fileID: 2028594986}
   - component: {fileID: 2028594987}
   m_Layer: 0
-  m_Name: Slide8
+  m_Name: Slide_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5376,7 +5405,7 @@ GameObject:
   - component: {fileID: 2110413083}
   - component: {fileID: 2110413084}
   m_Layer: 0
-  m_Name: newcat3
+  m_Name: cat_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

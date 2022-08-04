@@ -14,7 +14,7 @@ public class TextMover : MonoBehaviour
     private GameObject mainCamera;
     private CanvasGroup catBluePrint;
     private CanvasGroup[] parts = new CanvasGroup[15];
-    private SpriteRenderer[] slide = new SpriteRenderer[14];
+    private SpriteRenderer[] slide = new SpriteRenderer[15];
     private int slideIndex = 1;
     private string[] slideAnimations = new string[14];
     private Vector2[] coordsCB = new Vector2[13];
@@ -30,6 +30,7 @@ public class TextMover : MonoBehaviour
     private int closest;
     public float minDistance = 1000;
     private SpriteGlowEffect skull;
+    private SpriteRenderer boxContents;
 
     private Vector2 fingerDownPosition;
     private Vector2 fingerUpPosition;
@@ -41,6 +42,8 @@ public class TextMover : MonoBehaviour
     private Animator cameraAnimator;
     private Animator boxAnimator;
     private Animator slideHolder;
+    public Sprite[] spriteArray;
+
     void Start()
     {
         Input.compass.enabled = true;
@@ -48,7 +51,8 @@ public class TextMover : MonoBehaviour
         {
             StartCoroutine(GetLocation());
         }
-
+        boxContents = GameObject.Find("boxContents").GetComponent<SpriteRenderer>();
+        boxContents.sprite = spriteArray[5];
         coordsCresswell[1] = new Vector2(53.26301182857125f, -1.193743944168091f);
         coordsCresswell[2] = new Vector2(53.26306958489932f, -1.1971020698547366f);
         coordsCresswell[3] = new Vector2(53.262569027464444f, -1.1982500553131106f);
@@ -76,11 +80,15 @@ public class TextMover : MonoBehaviour
         coordsSean[10] = new Vector2(52.823417f, -3.391722f);
         coordsSean[11] = new Vector2(52.823556f, -3.394611f);
         coordsSean[12] = new Vector2(52.822806f, -3.399861f);
+        coordsSean[13] = new Vector2(52.824556f, -3.394611f);
+        coordsSean[14] = new Vector2(52.823806f, -3.399861f);
 
 
 
 
-    coordsCB[1] = new Vector2(53.291048960315216f, -3.7248343819867595f);  //Home
+
+
+        coordsCB[1] = new Vector2(53.291048960315216f, -3.7248343819867595f);  //Home
         coordsCB[2] = new Vector2(53.29135f, -3.71566f);  //Corner of Leisure Centre
         coordsCB[3] = new Vector2(53.29301f, -3.71410f);  //Stone Circle
         coordsCB[4] = new Vector2(53.29302f, -3.712158f); //Moel Eirias
@@ -158,11 +166,12 @@ public class TextMover : MonoBehaviour
         Color transparent = new(0, 0, 0, 0);
         for (int i = 1; i < 14; i++)
         {
-            slide[i] = GameObject.Find("Slide" + i).GetComponent<SpriteRenderer>();
+            slide[i] = GameObject.Find("Slide_" + i).GetComponent<SpriteRenderer>();
             slide[i].color = transparent;
             parts[i].alpha = 0;
         }
-        journeyProgress = PlayerPrefs.GetInt("journeyProgress");
+        PlayerPrefs.SetInt("journeyProgress",1);
+        journeyProgress =  PlayerPrefs.GetInt("journeyProgress");
         checkingLocation = true;
         Debug.Log(journeyProgress);
 
@@ -189,7 +198,7 @@ public class TextMover : MonoBehaviour
             yield return new WaitForSeconds(1f);
             slideIndex = i;
             slideHolder.Play(slideAnimations[i]);
-            //StartCoroutine(FadeOut(slide[i], 0.5f));
+            
         }
         for (int i = 1; i < 14; i++)
         {
@@ -202,28 +211,24 @@ public class TextMover : MonoBehaviour
 
        
     }
-    IEnumerator FireSequence(object[] parms)
+    IEnumerator FlyIn()
     {
-        
+        cameraAnimator.Play("CameraMove3");
+        yield return new WaitForSeconds(1);
+        cameraAnimator.Play("CameraMove1");
+        yield return new WaitForSeconds(5);
+    }
+    IEnumerator FlyOut()
+    {
+        cameraAnimator.Play("CameraMove1_Reversed");
+        yield return new WaitForSeconds(5);
+        StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
+    }
 
-        
-        Animator animator = (Animator)parms[0];
-        string sequence = (string)parms[1];
-        float delay = (float)parms[2];
-        animator.Play(sequence);
-        //yield return new WaitForSeconds(delay);
-        //CanvasGroup cg = (CanvasGroup)parms[8];
-        //animator.Play(sequence);
-        //yield return new WaitForSeconds(delay);
-        //cg.alpha = 1;
-        //cg = (CanvasGroup)parms[9];
-        //cg.alpha = 1;
-        yield return new WaitForSeconds(delay);
-        
-        
-
-        checkingLocation = true;
-        Debug.Log("Checking again");
+    IEnumerator OpenBox()
+    {
+        boxAnimator.Play("Lid");
+        yield return new WaitForSeconds(1);
     }
     public IEnumerator LoadScene(string sceneName)
     {
@@ -271,23 +276,22 @@ public class TextMover : MonoBehaviour
             if (Physics.Raycast(raycast, out raycastHit))
             {
                 Debug.Log("Something Hit " + raycastHit.collider.name);
-                if (raycastHit.collider.name == "newcat1")
+
+                int found = raycastHit.collider.name.IndexOf("_");
+                string number = raycastHit.collider.name.Substring(found + 1);
+                string[] thing = raycastHit.collider.name.Split("_");
+                Debug.Log("The cat is " + number);
+
+                if (thing[0] == "cat")
                 {
-                    object[] parms = new object[3] { cameraAnimator, "CameraMove1", 5f};
-                    StartCoroutine(FadeOut(slide[1], 0.5f));
-                    StartCoroutine(FireSequence(parms));
+
                 }
                 if (raycastHit.collider.name == "Slide1")
                 {
-                    Debug.Log("Slide 1");
                     
                 }
-                if (raycastHit.collider.name == "newcat2")
-                {
-                    object[] parms = new object[3] { cameraAnimator, "CameraMove1", 5f };
-                    StartCoroutine(FadeOut(slide[2], 0.5f));
-                    StartCoroutine(FireSequence(parms));
-                }
+               
+
                 if (raycastHit.collider.name == "Slide2")
                 {
                     Debug.Log("Slide 2");
@@ -297,19 +301,93 @@ public class TextMover : MonoBehaviour
                 if (raycastHit.collider.name == "Box")
                 {
                     Debug.Log("Clicked box");
-                    object[] parms = new object[3] { cameraAnimator, "CameraMove1_Reversed", 5f };
-                    StartCoroutine(FireSequence(parms));
-                    checkingLocation = true;
+
+                    StartCoroutine(FlyOut());
+                    slideHolder.SetFloat("direction", 1);
+                    slideHolder.Play(slideAnimations[journeyProgress]);
+                    StartCoroutine(FadeIn(slide[journeyProgress - 1], 0.5f));
+                    if (journeyProgress < 14) { 
+                        journeyProgress++;
+                        }
+                    PlayerPrefs.SetInt("journeyProgress", journeyProgress);
+                    switch (closest)
+                    {
+                        case 1:
+                            PlayerPrefs.SetInt("Found1", 1);
+                            break;
+                        case 2:
+                            PlayerPrefs.SetInt("Found2", 1);
+                            break;
+                        case 3:
+                            PlayerPrefs.SetInt("Found3", 1);
+                            break;
+                        case 4:
+                            PlayerPrefs.SetInt("Found4", 1);
+                            break;
+                        case 5:
+                            PlayerPrefs.SetInt("Found5", 1);
+                            break;
+                        case 6:
+                            PlayerPrefs.SetInt("Found6", 1);
+                            break;
+                        case 7:
+                            PlayerPrefs.SetInt("Found7", 1);
+                            break;
+                        case 8:
+                            PlayerPrefs.SetInt("Found8", 1);
+                            break;
+                        case 9:
+                            PlayerPrefs.SetInt("Found9", 1);
+                            break;
+                        case 10:
+                            PlayerPrefs.SetInt("Found10", 1);
+                            break;
+                        case 11:
+                            PlayerPrefs.SetInt("Found11", 1);
+                            break;
+                        case 12:
+                            PlayerPrefs.SetInt("Found12", 1);
+                            break;
+                        case 13:
+                            PlayerPrefs.SetInt("Found13", 1);
+                            break;
+                        case 14:
+                            PlayerPrefs.SetInt("Found14", 1);
+                            break;
+
+                    }
+                    checkingLocation = true;    
                 }
                 if (raycastHit.collider.name == "BoxTop")
                 {
-                    object[] parms = new object[3] { boxAnimator, "Lid", 5f };
-                    StartCoroutine(FireSequence(parms));
+                    
+                    StartCoroutine(OpenBox());
+                }
+                if (raycastHit.collider.name == "frame")
+                {
+                    //we'd better look at the wheel
+
+                    
+                    StartCoroutine(FlyIn());
+
+                    boxContents.sprite = spriteArray[journeyProgress];
+                    
+
+                    
+                    
+
+
+                   
+
+
+
                 }
 
 
 
-              
+
+
+
             }
         }
 
@@ -317,11 +395,15 @@ public class TextMover : MonoBehaviour
         {
             latitude = Input.location.lastData.latitude;
             longitude = Input.location.lastData.longitude;
+        } else
+        {
+            latitude = 0f;
+            longitude = 0f;
         }
         //Debug.Log(Distance(latitude, longitude, coordsCB[1].x, coordsCB[1].y));
         //find closest
         
-        for (int i = 1; i < 15; i++)
+        for (int i = 1; i < 14; i++)
         {
            
         //if(Distance(latitude, longitude, coordsCresswell[i].x, coordsCresswell[i].y) <= minDistance)
@@ -338,7 +420,7 @@ public class TextMover : MonoBehaviour
 
         //minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
         minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
-        debugText.text = "minDistance is " + minDistance.ToString() +" The closest is " + closest.ToString();
+        //debugText.text = "minDistance is " + minDistance.ToString() +" The closest is " + closest.ToString();
 
         int closestisFound = 0;
 
@@ -404,8 +486,8 @@ public class TextMover : MonoBehaviour
         {
             skull.GlowBrightness = 1f;
             skull.OutlineWidth = 0;
-            cameraAnimator.Play("CameraMove2");
-            Debug.Log("CameraMove2?");
+           
+           
         }
 
         if (minDistance < 100f && minDistance > 75f && checkingLocation && closestisFound == 0 )
@@ -433,54 +515,10 @@ public class TextMover : MonoBehaviour
             skull.GlowBrightness = 2f;
             skull.OutlineWidth = 10;
 
-            cameraAnimator.Play("CameraMove3");
+            //cameraAnimator.Play("CameraMove3");  //Put up a message or just move camera?
+            debugText.text = "Press the skull to discover it's secrets";
             checkingLocation = false;
-            switch (closest)
-            {
-                case 1:
-                    PlayerPrefs.SetInt("Found1", 1);
-                    break;
-                case 2:
-                    PlayerPrefs.SetInt("Found2", 1);
-                    break;
-                case 3:
-                    PlayerPrefs.SetInt("Found3", 1);
-                    break;
-                case 4:
-                    PlayerPrefs.SetInt("Found4", 1);
-                    break;
-                case 5:
-                    PlayerPrefs.SetInt("Found5", 1);
-                    break;
-                case 6:
-                    PlayerPrefs.SetInt("Found6", 1);
-                    break;
-                case 7:
-                    PlayerPrefs.SetInt("Found7", 1);
-                    break;
-                case 8:
-                    PlayerPrefs.SetInt("Found8", 1);
-                    break;
-                case 9:
-                    PlayerPrefs.SetInt("Found9", 1);
-                    break;
-                case 10:
-                    PlayerPrefs.SetInt("Found10", 1);
-                    break;
-                case 11:
-                    PlayerPrefs.SetInt("Found11", 1);
-                    break;
-                case 12:
-                    PlayerPrefs.SetInt("Found12", 1);
-                    break;
-                case 13:
-                    PlayerPrefs.SetInt("Found13", 1);
-                    break;
-                case 14:
-                    PlayerPrefs.SetInt("Found14", 1);
-                    break;
-
-            }
+           
 
         }
 
@@ -585,14 +623,14 @@ public class TextMover : MonoBehaviour
                 if (direction == SwipeDirection.Right)
                 {
 
-                    if (slideIndex < 1)
-                    {
-                        slideIndex = 13;
-                    }
+                    //if (slideIndex < 1)
+                    //{
+                    //    slideIndex = 13;
+                    //}
 
-                    slideHolder.SetFloat("direction", -1);
-                    slideHolder.Play(slideAnimations[slideIndex]);
-                    slideIndex--;
+                    //slideHolder.SetFloat("direction", -1);
+                    //slideHolder.Play(slideAnimations[slideIndex]);
+                    //slideIndex--;
                     
                 }
             }

@@ -23,6 +23,7 @@ public class TextMover : MonoBehaviour
     private Transform endMarker1;
     private Transform startMarker1;
     private TMP_Text debugText;
+    private TMP_Text messageText;
     private float speed;
     private float latitude;
     private float longitude;
@@ -42,6 +43,7 @@ public class TextMover : MonoBehaviour
     private Animator cameraAnimator;
     private Animator boxAnimator;
     private Animator slideHolder;
+    
     public Sprite[] spriteArray;
 
     void Start()
@@ -52,6 +54,7 @@ public class TextMover : MonoBehaviour
             StartCoroutine(GetLocation());
         }
         boxContents = GameObject.Find("boxContents").GetComponent<SpriteRenderer>();
+        
         boxContents.sprite = spriteArray[5];
         coordsCresswell[1] = new Vector2(53.26301182857125f, -1.193743944168091f);
         coordsCresswell[2] = new Vector2(53.26306958489932f, -1.1971020698547366f);
@@ -114,6 +117,7 @@ public class TextMover : MonoBehaviour
 
         mainCamera = GameObject.Find("Main Camera");
         debugText = GameObject.Find("Debug").GetComponent<TextMeshProUGUI>();
+        messageText = GameObject.Find("MessageText").GetComponent<TextMeshProUGUI>();
         //mainCamera.transform.LookAt(textObject1.GetComponent<Transform>());
 
         startMarker1 = mainCamera.GetComponent<Transform>();
@@ -220,15 +224,30 @@ public class TextMover : MonoBehaviour
     }
     IEnumerator FlyOut()
     {
+
+        messageText.text = "";
         cameraAnimator.Play("CameraMove1_Reversed");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3.5f);
         StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
+        yield return new WaitForSeconds(1);
+        boxAnimator.Play("LidClose");
+        slideHolder.SetFloat("direction", 1);
+        slideHolder.Play(slideAnimations[journeyProgress]);
+        if (journeyProgress < 14)
+        {
+            journeyProgress++;
+        }
+        PlayerPrefs.SetInt("journeyProgress", journeyProgress);
+        //StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
+
     }
 
     IEnumerator OpenBox()
     {
         boxAnimator.Play("Lid");
         yield return new WaitForSeconds(1);
+        cameraAnimator.Play("IntoBox");
+        messageText.text = "Inside the box you discover...";
     }
     public IEnumerator LoadScene(string sceneName)
     {
@@ -284,11 +303,11 @@ public class TextMover : MonoBehaviour
 
                 if (thing[0] == "cat")
                 {
-
+                    cameraAnimator.Play("CameraMove2");
                 }
-                if (raycastHit.collider.name == "Slide1")
+                if (raycastHit.collider.name == "arts")
                 {
-                    
+                    cameraAnimator.Play("CameraMove3");
                 }
                
 
@@ -298,18 +317,14 @@ public class TextMover : MonoBehaviour
                     
                 }
 
-                if (raycastHit.collider.name == "Box")
+                if (raycastHit.collider.name == "boxContents")
                 {
                     Debug.Log("Clicked box");
 
                     StartCoroutine(FlyOut());
-                    slideHolder.SetFloat("direction", 1);
-                    slideHolder.Play(slideAnimations[journeyProgress]);
-                    StartCoroutine(FadeIn(slide[journeyProgress - 1], 0.5f));
-                    if (journeyProgress < 14) { 
-                        journeyProgress++;
-                        }
-                    PlayerPrefs.SetInt("journeyProgress", journeyProgress);
+                    
+                    
+                   
                     switch (closest)
                     {
                         case 1:
@@ -367,7 +382,7 @@ public class TextMover : MonoBehaviour
                 {
                     //we'd better look at the wheel
 
-                    
+                    Debug.Log("You touched the skull");
                     StartCoroutine(FlyIn());
 
                     boxContents.sprite = spriteArray[journeyProgress];
@@ -420,7 +435,7 @@ public class TextMover : MonoBehaviour
 
         //minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
         minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
-        //debugText.text = "minDistance is " + minDistance.ToString() +" The closest is " + closest.ToString();
+        debugText.text = "minDistance is " + minDistance.ToString() +" The closest is " + closest.ToString();
 
         int closestisFound = 0;
 
@@ -478,6 +493,7 @@ public class TextMover : MonoBehaviour
         {
             skull.GlowBrightness = 1f;
             skull.OutlineWidth = 0;
+            messageText.text = "";
         }
 
         
@@ -486,8 +502,9 @@ public class TextMover : MonoBehaviour
         {
             skull.GlowBrightness = 1f;
             skull.OutlineWidth = 0;
-           
-           
+            messageText.text = "";
+
+
         }
 
         if (minDistance < 100f && minDistance > 75f && checkingLocation && closestisFound == 0 )
@@ -516,7 +533,7 @@ public class TextMover : MonoBehaviour
             skull.OutlineWidth = 10;
 
             //cameraAnimator.Play("CameraMove3");  //Put up a message or just move camera?
-            debugText.text = "Press the skull to discover it's secrets";
+            messageText.text = "Press the skull to discover it's secrets";
             checkingLocation = false;
            
 

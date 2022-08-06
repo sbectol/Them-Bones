@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class Twirly : MonoBehaviour
@@ -56,6 +57,9 @@ public class Twirly : MonoBehaviour
 
     void Start()
     {
+        //beastName = PlayerPrefs.GetString("BeastName");
+
+
         rate = 5f;
         sliderValue = 30;
         disc = GameObject.Find("CanvasDisc").GetComponent<Image>();
@@ -94,7 +98,7 @@ public class Twirly : MonoBehaviour
         innerTooth.transform.SetPositionAndRotation(Camera.main.ScreenToWorldPoint(disc.rectTransform.transform.position), Quaternion.Euler(0, 0, 0));
         longTooth.transform.SetPositionAndRotation(Camera.main.ScreenToWorldPoint(disc.rectTransform.transform.position), Quaternion.Euler(0, 0, 0));
         molarTooth.transform.SetPositionAndRotation(Camera.main.ScreenToWorldPoint(disc.rectTransform.transform.position), Quaternion.Euler(0, 0, 0));
-        middleCatHolder.transform.SetPositionAndRotation(Camera.main.ScreenToWorldPoint(disc.rectTransform.transform.position), Quaternion.Euler(0, 0, 0));
+        //middleCatHolder.transform.SetPositionAndRotation(Camera.main.ScreenToWorldPoint(disc.rectTransform.transform.position), Quaternion.Euler(0, 0, 0));
         Debug.Log(Screen.height);
         Debug.Log(Screen.width);
         Debug.Log((float)Screen.height / (float)Screen.width);
@@ -121,6 +125,15 @@ public class Twirly : MonoBehaviour
         squeakPlayer.clip = squeakClip;
         squeakPlayer.PlayOneShot(squeakClip);
     }
+
+    public IEnumerator LoadScene(string sceneName)
+    {
+
+        yield return new WaitForSeconds(0f);
+        SceneManager.LoadScene(sceneName);
+
+    }
+
     IEnumerator Clone()
     {
 
@@ -184,6 +197,27 @@ public class Twirly : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
+        {
+            Debug.Log("Touch");
+            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit raycastHit;
+            if (Physics.Raycast(raycast, out raycastHit))
+            {
+                Debug.Log("Something Hit " + raycastHit.collider.name);
+
+                int found = raycastHit.collider.name.IndexOf("_");
+                string number = raycastHit.collider.name.Substring(found + 1);
+                string[] thing = raycastHit.collider.name.Split("_");
+               
+                if (raycastHit.collider.name == "MiddleCat")
+                {
+                    StartCoroutine(LoadScene("Text"));
+                }
+
+        } }
         if (playTheSqueak == true)
         {
             PlaySqueak();
@@ -201,7 +235,8 @@ public class Twirly : MonoBehaviour
         {
             anim.speed = rate;
         }
-        middleCat.speed = rate;
+        middleCat.speed = rate/2;
+
     }
     void OnAudioFilterRead(float[] data, int channels)
     {

@@ -140,25 +140,28 @@ public class TextMover : MonoBehaviour
         parts[12] = GameObject.Find("Part12").GetComponent<CanvasGroup>();
         parts[13] = GameObject.Find("Part13").GetComponent<CanvasGroup>();
 
-        
-        PlayerPrefs.SetInt("journeyProgress", 0);
-        PlayerPrefs.SetInt("Found1", 0);
-        PlayerPrefs.SetInt("Found2", 0);
-        PlayerPrefs.SetInt("Found3", 0);
-        PlayerPrefs.SetInt("Found4", 0);
-        PlayerPrefs.SetInt("Found5", 0);
-        PlayerPrefs.SetInt("Found6", 0);
-        PlayerPrefs.SetInt("Found7", 0);
-        PlayerPrefs.SetInt("Found8", 0);
-        PlayerPrefs.SetInt("Found9", 0);
-        PlayerPrefs.SetInt("Found10", 0);
-        PlayerPrefs.SetInt("Found11", 0);
-        PlayerPrefs.SetInt("Found12", 0);
-        PlayerPrefs.SetInt("Found13", 0);
-        PlayerPrefs.SetInt("Found14", 0);
 
+        //PlayerPrefs.SetInt("journeyProgress", 0);
+        //PlayerPrefs.SetInt("Found1", 0);
+        //PlayerPrefs.SetInt("Found2", 0);
+        //PlayerPrefs.SetInt("Found3", 0);
+        //PlayerPrefs.SetInt("Found4", 0);
+        //PlayerPrefs.SetInt("Found5", 0);
+        //PlayerPrefs.SetInt("Found6", 0);
+        //PlayerPrefs.SetInt("Found7", 0);
+        //PlayerPrefs.SetInt("Found8", 0);
+        //PlayerPrefs.SetInt("Found9", 0);
+        //PlayerPrefs.SetInt("Found10", 0);
+        //PlayerPrefs.SetInt("Found11", 0);
+        //PlayerPrefs.SetInt("Found12", 0);
+        //PlayerPrefs.SetInt("Found13", 0);
+        //PlayerPrefs.SetInt("Found14", 0);
 
-       
+        //PlayerPrefs.SetInt("journeyProgress", 0);
+        journeyProgress = PlayerPrefs.GetInt("journeyProgress");
+        slideHolder.SetFloat("direction", 1);
+        slideHolder.Play(slideAnimations[journeyProgress]); ,. m  
+
         AnimationClip[] animationClips = slideHolder.runtimeAnimatorController.animationClips;
         int j = 1;
         foreach (AnimationClip animClip in animationClips)
@@ -172,11 +175,10 @@ public class TextMover : MonoBehaviour
         for (int i = 1; i < 14; i++)
         {
             slide[i] = GameObject.Find("Slide_" + i).GetComponent<SpriteRenderer>();
-            slide[i].color = transparent;
+            if(i>=journeyProgress) slide[i].color = transparent;
             parts[i].alpha = 0;
         }
-        PlayerPrefs.SetInt("journeyProgress",0);
-        journeyProgress =  PlayerPrefs.GetInt("journeyProgress");
+        
         if (journeyProgress > 0)
         {
             catBluePrint.alpha = 1;
@@ -199,7 +201,7 @@ public class TextMover : MonoBehaviour
     {
 
         yield return new WaitForSeconds(5);
-        //StartCoroutine(LoadScene("Twirly"));
+        //
 
 
 
@@ -216,7 +218,6 @@ public class TextMover : MonoBehaviour
         for (int i = 1; i < 14; i++)
         {
             yield return new WaitForSeconds(1f);
-            //StartCoroutine(FadeIn(slide[i], 0.5f));
             slideIndex = i;
             slideHolder.Play(slideAnimations[i]);
             
@@ -236,15 +237,14 @@ public class TextMover : MonoBehaviour
     }
     IEnumerator FlyOut()
     {
-
+        
         messageText.text = "";
         cameraAnimator.Play("CameraMove1_Reversed");
         yield return new WaitForSeconds(2.5f);
+        
         StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
-        yield return new WaitForSeconds(3);
         boxAnimator.Play("LidClose");
-        slideHolder.SetFloat("direction", 1);
-        slideHolder.Play(slideAnimations[journeyProgress]);
+        
         parts[journeyProgress].alpha = 1;
         if (journeyProgress < 14)
         {
@@ -253,6 +253,10 @@ public class TextMover : MonoBehaviour
         PlayerPrefs.SetInt("journeyProgress", journeyProgress);
 
         catBluePrint.alpha = 1;
+        
+        StartCoroutine(LoadScene("  ly"));
+        yield return new WaitForSeconds(3);
+        
 
         //StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
 
@@ -668,7 +672,8 @@ public class TextMover : MonoBehaviour
                 Debug.Log(direction);
                 if (direction == SwipeDirection.Left)
                 {
-                    slideIndex = journeyProgress+1;
+                    //sideIndex = journeyProgress+1;
+                    Debug.Log(slideIndex);
                     slideHolder.SetFloat("direction", 1);
                     slideHolder.Play(slideAnimations[slideIndex]);
                     slideIndex++;
@@ -677,19 +682,7 @@ public class TextMover : MonoBehaviour
                         slideIndex = 1;
                     }
                 }
-                if (direction == SwipeDirection.Right)
-                {
-
-                    //if (slideIndex < 1)
-                    //{
-                    //    slideIndex = 13;
-                    //}
-
-                    //slideHolder.SetFloat("direction", -1);
-                    //slideHolder.Play(slideAnimations[slideIndex]);
-                    //slideIndex--;
-                    
-                }
+               
             }
             fingerUpPosition = fingerDownPosition;
         }

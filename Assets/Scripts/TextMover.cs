@@ -32,6 +32,7 @@ public class TextMover : MonoBehaviour
     public float minDistance = 1000;
     private SpriteGlowEffect skull;
     private SpriteRenderer boxContents;
+    private bool inRange = false;
 
     private Vector2 fingerDownPosition;
     private Vector2 fingerUpPosition;
@@ -124,7 +125,7 @@ public class TextMover : MonoBehaviour
         endMarker1 = startMarker1;
         speed = 25f;
         catBluePrint = GameObject.Find("CatBluePrint").GetComponent<CanvasGroup>();
-        catBluePrint.alpha = 0;
+        
         parts[1] = GameObject.Find("Part1").GetComponent<CanvasGroup>();
         parts[2] = GameObject.Find("Part2").GetComponent<CanvasGroup>();
         parts[3] = GameObject.Find("Part3").GetComponent<CanvasGroup>();
@@ -174,8 +175,16 @@ public class TextMover : MonoBehaviour
             slide[i].color = transparent;
             parts[i].alpha = 0;
         }
-        PlayerPrefs.SetInt("journeyProgress",1);
+        PlayerPrefs.SetInt("journeyProgress",0);
         journeyProgress =  PlayerPrefs.GetInt("journeyProgress");
+        if (journeyProgress > 0)
+        {
+            catBluePrint.alpha = 1;
+        }
+        else
+        {
+            catBluePrint.alpha = 0;
+        }
         checkingLocation = true;
         Debug.Log(journeyProgress);
 
@@ -217,27 +226,34 @@ public class TextMover : MonoBehaviour
     }
     IEnumerator FlyIn()
     {
+        catBluePrint.alpha = 0;
+        boxContents.sprite = spriteArray[journeyProgress];
         cameraAnimator.Play("CameraMove3");
         yield return new WaitForSeconds(1);
         cameraAnimator.Play("CameraMove1");
         yield return new WaitForSeconds(5);
+        
     }
     IEnumerator FlyOut()
     {
 
         messageText.text = "";
         cameraAnimator.Play("CameraMove1_Reversed");
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(2.5f);
         StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
         boxAnimator.Play("LidClose");
         slideHolder.SetFloat("direction", 1);
         slideHolder.Play(slideAnimations[journeyProgress]);
+        parts[journeyProgress].alpha = 1;
         if (journeyProgress < 14)
         {
             journeyProgress++;
         }
         PlayerPrefs.SetInt("journeyProgress", journeyProgress);
+
+        catBluePrint.alpha = 1;
+
         //StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
 
     }
@@ -248,6 +264,7 @@ public class TextMover : MonoBehaviour
         yield return new WaitForSeconds(1);
         cameraAnimator.Play("IntoBox");
         messageText.text = "Inside the box you discover...";
+        
     }
     public IEnumerator LoadScene(string sceneName)
     {
@@ -304,10 +321,12 @@ public class TextMover : MonoBehaviour
                 if (thing[0] == "cat")
                 {
                     cameraAnimator.Play("CameraMove2");
+                    catBluePrint.alpha = 1;
                 }
                 if (raycastHit.collider.name == "arts")
                 {
                     cameraAnimator.Play("CameraMove3");
+                    catBluePrint.alpha = 0;
                 }
                
 
@@ -383,9 +402,18 @@ public class TextMover : MonoBehaviour
                     //we'd better look at the wheel
 
                     Debug.Log("You touched the skull");
-                    StartCoroutine(FlyIn());
+                    if (journeyProgress > 0)
+                    {
+                        StartCoroutine(FlyIn());
 
-                    boxContents.sprite = spriteArray[journeyProgress];
+                        
+                    } else
+                    {
+                        StartCoroutine(CGFadeIn(catBluePrint, 1.0f));
+                        messageText.text = "You find a page from an artist's sketch book/nThey have drawn a fearsome beast!";
+                        journeyProgress = 1;
+                        PlayerPrefs.SetInt("journeyProgress", 1);
+                    }
                     
 
                     
@@ -502,7 +530,7 @@ public class TextMover : MonoBehaviour
         {
             skull.GlowBrightness = 1f;
             skull.OutlineWidth = 0;
-            messageText.text = "";
+            inRange = false;
 
 
         }
@@ -511,30 +539,34 @@ public class TextMover : MonoBehaviour
         {
             skull.GlowBrightness = 2f;
             skull.OutlineWidth = 2;
+            inRange = false;
         }
         if (minDistance < 75f && minDistance > 50f  && checkingLocation && closestisFound == 0)
         {
             skull.GlowBrightness = 2f;
             skull.OutlineWidth = 5;
+            inRange = false;
         }
         if (minDistance < 50f && minDistance > 25f && checkingLocation && closestisFound == 0)
         {
             skull.GlowBrightness = 2f;
             skull.OutlineWidth = 7;
+            inRange = false;
         }
         if (minDistance < 25f && minDistance > 10f && checkingLocation && closestisFound == 0)
         {   
             skull.GlowBrightness = 2f;
             skull.OutlineWidth = 8;
+            inRange = false;
         }
         if (minDistance < 10f && checkingLocation && closestisFound == 0)
         {   
             skull.GlowBrightness = 2f;
             skull.OutlineWidth = 10;
-
+            inRange = true;
             //cameraAnimator.Play("CameraMove3");  //Put up a message or just move camera?
             messageText.text = "Press the skull to discover it's secrets";
-            checkingLocation = false;
+            //checkingLocation = false;
            
 
         }
@@ -611,7 +643,15 @@ public class TextMover : MonoBehaviour
             yield return null;
         }
     }
-
+    public IEnumerator CGFadeIn(CanvasGroup cg, float t)
+    {
+        for (float f = 0; f <= t; f += Time.deltaTime)
+        {
+            cg.alpha = Mathf.Lerp(0f, 1f, f / 2);
+            yield return null;
+        }
+        cg.alpha = 1;
+    }
     private void DetectSwipe()
     {
         if (SwipeDistanceCheckMet())
@@ -628,7 +668,7 @@ public class TextMover : MonoBehaviour
                 Debug.Log(direction);
                 if (direction == SwipeDirection.Left)
                 {
-
+                    slideIndex = journeyProgress+1;
                     slideHolder.SetFloat("direction", 1);
                     slideHolder.Play(slideAnimations[slideIndex]);
                     slideIndex++;

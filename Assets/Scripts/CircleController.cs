@@ -72,7 +72,7 @@ public class CircleController : MonoBehaviour
         StartCoroutine(FadeOut(2f, page2));
         yield return new WaitForSeconds(2);
         StartCoroutine(FadeIn(2f, page3));
-        StartCoroutine(LoadScene("Twirly"));
+        StartCoroutine(LoadScene("Text"));
 
 
 

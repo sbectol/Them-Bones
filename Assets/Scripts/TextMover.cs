@@ -158,10 +158,8 @@ public class TextMover : MonoBehaviour
         //PlayerPrefs.SetInt("Found14", 0);
 
         //PlayerPrefs.SetInt("journeyProgress", 0);
-        journeyProgress = PlayerPrefs.GetInt("journeyProgress");
-        slideHolder.SetFloat("direction", 1);
-        slideHolder.Play(slideAnimations[journeyProgress]); ,. m  
 
+        journeyProgress = PlayerPrefs.GetInt("journeyProgress");
         AnimationClip[] animationClips = slideHolder.runtimeAnimatorController.animationClips;
         int j = 1;
         foreach (AnimationClip animClip in animationClips)
@@ -175,8 +173,11 @@ public class TextMover : MonoBehaviour
         for (int i = 1; i < 14; i++)
         {
             slide[i] = GameObject.Find("Slide_" + i).GetComponent<SpriteRenderer>();
-            if(i>=journeyProgress) slide[i].color = transparent;
-            parts[i].alpha = 0;
+            if (i >= journeyProgress)
+            {
+                slide[i].color = transparent;
+                parts[i].alpha = 0;
+            }
         }
         
         if (journeyProgress > 0)
@@ -189,10 +190,16 @@ public class TextMover : MonoBehaviour
         }
         checkingLocation = true;
         Debug.Log(journeyProgress);
+        
+        slideHolder.SetFloat("direction", 1);
+        if (journeyProgress > 1)
+        {
+            slideHolder.Play(slideAnimations[journeyProgress-1]);
+        }
 
         //StartCoroutine(MoveSomeText());
         //StartCoroutine(RotateDisc());
-        
+
     }
 
     IEnumerator MoveSomeText()
@@ -253,8 +260,8 @@ public class TextMover : MonoBehaviour
         PlayerPrefs.SetInt("journeyProgress", journeyProgress);
 
         catBluePrint.alpha = 1;
-        
-        StartCoroutine(LoadScene("  ly"));
+        PlayerPrefs.SetString("AnimationToPlay", ( journeyProgress-1).ToString());
+        StartCoroutine(LoadScene("Twirly"));
         yield return new WaitForSeconds(3);
         
 
@@ -324,20 +331,30 @@ public class TextMover : MonoBehaviour
 
                 if (thing[0] == "cat")
                 {
-                    cameraAnimator.Play("CameraMove2");
-                    catBluePrint.alpha = 1;
+                    //cameraAnimator.Play("CameraMove2");
+                    //catBluePrint.alpha = 1;
                 }
                 if (raycastHit.collider.name == "arts")
                 {
                     cameraAnimator.Play("CameraMove3");
                     catBluePrint.alpha = 0;
+                    //PlayerPrefs.SetInt("journeyProgress", 0);
+                    //journeyProgress = 0;
+
                 }
                
 
-                if (raycastHit.collider.name == "Slide2")
+                if (thing[0] == "Slide")
                 {
-                    Debug.Log("Slide 2");
+                    Color transparent = new(0, 0, 0, 0);
+                    Debug.Log(raycastHit.collider.GetComponent<SpriteRenderer>().color);
+                    if (raycastHit.collider.GetComponent<SpriteRenderer>().color != transparent)
+                    {
+                        PlayerPrefs.SetString("AnimationToPlay", number);
+                        StartCoroutine(LoadScene("Twirly"));
+                    }
                     
+                   
                 }
 
                 if (raycastHit.collider.name == "boxContents")
@@ -414,7 +431,7 @@ public class TextMover : MonoBehaviour
                     } else
                     {
                         StartCoroutine(CGFadeIn(catBluePrint, 1.0f));
-                        messageText.text = "You find a page from an artist's sketch book/nThey have drawn a fearsome beast!";
+                        messageText.text = "You find a page from an artist's sketch book\nThey have drawn a fearsome beast!";
                         journeyProgress = 1;
                         PlayerPrefs.SetInt("journeyProgress", 1);
                     }
@@ -467,7 +484,7 @@ public class TextMover : MonoBehaviour
 
         //minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
         minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
-        debugText.text = "minDistance is " + minDistance.ToString() +" The closest is " + closest.ToString();
+        debugText.text = "minDistance is " + minDistance.ToString() +"m, The closest is " + closest.ToString() + " and Journey Progress is " + journeyProgress.ToString();
 
         int closestisFound = 0;
 

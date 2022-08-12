@@ -25,6 +25,9 @@ public class Twirly : MonoBehaviour
     private GameObject middleCatHolder;
     public GameObject scrollView;
 
+    private AudioClip audioClip;
+    private AudioSource soundPlayer;
+
     private float rotationAmount = 4f;
     private Image button;
     private RectTransform buttonRectTransform;
@@ -64,8 +67,10 @@ public class Twirly : MonoBehaviour
         //beastName = PlayerPrefs.GetString("BeastName");
         scrollView.transform.localPosition = new Vector3(-2000, 79, 0);
         animationToPlay = PlayerPrefs.GetString("AnimationToPlay");
-       
+        soundPlayer = GameObject.Find("SoundManager").GetComponent<AudioSource>();
         
+
+
         switch (animationToPlay) {
             case "1":
                 storyText.text = "Within the global network of modern science the animal and plant kingdoms are organized into an order in which everything has a name that makes it recognizable wherever you are in the world and whatever language you speak. Within this <i>taxonomy</i> these teeth, with their distinctive and rather chillingly serrated cutting edges, are identified as belonging to an extinct creature called <i>Homotherium latidens</i>. In English, this fearsome beast is known as the Scimitar-Toothed Cat.";
@@ -89,7 +94,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "What would happen to these stories over thousands of years as they were told again and again, passing through many minds?";
                 storyText.text += "\n";
                 storyText.text += "These are important questions because in some places this is still the way and modern science must find ways to co-exist with something much older, enduring – and very deeply human.";
-                audioFile = "Homotherium 1.mp3";
+                audioFile = "Homotherium 1";
                 break;
             case "2":
                 storyText.text = "Ten thousand years ago in the Near East – but at other times elsewhere – people learned to grow crops and corral herd animals. This meant they could stay in one location and didn’t have to carry everything around with them, so perhaps were better placed to create things from materials that were heavier and more permanent in form. As technologies evolved they began to write things down in more enduring formats so as to ‘fix’ them; literally setting them in stone.";
@@ -99,7 +104,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "Perhaps, as this time of a written truth emerged, the universe of memory held in myth and legend became increasingly submerged, along with the memory of great beasts once hunted and now banished to the edge of shadows. But the mortal remains of these creatures resurfaced occasionally to set the imagination spinning – particularly when they evoked sharp - toothed predators that might have feasted on us.And apparently this powerful magic remains today...";
                 storyText.text += "\n";
                 storyText.text += "In some places, the memory held in stories stayed strong and is now being shown to tally with scientific research. This is true of Aboriginal flood stories in Australia which are thousands of years old. Such tales, in which many generations of knowledge are bound up, have been preserved because what they say is, for one reason or another, of great importance to those people. In Arnhem Land living stories of the Thylacine – the marsupial wolf – are still told two thousand years after its disappearance from that landscape. Maintaining the memory of the Thylacine as a component in the universal order is important to the people who live there because they recognize themselves as being part of that order. The Thylacine is part of who they are – as is its story.";
-                audioFile = "Homotherium 2.mp3";
+                audioFile = "Homotherium 2";
                 break;
             case "3":
                 storyText.text = "We now know that around 12,000 years ago the climate was warming, causing the ice sheets that had covered much of the landmass familiar to us as the British Isles and Ireland to gradually melt. Year by year, decade by decade, century by century the map changed – as it always does. Beneath the ground in caves the bones of wild beasts were slowly covered by layers of earth that built up inch by inch as time passed – just as the beasts themselves became buried deeper and deeper in memory.";
@@ -115,7 +120,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "However, in the fullness of time, science has shown that these incredible racks were the crowning glory of the Giant Deer Megaloceros giganteus, the extinct cervid formerly known as the Irish Elk.";
                 storyText.text += "\n";
                 storyText.text += "But for Catcott – and indeed wider society – The Word, The Truth was God.";
-                audioFile = "Homotherium 3.mp3";
+                audioFile = "Homotherium 3";
                 break;
             case "4":
                 storyText.text = "Fifty years later, ‘the Deluge’ was still seen as the principal agency by which the remains of elephants and rhinoceroses had come to rest in the caves of Wales and England. But, wondered the Rev. Dr. Buckland of Oxford University, HOW were such vast carcasses washed through what were often narrow cave entrances? His explorations of Kirkdale Cave in Yorkshire led him to the answer. Here, the cave floor was carpeted by bones – and many small round white balls. These, he came to realise, were the fossilised dung balls of hyaenas. So the bones had been carried into the cave by hyaenas. Kirkdale Cave was, before the Flood, a hyaena den.";
@@ -131,7 +136,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "However, in the fullness of time, science has shown that these incredible racks were the crowning glory of the Giant Deer Megaloceros giganteus, the extinct cervid formerly known as the Irish Elk.";
                 storyText.text += "\n";
                 storyText.text += "This, for a man of The Church, must have been deeply troubling...";
-                audioFile = "Homotherium 4.mp3";
+                audioFile = "Homotherium 4";
                 break;
             case "5":
                 storyText.text = "In 1824, in search of new sources of income for the village, the vicar of Banwell in Somerset commissioned two miners to reopen a cave system that had been first discovered in 1757.The new Bishop of Bath and Wells George Henry Law who owned the land was delighted at what they found; a mass of animal bones including bear, reindeer, bison and wolverine.This, in the light of discoveries made elsewhere, presented solid proof of the Deluge, the catastrophic flood unleashed by God in order to cleanse the Earth of humanity’s wickedness. So, compelling evidence of the need for the Church to exert moral authority for the well-being of all.";
@@ -141,7 +146,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "This last group in particular demonstrates the powerful grip that this unfurling narrative – concerning the expansion of time itself, the making of the Earth and the origins of humanity – exerted over society. What was being debated over the decades of Beard’s dominion at Banwell was perhaps equivalent in terms of impact to what the discovery of life on another planet would be for us today. Or perhaps the reality of anthropogenic climate change, which has taken a similar timespan to become accepted in all rational quarters...";
                 storyText.text += "\n";
                 storyText.text += "It was, it seems, a battleground over which the established Authority fought to retain control in the face of a whole new universal Truth. There was, of course, no television or internet at the time so on the whole neither news nor people travelled as quickly or easily as they do today. And the latter is testament to the powerful allure of what was being presented by Beard at Banwell; a great many people were prepared to travel considerable distances to gaze on the subterranean marvels of which he was custodian (albeit on behalf of the Bishop).";
-                audioFile = "Homotherium 5.mp3";
+                audioFile = "Homotherium 5";
                 break;
             case "6":
                 storyText.text = "In order to advance his understanding of the great natural forces at play in the world, William Buckland traversed back and forth across England and Wales at great pace. In 1823 he wrote to Lady Mary Cole of the wealthy Talbot family of Penrice Castle, Gower:";
@@ -171,7 +176,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "<indent=15%><i>‘seems to have been fully aware that his discovery was important and, so far as Britain was concerned, unique... it may be supposed, perhaps, that he anticipated scepticism, and lost no! opportunity for furnishing the evidence which it demanded.’</i></indent>";
                 storyText.text += "\n";
                 storyText.text += "Amidst this rather toxic fug, the only certainty would seem to be that the spectacular teeth from the Wolf’s Den, with their saw-like cutting edges, had cast a spell over these men of the new science...";
-                audioFile = "Homotherium 6.mp3";
+                audioFile = "Homotherium 6";
                 break;
             case "7":
                 storyText.text = "In 1857, a thrusting young man with extraordinary energy went up to Jesus College, Oxford. His name was William Boyd Dawkins, the son of a vicar, and it was during his time at the university that the Great Question surrounding what was referred to as the ‘Antiquity of Man’ was answered. To determine this, as the sciences of archaeology, geology and palaeontology became more distinct as disciplines, it had become increasingly acknowledged that rigorous methods must be adopted in order to avoid the doubt that had been cast upon MacEnery’s discoveries.";
@@ -187,7 +192,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "Dawkins, like his fellow ‘Cave Hunters’ appears to have been drawn to big beasts; the mammoth, giant deer, woolly rhinoceros, cave lion and hyaena. Given the subject matter of cave paintings and the enduring popularity of modern safari parks, maybe this is true of us all...";
                 storyText.text += "\n";
                 storyText.text += "We’ve seen already the importance of the written word and the Big Book in establishing Truth. In 1866, Dawkins, in partnership with William Ayshford Sanford, embarked on the assembly of a massive work; The British Pleistocene Mammalia. This beautifully illustrated and comprehensive compendium would, Dawkins intended, be the definitive treatise on all of the discoveries made in the previous decades. It would, perhaps, be his monument – and was an idea conceived whilst Dawkins was still in his twenties.";
-                audioFile = "Homotherium 7.mp3";
+                audioFile = "Homotherium 7";
                 break;
             case "8":
                 storyText.text = "William Pengelly was a Cornishman, the son of a sea captain who left school at the age of twelve to join his father’s crew. He was shipwrecked once and saved from drowning twice before being brought back to Looe on the death of his younger brother in an accident. Here, he set about teaching himself mathematics before becoming a private tutor.";
@@ -225,7 +230,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "And like William Beard at Banwell earlier in the century, Pengelly records a steady trickle of dignitaries – amongst them the nobility of Europe including members of the British, Dutch and Russian royal families and even Napoleon III – making pilgrimages to Torquay to inspect the discoveries that were profoundly altering the Victorian universal view.";
                 storyText.text += "\n";
                 storyText.text += "Plainly, the work of the Cave Hunters still held a grip over society... and the scimitar-toothed one still had them in its clasp...";
-                audioFile = "Homotherium 8.mp3";
+                audioFile = "Homotherium 8";
                 break;
             case "9":
                 storyText.text = "In 1873, Mr Frank Tebbet, supervisor at the Creswell Crags limestone quarry in Nottinghamshire found fossils in the mouth of Robin Hood Cave, one of a series of caves in the rock face of the spectacular gorge. As a result, in July 1875 the Reverend John Magens Mello, a graduate of St. John’s College, Oxford and Thomas Heath, the curator of Derby Museum and Art Gallery commenced excavations in the gorge. Heath, the son of a tile cutter, had left school aged twelve to take up an apprenticeship in the same profession as his father but abandoning it, had progressed to assume the curatorship of the museum by the time he was twenty five.";
@@ -251,7 +256,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "We can never know for sure the precise truth, which resides in two rival testimonies. But what is certain is that Dawkins proceeded to use the media of the day, his influence and his status to destroy Thomas Heath’s reputation. The battle between the two effectively became a soap opera played out in the national and international media.";
                 storyText.text += "\n";
                 storyText.text += "Dawkins, it has been suggested, had sought to engineer a story to rival Pengelly’s at Kent’s Cavern, effectively tampering with the science. And in doing so, he cast a shadow over his own reputation – which remains tarnished to this day.";
-                audioFile = "Homotherium 9.mp3";
+                audioFile = "Homotherium 9";
                 break;
             case "10":
                 storyText.text = "The controversy of the ‘Creswell Incident’ was – for whatever reason – rooted in Dawkins’ apparent capacity for manipulating the truth in order to achieve his own ends. This single episode has by and large clouded his extraordinary achievements as a palaeontologist and geologist.";
@@ -269,7 +274,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "Dare we forgive him?";
                 storyText.text += "\n";
                 storyText.text += "Can we afford to?";
-                audioFile = "Homotherium 10.mp3";
+                audioFile = "Homotherium 10";
                 break;
             case "11":
                 storyText.text = "In 1898, four years before William Boyd Dawkins’ final encounter with the Homotherium at Victory Quarry, a young woman presented herself for work in the Bird Room at the Natural History Museum in London. Dorothea Bate was largely self-taught, observing later that her education was ‘only briefly interrupted by school’. At this time women weren’t employed as scientists so Bate was taken on – based on her exceptional skill – as an ‘unofficial scientific worker’, paid by the number of specimens she prepared.";
@@ -283,7 +288,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "She is remembered with respect and great affection as ‘the spark that would ignite a project’. Perhaps her use of dynamite as a collection tool was more Dawkins than Pengelly – but her selfless demeanour, along with her willingness to cast her research net over creatures small as well as great, sets her apart from the overwhelming majority of her ‘cave hunting’ predecessors. A towering – yet unassuming – figure in twentieth century palaeontology, she contributed much to our understanding of the impacts of climate and environmental change on mammalian species over the millennia.";
                 storyText.text += "\n";
                 storyText.text += "Undertaking fieldwork not just in Britain but also the Mediterranean and Africa, Dorothea Bate was a significant but quietly rotating cog in what had become a highly complex, inter-connected and globalised science machine.";
-                audioFile = "Homotherium 11.mp3";
+                audioFile = "Homotherium 11";
                 break;
             case "12":
                 storyText.text = "Danielle Schreve is today, Professor of Quaternary Science in the Department of Geography at Royal Holloway, University of London. The Quaternary Period is the last 2.6 million years and is divided into two epochs; the Pleistocene (2.58 million years ago to 11.7 thousand years ago) and the Holocene (11.7 million years ago to the present day).";
@@ -295,7 +300,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "Danielle has been excavating Gully Cave in the Mendip Hills in Somerset since 2006. Each year she and a team undertake a couple of weeks of meticulously planned digging using methods which both Buckland and Pengelly would recognise and endorse – though perhaps not Dawkins. Soil is removed and sieved with painstaking care, for as Dorothea Bate showed at Merlin’s Cave, tiny mammal bones have at least as much of a story to tell as those of the megafauna. Material is finally removed to the lab at Royal Holloway where analysis is undertaken for the rest of the year and beyond – bringing to bear new technologies that would astonish the antiquarians such as ancient DNA analysis, 3D visualisation and bone chemistry to reconstruct past diet and movements.";
                 storyText.text += "\n";
                 storyText.text += "This research is steadily forming a high resolution picture of the changes that have taken place over the last 100,000 years; how species have come and gone as the climate has warmed and cooled. The reindeer for example, was present 11,500 years ago but no longer runs over the Mendip Hills because it’s now too warm there for a creature so perfectly adapted to the cold. They, as we know well, are solely creatures of the Arctic and Sub-Arctic – but how long before it becomes too warm for them there? When this comes to pass they will vanish. And perhaps we, who are dependent on healthy biodiversity for our own well-being, will follow, having first been forced to retreat to habitable refugia – as science shows our ancestors did before us.";
-                audioFile = "Homotherium 12.mp3";
+                audioFile = "Homotherium 12";
                 break;
             case "13":
                 storyText.text = "Dr. Angharad Jones, curator at Creswell Crags Museum, has a PhD in the study of fossil hyaena evolution and behaviour and is part of the global research network. To achieve this distinction she studied under the tutelage of Danielle Schreve at Royal Holloway University, beginning by devising a scientific question that hadn’t been asked before, then attempting to answer it – and finally having her findings and conclusion scrutinised and then questioned by a group of experts in the field.";
@@ -311,7 +316,7 @@ public class Twirly : MonoBehaviour
                 storyText.text += "This shows us that whilst museums are undoubtedly places of wonder, they’re also really important as treasure houses – of knowledge relating to things, much of which we don’t yet know. And who can tell what or where the answers to future questions will come from?";
                 storyText.text += "\n";
                 storyText.text += "So; science and museums are all part of the same vital system which, as planet Earth comes under increasing pressure, has come to play a pivotal role in keeping the world – and us as part of it – ticking over. They are the engine and components in a vast Truth Machine which is constantly evolving – but which, being shaped by humans, can occasionally fall prey to human foibles if there aren’t safeguards in place. Modern science though has recognised this and evolved in response. And, of course, it will continue to do so, partly because it acknowledges that everything is always changing – but also because no one individual, in the pursuit of power or personal gain, can be allowed to corrupt its hard won Truth.";
-                audioFile = "Homotherium 13.mp3";
+                audioFile = "Homotherium 13";
                 break;
         }
 
@@ -398,11 +403,11 @@ public class Twirly : MonoBehaviour
             Debug.Log("Scroller");
             if (scrollView.transform.position.x < 0)
             {
-                scrollView.transform.localPosition = new Vector3(0, 79, 0);
+                scrollView.transform.localPosition = new Vector3(0, 380, 0);
             }
             else
             {
-                scrollView.transform.localPosition = new Vector3(-2000, 79, 0);
+                scrollView.transform.localPosition = new Vector3(-2000, 380, 0);
             }
         }
     }
@@ -466,7 +471,27 @@ public class Twirly : MonoBehaviour
         molarToothHolder.transform.RotateAround(Camera.main.ScreenToWorldPoint(buttonRectTransform.transform.position), new Vector3(0, 0, 1f), 0);
         yield return new WaitForEndOfFrame();
     }
+    public void PlayAudio()
+    {
+       
+            //  StartCoroutine(Scroll(scrollerText, new Vector3(0, 14000, 0), 210f));
+            if (soundPlayer.isPlaying == false)
+            {
 
+                audioClip = Resources.Load<AudioClip>("Audio/" + audioFile);
+                soundPlayer.clip = audioClip;
+                Debug.Log(audioFile);
+                Debug.Log(audioClip);
+                soundPlayer.Play();
+            }
+            else
+            {
+
+                soundPlayer.Pause();
+            }
+
+        
+    }
     // Update is called once per frame
     void Update()
     {
@@ -485,9 +510,9 @@ public class Twirly : MonoBehaviour
                 string number = raycastHit.collider.name.Substring(found + 1);
                 string[] thing = raycastHit.collider.name.Split("_");
                
-                if (raycastHit.collider.name == "MiddleCat")
+                if (raycastHit.collider.name == "Cat")
                 {
-                    StartCoroutine(LoadScene("Text"));
+                    PlayAudio();
                 }
 
         } }

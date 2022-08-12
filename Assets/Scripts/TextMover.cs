@@ -84,8 +84,8 @@ public class TextMover : MonoBehaviour
         coordsSean[10] = new Vector2(52.823417f, -3.391722f);
         coordsSean[11] = new Vector2(52.823556f, -3.394611f);
         coordsSean[12] = new Vector2(52.822806f, -3.399861f);
-        coordsSean[13] = new Vector2(52.824556f, -3.394611f);
-        coordsSean[14] = new Vector2(52.823806f, -3.399861f);
+        coordsSean[13] = new Vector2(52.822625f, -3.401272f);
+        
 
 
 

@@ -85,7 +85,10 @@ public class TextMover : MonoBehaviour
         coordsSean[11] = new Vector2(52.823556f, -3.394611f);
         coordsSean[12] = new Vector2(52.822806f, -3.399861f);
         coordsSean[13] = new Vector2(52.822625f, -3.401272f);
+        coordsSean[14] = new Vector2(52.824895f, -3.406880f);
         
+
+
 
 
 
@@ -467,7 +470,7 @@ public class TextMover : MonoBehaviour
         //Debug.Log(Distance(latitude, longitude, coordsCB[1].x, coordsCB[1].y));
         //find closest
         
-        for (int i = 1; i < 14; i++)
+        for (int i = 1; i < 15; i++)
         {
            
         //if(Distance(latitude, longitude, coordsCresswell[i].x, coordsCresswell[i].y) <= minDistance)
@@ -484,7 +487,7 @@ public class TextMover : MonoBehaviour
 
         //minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
         minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
-        debugText.text = "minDistance is " + minDistance.ToString() +"m, The closest is " + closest.ToString() + " and Journey Progress is " + journeyProgress.ToString();
+        //debugText.text = "minDistance is " + minDistance.ToString() +"m, The closest is " + closest.ToString() + " and Journey Progress is " + journeyProgress.ToString();
 
         int closestisFound = 0;
 

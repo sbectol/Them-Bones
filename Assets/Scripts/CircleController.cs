@@ -62,7 +62,7 @@ public class CircleController : MonoBehaviour
         StartCoroutine(ScaleOverSeconds(tooth, finalToothScale, 10));
         yield return new WaitForSeconds(10);
         StartCoroutine(FadeHole());
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         StartCoroutine(FadeIn(2f,page1));
         yield return new WaitForSeconds(8);
         StartCoroutine(FadeOut(2f, page1));
@@ -72,6 +72,7 @@ public class CircleController : MonoBehaviour
         StartCoroutine(FadeOut(2f, page2));
         yield return new WaitForSeconds(2);
         StartCoroutine(FadeIn(2f, page3));
+        yield return new WaitForSeconds(2);
         StartCoroutine(LoadScene("Text"));
 
 
@@ -89,7 +90,9 @@ public class CircleController : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             GameObject myclone = Instantiate(beastlyCircle, new Vector3(0, 0, 0), Quaternion.identity, beastHolder.transform);
-            myclone.transform.localScale = new Vector3(0.5f+(0.1f*i), 0.5f + (0.1f *i), 0);
+            myclone.transform.localScale = new Vector3(0.5f+(0.2f*i), 0.5f + (0.2f *i), 0);
+            SpriteRenderer spriteRenderer  = myclone.GetComponent<SpriteRenderer>();
+            spriteRenderer.sortingOrder = 5 - i;
             Animator cloneAnimator = myclone.GetComponent<Animator>();
             cloneAnimator.Play("beastlyCircle", 0, 0.1f*i);
 

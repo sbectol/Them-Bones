@@ -249,13 +249,13 @@ public class TextMover : MonoBehaviour
     {
         
         messageText.text = "";
-        cameraAnimator.Play("CameraMove1_Reversed");
-        yield return new WaitForSeconds(2.5f);
+       // cameraAnimator.Play("CameraMove1_Reversed");
+        
         
         StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
-        boxAnimator.Play("LidClose");
+        //boxAnimator.Play("LidClose");
         
-        parts[journeyProgress].alpha = 1;
+        
         if (journeyProgress < 14)
         {
             journeyProgress++;
@@ -263,9 +263,11 @@ public class TextMover : MonoBehaviour
         PlayerPrefs.SetInt("journeyProgress", journeyProgress);
 
         catBluePrint.alpha = 1;
+        yield return new WaitForSeconds(2.5f);
         PlayerPrefs.SetString("AnimationToPlay", ( journeyProgress-1).ToString());
+        parts[journeyProgress].alpha = 1;
         StartCoroutine(LoadScene("Twirly"));
-        yield return new WaitForSeconds(3);
+        //yield return new WaitForSeconds(3);
         
 
         //StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
@@ -428,7 +430,7 @@ public class TextMover : MonoBehaviour
                     Debug.Log("You touched the skull");
                     if (journeyProgress > 0)
                     {
-                        StartCoroutine(FlyIn());
+                        StartCoroutine(FlyOut());
 
                         
                     } else

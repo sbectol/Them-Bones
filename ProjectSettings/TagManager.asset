@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Wayback
+    uniqueID: 2033166647
+    locked: 0
   - name: Behind
     uniqueID: 1716871913
     locked: 0
@@ -49,4 +52,7 @@ TagManager:
     locked: 0
   - name: Infront
     uniqueID: 426090487
+    locked: 0
+  - name: Upfront
+    uniqueID: 1813498657
     locked: 0

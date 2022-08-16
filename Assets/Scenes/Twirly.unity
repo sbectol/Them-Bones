@@ -470,11 +470,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2227500133183241935, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 34.1631
       objectReference: {fileID: 0}
     - target: {fileID: 2227500133183241935, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 882.3769
+      value: 1375.322
       objectReference: {fileID: 0}
     - target: {fileID: 2227500133183241935, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
       propertyPath: m_LocalPosition.x
@@ -506,11 +506,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2227500133183241935, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 17.0815
       objectReference: {fileID: 0}
     - target: {fileID: 2227500133183241935, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 380.678
+      value: 578.329
       objectReference: {fileID: 0}
     - target: {fileID: 2227500133183241935, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -528,14 +528,46 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2227500133725470874, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2227500133725470874, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2227500133725470874, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2227500133725470874, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2227500133725470875, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
+      propertyPath: m_fontSize
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 2227500133725470875, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
+      propertyPath: m_margin.y
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 2227500133725470875, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: df9b28bccb8c048cbbbf2adc06afe702, type: 2}
     - target: {fileID: 2227500133725470875, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 2227500133725470875, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -9000452996606819704, guid: df9b28bccb8c048cbbbf2adc06afe702, type: 2}
+    - target: {fileID: 2227500133725470875, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2227500133997929393, guid: 32e2add105e3049b4adeb9eb034d6449, type: 3}
       propertyPath: m_text
       value: 
@@ -2019,7 +2051,7 @@ RectTransform:
   m_GameObject: {fileID: 1270023305}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 422915934}
@@ -2107,7 +2139,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3fd8aaa6daad74ef783bcc57e576d91b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6eb72f1da1de741e482c51636c2c8096, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

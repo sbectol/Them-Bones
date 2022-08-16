@@ -65,7 +65,7 @@ public class Twirly : MonoBehaviour
     void Start()
     {
         //beastName = PlayerPrefs.GetString("BeastName");
-        scrollView.transform.localPosition = new Vector3(-2000, 79, 0);
+        scrollView.transform.localPosition = new Vector3(-2000, 0, 0);
         animationToPlay = PlayerPrefs.GetString("AnimationToPlay");
         soundPlayer = GameObject.Find("SoundManager").GetComponent<AudioSource>();
         
@@ -403,7 +403,7 @@ public class Twirly : MonoBehaviour
             Debug.Log("Scroller");
             if (scrollView.transform.position.x < 0)
             {
-                scrollView.transform.localPosition = new Vector3(0, 380, 0);
+                scrollView.transform.localPosition = new Vector3(0, -687.65f, 0);
             }
             else
             {

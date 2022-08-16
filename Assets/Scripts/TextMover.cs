@@ -9,14 +9,15 @@ using SpriteGlow;
 public class TextMover : MonoBehaviour
 {
     // Start is called before the first frame update
-
+    private BoxCollider slideBoxCollider;
     private GameObject frame;
     private GameObject mainCamera;
+    private CanvasGroup fader;
     private CanvasGroup catBluePrint;
     private CanvasGroup[] parts = new CanvasGroup[15];
     private SpriteRenderer[] slide = new SpriteRenderer[15];
     private int slideIndex = 1;
-    private string[] slideAnimations = new string[14];
+    private string[] slideAnimations = new string[16];
     private Vector2[] coordsCB = new Vector2[13];
     private Vector2[] coordsCresswell = new Vector2[15];
     private Vector2[] coordsSean = new Vector2[15];
@@ -33,6 +34,8 @@ public class TextMover : MonoBehaviour
     private SpriteGlowEffect skull;
     private SpriteRenderer boxContents;
     private bool inRange = false;
+    private bool SlideHolderZoomed = false;
+    
 
     private Vector2 fingerDownPosition;
     private Vector2 fingerUpPosition;
@@ -54,8 +57,9 @@ public class TextMover : MonoBehaviour
         {
             StartCoroutine(GetLocation());
         }
+        slideBoxCollider = GameObject.Find("slide disc").GetComponent<BoxCollider>();
         boxContents = GameObject.Find("boxContents").GetComponent<SpriteRenderer>();
-        
+        fader = GameObject.Find("Fader").GetComponent<CanvasGroup>();
         boxContents.sprite = spriteArray[5];
         coordsCresswell[1] = new Vector2(53.26301182857125f, -1.193743944168091f);
         coordsCresswell[2] = new Vector2(53.26306958489932f, -1.1971020698547366f);
@@ -163,13 +167,18 @@ public class TextMover : MonoBehaviour
         //PlayerPrefs.SetInt("journeyProgress", 0);
 
         journeyProgress = PlayerPrefs.GetInt("journeyProgress");
+        //slideIndex = journeyProgress;
         AnimationClip[] animationClips = slideHolder.runtimeAnimatorController.animationClips;
         int j = 1;
         foreach (AnimationClip animClip in animationClips)
         {
-            Debug.Log(animClip.name + ": " + j);
-            slideAnimations[j] = animClip.name;
-            j++;
+            
+            if (animClip.name != "SlideHolderZoomIn" && animClip.name != "SlideHolderZoomOut")
+            {
+                Debug.Log(animClip.name + ": " + j);
+                slideAnimations[j] = animClip.name;
+                j++;
+            }
 
         }
         Color transparent = new(0, 0, 0, 0);
@@ -194,11 +203,11 @@ public class TextMover : MonoBehaviour
         checkingLocation = true;
         Debug.Log(journeyProgress);
         
-        slideHolder.SetFloat("direction", 1);
-        if (journeyProgress > 1)
-        {
-            slideHolder.Play(slideAnimations[journeyProgress-1]);
-        }
+        //slideHolder.SetFloat("direction", 1);
+        //if (journeyProgress > 1)
+        //{
+        //    slideHolder.Play(slideAnimations[journeyProgress-1]);
+        //}
 
         //StartCoroutine(MoveSomeText());
         //StartCoroutine(RotateDisc());
@@ -262,30 +271,42 @@ public class TextMover : MonoBehaviour
         }
         PlayerPrefs.SetInt("journeyProgress", journeyProgress);
 
-        catBluePrint.alpha = 1;
-        yield return new WaitForSeconds(2.5f);
+        //catBluePrint.alpha = 1;
+        
         PlayerPrefs.SetString("AnimationToPlay", ( journeyProgress-1).ToString());
-        parts[journeyProgress].alpha = 1;
+        //parts[journeyProgress].alpha = 1;
         StartCoroutine(LoadScene("Twirly"));
-        //yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0);
         
 
         //StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
 
     }
+    IEnumerator ZoomSlideHolder()
+    {
 
+        catBluePrint.alpha = 0;
+        slideHolder.Play("SlideHolderZoomIn");
+        slideBoxCollider.enabled = false;
+       
+        yield return new WaitForSeconds(1);
+        
+        //messageText.text = "Inside the box you discover...";
+
+    }
     IEnumerator OpenBox()
     {
         boxAnimator.Play("Lid");
         yield return new WaitForSeconds(1);
         cameraAnimator.Play("IntoBox");
-        messageText.text = "Inside the box you discover...";
+        //messageText.text = "Inside the box you discover...";
         
     }
     public IEnumerator LoadScene(string sceneName)
     {
 
-        yield return new WaitForSeconds(0f);
+        StartCoroutine(CGFadeIn(fader, 2f));
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(sceneName);
 
     }
@@ -334,22 +355,9 @@ public class TextMover : MonoBehaviour
                 string[] thing = raycastHit.collider.name.Split("_");
                 Debug.Log("The cat is " + number);
 
-                if (thing[0] == "cat")
-                {
-                    //cameraAnimator.Play("CameraMove2");
-                    //catBluePrint.alpha = 1;
-                }
-                if (raycastHit.collider.name == "arts")
-                {
-                    cameraAnimator.Play("CameraMove3");
-                    catBluePrint.alpha = 0;
-                    //PlayerPrefs.SetInt("journeyProgress", 0);
-                    //journeyProgress = 0;
-
-                }
                
 
-                if (thing[0] == "Slide")
+                if (thing[0] == "Slide" && SlideHolderZoomed)
                 {
                     Color transparent = new(0, 0, 0, 0);
                     Debug.Log(raycastHit.collider.GetComponent<SpriteRenderer>().color);
@@ -359,6 +367,12 @@ public class TextMover : MonoBehaviour
                         StartCoroutine(LoadScene("Twirly"));
                     }
                     
+                   
+                }
+                if(raycastHit.collider.name == "slide disc" && SlideHolderZoomed == false)
+                {
+                    SlideHolderZoomed = true;
+                    StartCoroutine("ZoomSlideHolder");
                    
                 }
 
@@ -436,7 +450,7 @@ public class TextMover : MonoBehaviour
                     } else
                     {
                         StartCoroutine(CGFadeIn(catBluePrint, 1.0f));
-                        messageText.text = "You find a page from an artist's sketch book\nThey have drawn a fearsome beast!";
+                       // messageText.text = "You find a page from an artist's sketch book\nThey have drawn a fearsome beast!";
                         journeyProgress = 1;
                         PlayerPrefs.SetInt("journeyProgress", 1);
                     }
@@ -591,7 +605,7 @@ public class TextMover : MonoBehaviour
             skull.OutlineWidth = 10;
             inRange = true;
             //cameraAnimator.Play("CameraMove3");  //Put up a message or just move camera?
-            messageText.text = "Press the skull to discover it's secrets";
+            //messageText.text = "Press the skull to discover it's secrets";
             //checkingLocation = false;
            
 
@@ -692,11 +706,12 @@ public class TextMover : MonoBehaviour
             {
                 var direction = fingerDownPosition.x - fingerUpPosition.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
                 Debug.Log(direction);
-                if (direction == SwipeDirection.Left)
+                if (direction == SwipeDirection.Left && SlideHolderZoomed == true)
                 {
                     //sideIndex = journeyProgress+1;
-                    Debug.Log(slideIndex);
+                    Debug.Log(slideAnimations[slideIndex]);
                     slideHolder.SetFloat("direction", 1);
+                    if (slideIndex == 0) slideIndex = 1;
                     slideHolder.Play(slideAnimations[slideIndex]);
                     slideIndex++;
                     if(slideIndex>13)

@@ -73,7 +73,9 @@ public class Twirly : MonoBehaviour
 
         switch (animationToPlay) {
             case "1":
-                storyText.text = "Within the global network of modern science the animal and plant kingdoms are organized into an order in which everything has a name that makes it recognizable wherever you are in the world and whatever language you speak. Within this <i>taxonomy</i> these teeth, with their distinctive and rather chillingly serrated cutting edges, are identified as belonging to an extinct creature called <i>Homotherium latidens</i>. In English, this fearsome beast is known as the Scimitar-Toothed Cat.";
+                storyText.text = "<size=120%><align=center>The Beast That Stalks Our Dream Time</align></size>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "Within the global network of modern science the animal and plant kingdoms are organized into an order in which everything has a name that makes it recognizable wherever you are in the world and whatever language you speak. Within this <i>taxonomy</i> these teeth, with their distinctive and rather chillingly serrated cutting edges, are identified as belonging to an extinct creature called <i>Homotherium latidens</i>. In English, this fearsome beast is known as the Scimitar-Toothed Cat.";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "Two centuries ago, whilst the Scimitar - Tooth still lurked on the edge of shadows, just beyond the bounds of the emerging scientific order, a footnote on a page within cave explorer Father John MacEnery’s book <i>Cavern Researches</i> described the beast thus:";
                 storyText.text += "\n";storyText.text += "\n";
@@ -97,7 +99,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 1";
                 break;
             case "2":
-                storyText.text = "Ten thousand years ago in the Near East – but at other times elsewhere – people learned to grow crops and corral herd animals. This meant they could stay in one location and didn’t have to carry everything around with them, so perhaps were better placed to create things from materials that were heavier and more permanent in form. As technologies evolved they began to write things down in more enduring formats so as to ‘fix’ them; literally setting them in stone.";
+                storyText.text = "<size=120%><align=center>The Deluge</align></size>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "Ten thousand years ago in the Near East – but at other times elsewhere – people learned to grow crops and corral herd animals. This meant they could stay in one location and didn’t have to carry everything around with them, so perhaps were better placed to create things from materials that were heavier and more permanent in form. As technologies evolved they began to write things down in more enduring formats so as to ‘fix’ them; literally setting them in stone.";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "Perhaps they thought – as we might – that this would make things clearer and less prone to dispute, although emails often demonstrate that this isn’t always the case. On the whole, they compiled lists that showed fairly boring but nonetheless important stuff relating to stocks, crops, ownership and that sort of thing. But they did occasionally write down stories as well – and one tablet of what is known as cuneiform writing has been translated as relating the familiar story of the Great Flood. It’s called the Ark Tablet and it was created nearly two thousand years before the time of Jesus.";
                 storyText.text += "\n";storyText.text += "\n";
@@ -107,7 +111,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 2";
                 break;
             case "3":
-                storyText.text = "We now know that around 12,000 years ago the climate was warming, causing the ice sheets that had covered much of the landmass familiar to us as the British Isles and Ireland to gradually melt. Year by year, decade by decade, century by century the map changed – as it always does. Beneath the ground in caves the bones of wild beasts were slowly covered by layers of earth that built up inch by inch as time passed – just as the beasts themselves became buried deeper and deeper in memory.";
+                storyText.text = "<size=120%><align=center>Catcott and Slutch</size>\n(And The Mis - identified Moofe - Deer)</align>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "We now know that around 12,000 years ago the climate was warming, causing the ice sheets that had covered much of the landmass familiar to us as the British Isles and Ireland to gradually melt. Year by year, decade by decade, century by century the map changed – as it always does. Beneath the ground in caves the bones of wild beasts were slowly covered by layers of earth that built up inch by inch as time passed – just as the beasts themselves became buried deeper and deeper in memory.";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "In the eighteenth century, natural scientists – often men of the Church who were the only ones with the time to think about such things and commit their thoughts to paper – began to unearth these bones in the course of their philosophising. This created a number of significant puzzles because, rather confusingly, many of the bones were huge and the animals from which they might have come were nowhere to be seen in the locale. And we have to remember that at this time extinction was not known, let alone understood. And also that The Truth was by and large owned by the Church.";
                 storyText.text += "\n";storyText.text += "\n";
@@ -123,7 +129,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 3";
                 break;
             case "4":
-                storyText.text = "Fifty years later, ‘the Deluge’ was still seen as the principal agency by which the remains of elephants and rhinoceroses had come to rest in the caves of Wales and England. But, wondered the Rev. Dr. Buckland of Oxford University, HOW were such vast carcasses washed through what were often narrow cave entrances? His explorations of Kirkdale Cave in Yorkshire led him to the answer. Here, the cave floor was carpeted by bones – and many small round white balls. These, he came to realise, were the fossilised dung balls of hyaenas. So the bones had been carried into the cave by hyaenas. Kirkdale Cave was, before the Flood, a hyaena den.";
+                storyText.text = "<size=120%><align=center>The Conflicting Universes of the Rev. Dr. Buckland</align></size>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "Fifty years later, ‘the Deluge’ was still seen as the principal agency by which the remains of elephants and rhinoceroses had come to rest in the caves of Wales and England. But, wondered the Rev. Dr. Buckland of Oxford University, HOW were such vast carcasses washed through what were often narrow cave entrances? His explorations of Kirkdale Cave in Yorkshire led him to the answer. Here, the cave floor was carpeted by bones – and many small round white balls. These, he came to realise, were the fossilised dung balls of hyaenas. So the bones had been carried into the cave by hyaenas. Kirkdale Cave was, before the Flood, a hyaena den.";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "To prove this, Buckland acquired a hyaena and fed it great joints of beef, closely observing its actions at both ends. At the anterior end its incredibly powerful jaws imparted bite marks identical to those on bones he had found at Kirkdale. And at the posterior end, white balls of ‘album graecum’ (ie. poo full of bone) popped out. These he called ‘coprolites’ from the Greek kopros (meaning dung) and lithos (meaning stone).";
                 storyText.text += "\n";storyText.text += "\n";
@@ -139,7 +147,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 4";
                 break;
             case "5":
-                storyText.text = "In 1824, in search of new sources of income for the village, the vicar of Banwell in Somerset commissioned two miners to reopen a cave system that had been first discovered in 1757.The new Bishop of Bath and Wells George Henry Law who owned the land was delighted at what they found; a mass of animal bones including bear, reindeer, bison and wolverine.This, in the light of discoveries made elsewhere, presented solid proof of the Deluge, the catastrophic flood unleashed by God in order to cleanse the Earth of humanity’s wickedness. So, compelling evidence of the need for the Church to exert moral authority for the well-being of all.";
+                storyText.text = "<size=120%><align=center>William Beard of Bone Cottage, Banwell\n</size>(and his Bear)</align>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "In 1824, in search of new sources of income for the village, the vicar of Banwell in Somerset commissioned two miners to reopen a cave system that had been first discovered in 1757.The new Bishop of Bath and Wells George Henry Law who owned the land was delighted at what they found; a mass of animal bones including bear, reindeer, bison and wolverine.This, in the light of discoveries made elsewhere, presented solid proof of the Deluge, the catastrophic flood unleashed by God in order to cleanse the Earth of humanity’s wickedness. So, compelling evidence of the need for the Church to exert moral authority for the well-being of all.";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "Over the ensuing three decades, William Beard (of Bone Cottage, Banwell) acted as curator of Banwell Bone Cave, leading guided tours for which he extracted a charge from visitors. His diary, held in the Somerset County Archives, demonstrates not only that (somewhat unsurprisingly) he got through a whole lot of candles – but also that he welcomed an extraordinary array of people to the caves including local laymen, illustrious cave researchers including William Buckland and William Pengelly and countless representatives of what might be thought of as ‘the chattering classes’ of the period.";
                 storyText.text += "\n";storyText.text += "\n";
@@ -149,7 +159,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 5";
                 break;
             case "6":
-                storyText.text = "In order to advance his understanding of the great natural forces at play in the world, William Buckland traversed back and forth across England and Wales at great pace. In 1823 he wrote to Lady Mary Cole of the wealthy Talbot family of Penrice Castle, Gower:";
+                storyText.text = "<size=120%><align=center>The Silencing of Father John MacEnery</align></size>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "In order to advance his understanding of the great natural forces at play in the world, William Buckland traversed back and forth across England and Wales at great pace. In 1823 he wrote to Lady Mary Cole of the wealthy Talbot family of Penrice Castle, Gower:";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "<indent=5%><i>Since I left you I found they have discovered two large Tusks of Tygers at Plymouth and passing through Wells I heard tidings of human bones at Wokey(sic) Hole...";
                 storyText.text += "\n";storyText.text += "\n";
@@ -179,7 +191,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 6";
                 break;
             case "7":
-                storyText.text = "In 1857, a thrusting young man with extraordinary energy went up to Jesus College, Oxford. His name was William Boyd Dawkins, the son of a vicar, and it was during his time at the university that the Great Question surrounding what was referred to as the ‘Antiquity of Man’ was answered. To determine this, as the sciences of archaeology, geology and palaeontology became more distinct as disciplines, it had become increasingly acknowledged that rigorous methods must be adopted in order to avoid the doubt that had been cast upon MacEnery’s discoveries.";
+                storyText.text = "<size=120%><align=center>Big Beasts Stalk the Mind of Sir William Boyd Dawkins</align></size>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "In 1857, a thrusting young man with extraordinary energy went up to Jesus College, Oxford. His name was William Boyd Dawkins, the son of a vicar, and it was during his time at the university that the Great Question surrounding what was referred to as the ‘Antiquity of Man’ was answered. To determine this, as the sciences of archaeology, geology and palaeontology became more distinct as disciplines, it had become increasingly acknowledged that rigorous methods must be adopted in order to avoid the doubt that had been cast upon MacEnery’s discoveries.";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "Accordingly, when a new and undisturbed cave was found at Windmill Hill, near Brixham in Devon, a Committee was formed; of eminent men including Hugh Falconer, Charles Lyell (the author of Principles of Geology), Richard Owen (who devised the word ‘dinosaur’) and William Pengelly of Torquay. Using a method devised by Pengelly, the cave was carefully excavated – and stone tools found beneath the sealed calcite layer alongside the bones of extinct cold climate creatures. Humans must, therefore, have lived in Devon in ancient times – and at the same time as the woolly beasts.";
                 storyText.text += "\n";storyText.text += "\n";
@@ -195,7 +209,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 7";
                 break;
             case "8":
-                storyText.text = "William Pengelly was a Cornishman, the son of a sea captain who left school at the age of twelve to join his father’s crew. He was shipwrecked once and saved from drowning twice before being brought back to Looe on the death of his younger brother in an accident. Here, he set about teaching himself mathematics before becoming a private tutor.";
+                storyText.text = "<size=120%><align=center>William Pengelly and the Cavern of Truth</align></size>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "William Pengelly was a Cornishman, the son of a sea captain who left school at the age of twelve to join his father’s crew. He was shipwrecked once and saved from drowning twice before being brought back to Looe on the death of his younger brother in an accident. Here, he set about teaching himself mathematics before becoming a private tutor.";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "Perhaps these early experiences gave him a different perspective to the Oxford Men, Buckland, Lyell, Dawkins and all. And maybe it was this that enabled him to navigate the distinctly choppy political waters surrounding the excavation at Windmill Hill Cave, Brixham, which was to play such a significant role in establishing the so-called ‘Antiquity of Man’. Correspondence suggests the Committee to be a wriggling mass of egos and untruths as the men of science each sought to claim credit for the important discoveries being made. In all this subterfuge, the name of Falconer – who had cast doubt on the provenance of MacEnery’s ‘bear’ teeth – particularly stands out.";
                 storyText.text += "\n";storyText.text += "\n";
@@ -233,7 +249,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 8";
                 break;
             case "9":
-                storyText.text = "In 1873, Mr Frank Tebbet, supervisor at the Creswell Crags limestone quarry in Nottinghamshire found fossils in the mouth of Robin Hood Cave, one of a series of caves in the rock face of the spectacular gorge. As a result, in July 1875 the Reverend John Magens Mello, a graduate of St. John’s College, Oxford and Thomas Heath, the curator of Derby Museum and Art Gallery commenced excavations in the gorge. Heath, the son of a tile cutter, had left school aged twelve to take up an apprenticeship in the same profession as his father but abandoning it, had progressed to assume the curatorship of the museum by the time he was twenty five.";
+                storyText.text = "<size=120%><align=center>The (Alleged) Fall of Sir William Boyd Dawkins</align></size>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "In 1873, Mr Frank Tebbet, supervisor at the Creswell Crags limestone quarry in Nottinghamshire found fossils in the mouth of Robin Hood Cave, one of a series of caves in the rock face of the spectacular gorge. As a result, in July 1875 the Reverend John Magens Mello, a graduate of St. John’s College, Oxford and Thomas Heath, the curator of Derby Museum and Art Gallery commenced excavations in the gorge. Heath, the son of a tile cutter, had left school aged twelve to take up an apprenticeship in the same profession as his father but abandoning it, had progressed to assume the curatorship of the museum by the time he was twenty five.";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "They quickly found not only the bones of horse, woolly rhinoceros, bison, hyaena, mammoth, elk and lion – but also stone tools.";
                 storyText.text += "\n";storyText.text += "\n";
@@ -259,7 +277,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 9";
                 break;
             case "10":
-                storyText.text = "The controversy of the ‘Creswell Incident’ was – for whatever reason – rooted in Dawkins’ apparent capacity for manipulating the truth in order to achieve his own ends. This single episode has by and large clouded his extraordinary achievements as a palaeontologist and geologist.";
+                storyText.text = "<size=120%><align=center>Sir William Boyd Dawkins: Laying the Ghost at Victory Quarry</align></size>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "The controversy of the ‘Creswell Incident’ was – for whatever reason – rooted in Dawkins’ apparent capacity for manipulating the truth in order to achieve his own ends. This single episode has by and large clouded his extraordinary achievements as a palaeontologist and geologist.";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "By contrast, Pengelly’s measured, analytical and more selfless approach has seen researchers beat a path to Torquay Museum (of which he was a founder) right up to the present day to pore over finds from Kents Cavern. Science demands rigour and precision.";
                 storyText.text += "\n";storyText.text += "\n";
@@ -277,7 +297,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 10";
                 break;
             case "11":
-                storyText.text = "In 1898, four years before William Boyd Dawkins’ final encounter with the Homotherium at Victory Quarry, a young woman presented herself for work in the Bird Room at the Natural History Museum in London. Dorothea Bate was largely self-taught, observing later that her education was ‘only briefly interrupted by school’. At this time women weren’t employed as scientists so Bate was taken on – based on her exceptional skill – as an ‘unofficial scientific worker’, paid by the number of specimens she prepared.";
+                storyText.text = "<size=120%><align=center>The Quiet Resolve of Dorothea Bate</align></size>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "In 1898, four years before William Boyd Dawkins’ final encounter with the Homotherium at Victory Quarry, a young woman presented herself for work in the Bird Room at the Natural History Museum in London. Dorothea Bate was largely self-taught, observing later that her education was ‘only briefly interrupted by school’. At this time women weren’t employed as scientists so Bate was taken on – based on her exceptional skill – as an ‘unofficial scientific worker’, paid by the number of specimens she prepared.";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "Growing up in the countryside of Carmarthenshire had imbued her with an insatiable passion for exploring her natural surroundings and it was this, combined with her quiet but formidable determination that was to propel her pioneering career as a scientist.";
                 storyText.text += "\n";storyText.text += "\n";
@@ -291,7 +313,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 11";
                 break;
             case "12":
-                storyText.text = "Danielle Schreve is today, Professor of Quaternary Science in the Department of Geography at Royal Holloway, University of London. The Quaternary Period is the last 2.6 million years and is divided into two epochs; the Pleistocene (2.58 million years ago to 11.7 thousand years ago) and the Holocene (11.7 million years ago to the present day).";
+                storyText.text = "<size=120%><align=center>The Cave In The Mind of Professor Schreve</align></size>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "Danielle Schreve is today, Professor of Quaternary Science in the Department of Geography at Royal Holloway, University of London. The Quaternary Period is the last 2.6 million years and is divided into two epochs; the Pleistocene (2.58 million years ago to 11.7 thousand years ago) and the Holocene (11.7 million years ago to the present day).";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "Using a variety of processes available to modern science, she extracts information from ancient animal bones and interprets the data so as to understand the impacts of abrupt climate and environmental change on the fauna of the period. In this way, she can help to predict what the impacts of future climate change may be because many of these creatures – or at least their close relatives – are still with us. And thus we can gain an idea of what may happen to entire ecosystems and therefore – because we are a part of them – to us.";
                 storyText.text += "\n";storyText.text += "\n";
@@ -303,7 +327,9 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 12";
                 break;
             case "13":
-                storyText.text = "Dr. Angharad Jones, curator at Creswell Crags Museum, has a PhD in the study of fossil hyaena evolution and behaviour and is part of the global research network. To achieve this distinction she studied under the tutelage of Danielle Schreve at Royal Holloway University, beginning by devising a scientific question that hadn’t been asked before, then attempting to answer it – and finally having her findings and conclusion scrutinised and then questioned by a group of experts in the field.";
+                storyText.text = "<size=120%><align=center>Udfil Rhyfeddol y Doethur Jones\n</size>(Dr Jones’ Astonishing Hyaena)</align>";
+                storyText.text += "\n"; storyText.text += "\n";
+                storyText.text += "Dr. Angharad Jones, curator at Creswell Crags Museum, has a PhD in the study of fossil hyaena evolution and behaviour and is part of the global research network. To achieve this distinction she studied under the tutelage of Danielle Schreve at Royal Holloway University, beginning by devising a scientific question that hadn’t been asked before, then attempting to answer it – and finally having her findings and conclusion scrutinised and then questioned by a group of experts in the field.";
                 storyText.text += "\n";storyText.text += "\n";
                 storyText.text += "This, essentially, is what happens in all science, where every piece of research is ‘peer reviewed’ – meaning that other expert researchers with relevant knowledge and experience consider and question it. In raw terms, they seek to pick holes in it. And if there aren’t any then the research – and its particular truth – must be strong within the context of what is known at that time. The process isn’t about advancing the career of the individual scientist; rather assuring the integrity of each piece of research as an individual building block within a global edifice comprising thousands and thousands of researchers; all of whom are subject to the same system of checks.";
                 storyText.text += "\n";storyText.text += "\n";
@@ -403,11 +429,11 @@ public class Twirly : MonoBehaviour
             Debug.Log("Scroller");
             if (scrollView.transform.position.x < 0)
             {
-                scrollView.transform.localPosition = new Vector3(0, -687.65f, 0);
+                scrollView.transform.localPosition = new Vector3(0, 500, 0);
             }
             else
             {
-                scrollView.transform.localPosition = new Vector3(-2000, 380, 0);
+                scrollView.transform.localPosition = new Vector3(-2000, 0, 0);
             }
         }
     }

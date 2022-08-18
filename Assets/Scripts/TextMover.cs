@@ -31,7 +31,7 @@ public class TextMover : MonoBehaviour
     private int journeyProgress;
     private int closest;
     public float minDistance = 1000;
-    private SpriteGlowEffect skull;
+    //private SpriteGlowEffect skull;
     private SpriteRenderer boxContents;
     private bool inRange = false;
     private bool SlideHolderZoomed = false;
@@ -118,7 +118,7 @@ public class TextMover : MonoBehaviour
         boxAnimator = GameObject.Find("BoxTop").GetComponent<Animator>();
       
         slideHolder = GameObject.Find("SlideHolder").GetComponent<Animator>();
-        skull = GameObject.Find("frame").GetComponent<SpriteGlowEffect>();
+        //skull = GameObject.Find("frame").GetComponent<SpriteGlowEffect>();
         
 
 
@@ -442,6 +442,7 @@ public class TextMover : MonoBehaviour
                     //we'd better look at the wheel
 
                     Debug.Log("You touched the skull");
+                    
                     if (journeyProgress > 0)
                     {
                         StartCoroutine(FlyOut());
@@ -559,8 +560,8 @@ public class TextMover : MonoBehaviour
 
         if (closestisFound ==1)
         {
-            skull.GlowBrightness = 1f;
-            skull.OutlineWidth = 0;
+            //skull.GlowBrightness = 1f;
+            //skull.OutlineWidth = 0;
             messageText.text = "";
         }
 
@@ -568,8 +569,8 @@ public class TextMover : MonoBehaviour
         
         if (minDistance > 100f && checkingLocation)
         {
-            skull.GlowBrightness = 1f;
-            skull.OutlineWidth = 0;
+            //skull.GlowBrightness = 1f;
+            //skull.OutlineWidth = 0;
             inRange = false;
 
 
@@ -577,32 +578,32 @@ public class TextMover : MonoBehaviour
 
         if (minDistance < 100f && minDistance > 75f && checkingLocation && closestisFound == 0 )
         {
-            skull.GlowBrightness = 2f;
-            skull.OutlineWidth = 2;
+            //skull.GlowBrightness = 2f;
+            //skull.OutlineWidth = 2;
             inRange = false;
         }
         if (minDistance < 75f && minDistance > 50f  && checkingLocation && closestisFound == 0)
         {
-            skull.GlowBrightness = 2f;
-            skull.OutlineWidth = 5;
+            //skull.GlowBrightness = 2f;
+            //skull.OutlineWidth = 5;
             inRange = false;
         }
         if (minDistance < 50f && minDistance > 25f && checkingLocation && closestisFound == 0)
         {
-            skull.GlowBrightness = 2f;
-            skull.OutlineWidth = 7;
+            //skull.GlowBrightness = 2f;
+            //skull.OutlineWidth = 7;
             inRange = false;
         }
         if (minDistance < 25f && minDistance > 10f && checkingLocation && closestisFound == 0)
         {   
-            skull.GlowBrightness = 2f;
-            skull.OutlineWidth = 8;
+            //skull.GlowBrightness = 2f;
+            //skull.OutlineWidth = 8;
             inRange = false;
         }
         if (minDistance < 10f && checkingLocation && closestisFound == 0)
         {   
-            skull.GlowBrightness = 2f;
-            skull.OutlineWidth = 10;
+            //skull.GlowBrightness = 2f;
+            //skull.OutlineWidth = 10;
             inRange = true;
             //cameraAnimator.Play("CameraMove3");  //Put up a message or just move camera?
             //messageText.text = "Press the skull to discover it's secrets";

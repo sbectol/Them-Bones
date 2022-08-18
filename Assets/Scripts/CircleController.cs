@@ -17,6 +17,9 @@ public class CircleController : MonoBehaviour
     private CanvasGroup page1;
     private CanvasGroup page2;
     private CanvasGroup page3;
+    private CanvasGroup page4;
+    private CanvasGroup page5;
+    private CanvasGroup page6;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,9 @@ public class CircleController : MonoBehaviour
         page1 = GameObject.Find("Page1").GetComponent<CanvasGroup>();
         page2 = GameObject.Find("Page2").GetComponent<CanvasGroup>();
         page3 = GameObject.Find("Page3").GetComponent<CanvasGroup>();
+        page4 = GameObject.Find("Page4").GetComponent<CanvasGroup>();
+        page5 = GameObject.Find("Page5").GetComponent<CanvasGroup>();
+        page6 = GameObject.Find("Page6").GetComponent<CanvasGroup>();
 
         hole = GameObject.Find("Hole").GetComponent<SpriteRenderer>();
 
@@ -72,12 +78,51 @@ public class CircleController : MonoBehaviour
         StartCoroutine(FadeOut(2f, page2));
         yield return new WaitForSeconds(2);
         StartCoroutine(FadeIn(2f, page3));
+        yield return new WaitForSeconds(8);
+        StartCoroutine(FadeOut(2f, page3));
         yield return new WaitForSeconds(2);
-        StartCoroutine(LoadScene("Text"));
+        StartCoroutine(FadeIn(2f, page4));
+        yield return new WaitForSeconds(2);
+
+
+        //StartCoroutine(LoadScene("Text"));
 
 
 
     }
+    public void Page5()
+    {
+        Debug.Log("Pressed");
+        _ = StartCoroutine(GoPage5);
+    }
+    public IEnumerator GoPage5
+    {
+        get
+        {
+
+            _ = StartCoroutine(FadeOut(2f, page4));
+            yield return new WaitForSeconds(2);
+            _ = StartCoroutine(FadeIn(2f, page5));
+            yield return new WaitForSeconds(2);
+        }
+    }
+    public void Page6()
+    {
+        Debug.Log("Pressed");
+        _ = StartCoroutine(GoPage6);
+    }
+    public IEnumerator GoPage6
+    {
+        get
+        {
+
+            StartCoroutine(FadeOut(2f, page5));
+            yield return new WaitForSeconds(2);
+            StartCoroutine(FadeIn(2f, page6));
+            yield return new WaitForSeconds(2);
+        }
+    }
+
     public IEnumerator LoadScene(string sceneName)
     {
 

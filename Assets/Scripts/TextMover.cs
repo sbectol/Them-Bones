@@ -276,7 +276,7 @@ public class TextMover : MonoBehaviour
         //catBluePrint.alpha = 1;
         Debug.Log("JouneyProgress " + journeyProgress.ToString());
         PlayerPrefs.SetString("AnimationToPlay", ( journeyProgress-1).ToString());
-        if (journeyProgress > 13) PlayerPrefs.SetString("AnimationToPlay", "14");
+        if (journeyProgress == 14) PlayerPrefs.SetString("AnimationToPlay", "14");
         //parts[journeyProgress].alpha = 1;
         StartCoroutine(LoadScene("Twirly"));
         yield return new WaitForSeconds(0);
@@ -445,8 +445,8 @@ public class TextMover : MonoBehaviour
                     //we'd better look at the wheel
 
                     Debug.Log("You touched the skull");
-                    if (inRange == true)
-                    {
+                    //if (inRange == true)
+                    //{
 
                         if (journeyProgress > 0)
                         {
@@ -461,7 +461,7 @@ public class TextMover : MonoBehaviour
                             journeyProgress = 1;
                             PlayerPrefs.SetInt("journeyProgress", 1);
                         }
-                    }
+                    //}
                     
 
                     

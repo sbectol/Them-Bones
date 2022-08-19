@@ -33,6 +33,7 @@ public class TextMover : MonoBehaviour
     public float minDistance = 1000;
     //private SpriteGlowEffect skull;
     private SpriteRenderer boxContents;
+    private SpriteRenderer skull;
     private bool inRange = false;
     private bool SlideHolderZoomed = false;
     
@@ -59,6 +60,7 @@ public class TextMover : MonoBehaviour
         }
         slideBoxCollider = GameObject.Find("slide disc").GetComponent<BoxCollider>();
         boxContents = GameObject.Find("boxContents").GetComponent<SpriteRenderer>();
+        skull = GameObject.Find("frame").GetComponent<SpriteRenderer>();
         fader = GameObject.Find("Fader").GetComponent<CanvasGroup>();
         boxContents.sprite = spriteArray[5];
         coordsCresswell[1] = new Vector2(53.26301182857125f, -1.193743944168091f);
@@ -272,8 +274,9 @@ public class TextMover : MonoBehaviour
         PlayerPrefs.SetInt("journeyProgress", journeyProgress);
 
         //catBluePrint.alpha = 1;
-        
+        Debug.Log("JouneyProgress " + journeyProgress.ToString());
         PlayerPrefs.SetString("AnimationToPlay", ( journeyProgress-1).ToString());
+        if (journeyProgress > 13) PlayerPrefs.SetString("AnimationToPlay", "14");
         //parts[journeyProgress].alpha = 1;
         StartCoroutine(LoadScene("Twirly"));
         yield return new WaitForSeconds(0);
@@ -442,18 +445,22 @@ public class TextMover : MonoBehaviour
                     //we'd better look at the wheel
 
                     Debug.Log("You touched the skull");
-                    
-                    if (journeyProgress > 0)
+                    if (inRange == true)
                     {
-                        StartCoroutine(FlyOut());
 
-                        
-                    } else
-                    {
-                        StartCoroutine(CGFadeIn(catBluePrint, 1.0f));
-                       // messageText.text = "You find a page from an artist's sketch book\nThey have drawn a fearsome beast!";
-                        journeyProgress = 1;
-                        PlayerPrefs.SetInt("journeyProgress", 1);
+                        if (journeyProgress > 0)
+                        {
+                            StartCoroutine(FlyOut());
+
+
+                        }
+                        else
+                        {
+                            StartCoroutine(CGFadeIn(catBluePrint, 1.0f));
+                            // messageText.text = "You find a page from an artist's sketch book\nThey have drawn a fearsome beast!";
+                            journeyProgress = 1;
+                            PlayerPrefs.SetInt("journeyProgress", 1);
+                        }
                     }
                     
 
@@ -560,8 +567,7 @@ public class TextMover : MonoBehaviour
 
         if (closestisFound ==1)
         {
-            //skull.GlowBrightness = 1f;
-            //skull.OutlineWidth = 0;
+            skull.color = new Color32(220, 220, 220, 220);
             messageText.text = "";
         }
 
@@ -569,8 +575,7 @@ public class TextMover : MonoBehaviour
         
         if (minDistance > 100f && checkingLocation)
         {
-            //skull.GlowBrightness = 1f;
-            //skull.OutlineWidth = 0;
+            skull.color = new Color32(220, 220, 220, 220);
             inRange = false;
 
 
@@ -578,32 +583,27 @@ public class TextMover : MonoBehaviour
 
         if (minDistance < 100f && minDistance > 75f && checkingLocation && closestisFound == 0 )
         {
-            //skull.GlowBrightness = 2f;
-            //skull.OutlineWidth = 2;
+            skull.color = new Color32(230, 225, 225, 225);
             inRange = false;
         }
         if (minDistance < 75f && minDistance > 50f  && checkingLocation && closestisFound == 0)
         {
-            //skull.GlowBrightness = 2f;
-            //skull.OutlineWidth = 5;
+            skull.color = new Color32(230, 230, 230, 230);
             inRange = false;
         }
         if (minDistance < 50f && minDistance > 25f && checkingLocation && closestisFound == 0)
         {
-            //skull.GlowBrightness = 2f;
-            //skull.OutlineWidth = 7;
+            skull.color = new Color32(235, 235, 235, 235);
             inRange = false;
         }
         if (minDistance < 25f && minDistance > 10f && checkingLocation && closestisFound == 0)
-        {   
-            //skull.GlowBrightness = 2f;
-            //skull.OutlineWidth = 8;
+        {
+            skull.color = new Color32(240, 240, 240, 240);
             inRange = false;
         }
         if (minDistance < 10f && checkingLocation && closestisFound == 0)
-        {   
-            //skull.GlowBrightness = 2f;
-            //skull.OutlineWidth = 10;
+        {
+            skull.color = new Color32(255, 255, 255, 255);
             inRange = true;
             //cameraAnimator.Play("CameraMove3");  //Put up a message or just move camera?
             //messageText.text = "Press the skull to discover it's secrets";

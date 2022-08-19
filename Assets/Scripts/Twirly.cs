@@ -24,6 +24,9 @@ public class Twirly : MonoBehaviour
     private GameObject molarToothHolder;
     private GameObject middleCatHolder;
     public GameObject scrollView;
+    private CanvasGroup showText;
+    private CanvasGroup goBack;
+    private TMP_Text messageText;
 
     private AudioClip audioClip;
     private AudioSource soundPlayer;
@@ -68,7 +71,10 @@ public class Twirly : MonoBehaviour
         scrollView.transform.localPosition = new Vector3(-2000, 0, 0);
         animationToPlay = PlayerPrefs.GetString("AnimationToPlay");
         soundPlayer = GameObject.Find("SoundManager").GetComponent<AudioSource>();
-        
+        messageText = GameObject.Find("MessageText").GetComponent<TextMeshProUGUI>();
+        goBack = GameObject.Find("goBack").GetComponent<CanvasGroup>();
+        showText = GameObject.Find("showText").GetComponent<CanvasGroup>();
+
 
 
         switch (animationToPlay) {
@@ -344,6 +350,18 @@ public class Twirly : MonoBehaviour
                 storyText.text += "So; science and museums are all part of the same vital system which, as planet Earth comes under increasing pressure, has come to play a pivotal role in keeping the world – and us as part of it – ticking over. They are the engine and components in a vast Truth Machine which is constantly evolving – but which, being shaped by humans, can occasionally fall prey to human foibles if there aren’t safeguards in place. Modern science though has recognised this and evolved in response. And, of course, it will continue to do so, partly because it acknowledges that everything is always changing – but also because no one individual, in the pursuit of power or personal gain, can be allowed to corrupt its hard won Truth.";
                 audioFile = "Homotherium 13";
                 break;
+            case "14":
+                messageText.text = "WELL DONE!\n<size=75%>YOU HAVE BROUGHT THE TRUTH MACHINE BACK TO LIFE AGAIN!</size>";
+                showText.alpha = 0;
+                break;
+            case "15":
+                messageText.text = "<size=75%>BRING ERNIE BACK TO LIFE!\nAnd when you are ready, click then button and set off round the lake.</size>";
+                showText.alpha = 0;
+                goBack.alpha = 0;
+                
+                break;
+            
+                
         }
 
         
@@ -402,6 +420,7 @@ public class Twirly : MonoBehaviour
         StartCoroutine(Clone());
         catAnimator = catHolder.GetComponentsInChildren<Animator>();
         middleCat = GameObject.Find("MiddleCat").GetComponent<Animator>();
+        Debug.Log("Playing " + "therium " + animationToPlay);
         middleCat.Play("therium" + animationToPlay);
         StartCoroutine(Friction(0.1f));
 
@@ -499,8 +518,14 @@ public class Twirly : MonoBehaviour
     }
     public void PlayAudio()
     {
-       
-            //  StartCoroutine(Scroll(scrollerText, new Vector3(0, 14000, 0), 210f));
+
+        //  StartCoroutine(Scroll(scrollerText, new Vector3(0, 14000, 0), 210f));
+        if (animationToPlay == "15")
+        {
+            StartCoroutine(LoadScene("Text"));
+        }
+        else
+        {
             if (soundPlayer.isPlaying == false)
             {
 
@@ -515,7 +540,7 @@ public class Twirly : MonoBehaviour
 
                 soundPlayer.Pause();
             }
-
+        }
         
     }
     // Update is called once per frame
@@ -538,7 +563,9 @@ public class Twirly : MonoBehaviour
                
                 if (raycastHit.collider.name == "Cat")
                 {
-                    PlayAudio();
+                   
+                        PlayAudio();
+                    
                 }
 
         } }

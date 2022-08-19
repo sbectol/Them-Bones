@@ -13,6 +13,7 @@ public class CircleController : MonoBehaviour
     private GameObject beastHolder;
     private GameObject tooth;
     private SpriteRenderer hole;
+    private SpriteRenderer toothSprite;
     private GameObject toothShadow;
     private CanvasGroup page1;
     private CanvasGroup page2;
@@ -20,6 +21,10 @@ public class CircleController : MonoBehaviour
     private CanvasGroup page4;
     private CanvasGroup page5;
     private CanvasGroup page6;
+    private CanvasGroup page7;
+    private GameObject page4GO;
+    private GameObject page5GO;
+    private GameObject page6GO;
 
     // Start is called before the first frame update
     void Start()
@@ -28,12 +33,17 @@ public class CircleController : MonoBehaviour
         beastHolder = GameObject.Find("beastHolder");
         tooth = GameObject.Find("tooth");
         toothShadow = GameObject.Find("toothShadow");
+        toothSprite = tooth.GetComponent<SpriteRenderer>();
         page1 = GameObject.Find("Page1").GetComponent<CanvasGroup>();
         page2 = GameObject.Find("Page2").GetComponent<CanvasGroup>();
         page3 = GameObject.Find("Page3").GetComponent<CanvasGroup>();
         page4 = GameObject.Find("Page4").GetComponent<CanvasGroup>();
         page5 = GameObject.Find("Page5").GetComponent<CanvasGroup>();
         page6 = GameObject.Find("Page6").GetComponent<CanvasGroup>();
+        page7 = GameObject.Find("Page7").GetComponent<CanvasGroup>();
+        page4GO = GameObject.Find("Page4");
+        page5GO = GameObject.Find("Page5");
+        page6GO = GameObject.Find("Page6");
 
         hole = GameObject.Find("Hole").GetComponent<SpriteRenderer>();
 
@@ -66,7 +76,7 @@ public class CircleController : MonoBehaviour
         StartCoroutine(ScaleOverSeconds(tooth, toothScale, 10));
         yield return new WaitForSeconds(10);
         StartCoroutine(ScaleOverSeconds(tooth, finalToothScale, 10));
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         StartCoroutine(FadeHole());
         yield return new WaitForSeconds(3);
         StartCoroutine(FadeIn(2f,page1));
@@ -102,6 +112,7 @@ public class CircleController : MonoBehaviour
 
             _ = StartCoroutine(FadeOut(2f, page4));
             yield return new WaitForSeconds(2);
+            page4GO.transform.localPosition = new Vector3(-2000, 0, 0);
             _ = StartCoroutine(FadeIn(2f, page5));
             yield return new WaitForSeconds(2);
         }
@@ -118,11 +129,34 @@ public class CircleController : MonoBehaviour
 
             StartCoroutine(FadeOut(2f, page5));
             yield return new WaitForSeconds(2);
+            page5GO.transform.localPosition = new Vector3(-2000, 0, 0);
             StartCoroutine(FadeIn(2f, page6));
             yield return new WaitForSeconds(2);
         }
     }
 
+    public void Page7()
+    {
+        Debug.Log("Pressed");
+        _ = StartCoroutine(GoPage7);
+    }
+    public IEnumerator GoPage7
+    {
+        get
+        {
+
+            StartCoroutine(FadeOut(2f, page6));
+            yield return new WaitForSeconds(2);
+            page6GO.transform.localPosition = new Vector3(-2000, 0, 0);
+            StartCoroutine(FadeIn(2f, page7));
+            yield return new WaitForSeconds(2);
+        }
+    }
+    public void goTwirly()
+    {
+        PlayerPrefs.SetString("AnimationToPlay", "15");
+        StartCoroutine(LoadScene("Twirly"));
+    }
     public IEnumerator LoadScene(string sceneName)
     {
 
@@ -132,10 +166,10 @@ public class CircleController : MonoBehaviour
     }
     IEnumerator Clone()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 4; i++)
         {
             GameObject myclone = Instantiate(beastlyCircle, new Vector3(0, 0, 0), Quaternion.identity, beastHolder.transform);
-            myclone.transform.localScale = new Vector3(0.5f+(0.2f*i), 0.5f + (0.2f *i), 0);
+            myclone.transform.localScale = new Vector3(0.5f+(0.1f*i), 0.5f + (0.1f *i), 0);
             SpriteRenderer spriteRenderer  = myclone.GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = 5 - i;
             Animator cloneAnimator = myclone.GetComponent<Animator>();
@@ -154,8 +188,10 @@ public class CircleController : MonoBehaviour
             float t = elapsedTime / seconds;
             t = t * t * (3f - 2f * t);
             Color c = Color.black;
-            c.a = Mathf.Lerp(0, 1, t);
-            hole.color = c;// Color.Lerp(trans, black, t);
+            c.r = Mathf.Lerp(1, 0, t);
+            c.g = Mathf.Lerp(1, 0, t);
+            c.b = Mathf.Lerp(1, 0, t);
+            toothSprite.color = c;// Color.Lerp(trans, black, t);
             Debug.Log(c);
             elapsedTime += Time.deltaTime;
             yield return null;

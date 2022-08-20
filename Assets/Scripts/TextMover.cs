@@ -78,21 +78,23 @@ public class TextMover : MonoBehaviour
         coordsCresswell[13] = new Vector2(53.26222248426966f, -1.1971557140350342f);
         coordsCresswell[14] = new Vector2(53.26242784353887f, -1.1964797973632812f);
 
-        coordsSean[1] = new Vector2(52.827694f, -3.408333f);
-        coordsSean[2] = new Vector2(52.827194f, -3.406417f);
-        coordsSean[3] = new Vector2(52.826833f, -3.403361f);
-        coordsSean[4] = new Vector2(52.827194f, -3.400417f);
-        coordsSean[5] = new Vector2(52.828083f, -3.396639f);
-        coordsSean[6] = new Vector2(52.828694f, -3.394556f);
-        coordsSean[7] = new Vector2(52.830972f, -3.391333f);
-        coordsSean[8] = new Vector2(52.829750f, -3.390194f);
-        coordsSean[9] = new Vector2(52.828583f, -3.392967f);
-        coordsSean[10] = new Vector2(52.823417f, -3.391722f);
-        coordsSean[11] = new Vector2(52.823556f, -3.394611f);
-        coordsSean[12] = new Vector2(52.822806f, -3.399861f);
-        coordsSean[13] = new Vector2(52.822625f, -3.401272f);
-        coordsSean[14] = new Vector2(52.824895f, -3.406880f);
-        
+        coordsSean[1] = new Vector2(52.824895f, -3.406880f);
+        coordsSean[2] = new Vector2(52.822625f, -3.401272f);
+        coordsSean[3] = new Vector2(52.822806f, -3.399861f);
+        coordsSean[4] = new Vector2(52.823556f, -3.394611f);
+        coordsSean[5] = new Vector2(52.823417f, -3.391722f);
+        coordsSean[6] = new Vector2(52.828583f, -3.392967f);
+        coordsSean[7] = new Vector2(52.829750f, -3.390194f);
+        coordsSean[8] = new Vector2(52.830972f, -3.391333f);
+        coordsSean[9] = new Vector2(52.828694f, -3.394556f);
+        coordsSean[10] = new Vector2(52.828083f, -3.396639f);
+        coordsSean[11] = new Vector2(52.827194f, -3.400417f);
+        coordsSean[12] = new Vector2(52.826833f, -3.403361f);
+        coordsSean[13] = new Vector2(52.827194f, -3.406417f);
+        coordsSean[14] = new Vector2(52.827694f, -3.408333f);
+
+
+
 
 
 
@@ -263,12 +265,14 @@ public class TextMover : MonoBehaviour
        // cameraAnimator.Play("CameraMove1_Reversed");
         
         
-        StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
+        
         //boxAnimator.Play("LidClose");
         
         
-        if (journeyProgress < 14)
+        if (journeyProgress < 15)
+
         {
+            StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
             journeyProgress++;
         }
         PlayerPrefs.SetInt("journeyProgress", journeyProgress);
@@ -276,7 +280,7 @@ public class TextMover : MonoBehaviour
         //catBluePrint.alpha = 1;
         Debug.Log("JouneyProgress " + journeyProgress.ToString());
         PlayerPrefs.SetString("AnimationToPlay", ( journeyProgress-1).ToString());
-        if (journeyProgress == 14) PlayerPrefs.SetString("AnimationToPlay", "14");
+        //if (journeyProgress == 14) PlayerPrefs.SetString("AnimationToPlay", "14");
         //parts[journeyProgress].alpha = 1;
         StartCoroutine(LoadScene("Twirly"));
         yield return new WaitForSeconds(0);
@@ -445,8 +449,8 @@ public class TextMover : MonoBehaviour
                     //we'd better look at the wheel
 
                     Debug.Log("You touched the skull");
-                    //if (inRange == true)
-                    //{
+                    if (inRange == true || journeyProgress == 15)
+                    {
 
                         if (journeyProgress > 0)
                         {
@@ -461,14 +465,14 @@ public class TextMover : MonoBehaviour
                             journeyProgress = 1;
                             PlayerPrefs.SetInt("journeyProgress", 1);
                         }
-                    //}
-                    
-
-                    
-                    
+                    }
 
 
-                   
+
+
+
+
+
 
 
 
@@ -601,7 +605,7 @@ public class TextMover : MonoBehaviour
             skull.color = new Color32(240, 240, 240, 240);
             inRange = false;
         }
-        if (minDistance < 10f && checkingLocation && closestisFound == 0)
+        if (minDistance < 15f && checkingLocation && closestisFound == 0)
         {
             skull.color = new Color32(255, 255, 255, 255);
             inRange = true;

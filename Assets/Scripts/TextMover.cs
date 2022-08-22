@@ -179,7 +179,7 @@ public class TextMover : MonoBehaviour
             
             if (animClip.name != "SlideHolderZoomIn" && animClip.name != "SlideHolderZoomOut")
             {
-                Debug.Log(animClip.name + ": " + j);
+                //Debug.Log(animClip.name + ": " + j);
                 slideAnimations[j] = animClip.name;
                 j++;
             }
@@ -218,18 +218,7 @@ public class TextMover : MonoBehaviour
 
     }
 
-    IEnumerator MoveSomeText()
-
-
-    {
-
-        yield return new WaitForSeconds(5);
-        //
-
-
-
-
-    }
+   
     IEnumerator RotateDisc() {
         for(int i = 1; i < 14; i++)
         {
@@ -248,25 +237,12 @@ public class TextMover : MonoBehaviour
 
        
     }
-    IEnumerator FlyIn()
-    {
-        catBluePrint.alpha = 0;
-        boxContents.sprite = spriteArray[journeyProgress];
-        cameraAnimator.Play("CameraMove3");
-        yield return new WaitForSeconds(1);
-        cameraAnimator.Play("CameraMove1");
-        yield return new WaitForSeconds(5);
-        
-    }
+    
     IEnumerator FlyOut()
     {
         
         messageText.text = "";
-       // cameraAnimator.Play("CameraMove1_Reversed");
-        
-        
-        
-        //boxAnimator.Play("LidClose");
+       
         
         
         if (journeyProgress < 15)
@@ -277,16 +253,15 @@ public class TextMover : MonoBehaviour
         }
         PlayerPrefs.SetInt("journeyProgress", journeyProgress);
 
-        //catBluePrint.alpha = 1;
+        
         Debug.Log("JouneyProgress " + journeyProgress.ToString());
         PlayerPrefs.SetString("AnimationToPlay", ( journeyProgress-1).ToString());
-        //if (journeyProgress == 14) PlayerPrefs.SetString("AnimationToPlay", "14");
-        //parts[journeyProgress].alpha = 1;
+        
         StartCoroutine(LoadScene("Twirly"));
         yield return new WaitForSeconds(0);
         
 
-        //StartCoroutine(FadeIn(slide[journeyProgress], 0.5f));
+        
 
     }
     IEnumerator ZoomSlideHolder()
@@ -298,7 +273,7 @@ public class TextMover : MonoBehaviour
        
         yield return new WaitForSeconds(1);
         
-        //messageText.text = "Inside the box you discover...";
+        
 
     }
     IEnumerator OpenBox()
@@ -490,11 +465,12 @@ public class TextMover : MonoBehaviour
         {
             latitude = Input.location.lastData.latitude;
             longitude = Input.location.lastData.longitude;
-        } else
-        {
-            latitude = 0f;
-            longitude = 0f;
         }
+        //else
+        //{
+        //    latitude = 0f;
+        //    longitude = 0f;
+        //}
         //Debug.Log(Distance(latitude, longitude, coordsCB[1].x, coordsCB[1].y));
         //find closest
         
@@ -515,7 +491,7 @@ public class TextMover : MonoBehaviour
 
         //minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
         minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
-        //debugText.text = "minDistance is " + minDistance.ToString() +"m, The closest is " + closest.ToString() + " and Journey Progress is " + journeyProgress.ToString();
+        debugText.text = "minDistance is " + minDistance.ToString() +"m, The closest is " + closest.ToString() + " and Journey Progress is " + journeyProgress.ToString();
 
         int closestisFound = 0;
 
@@ -595,24 +571,85 @@ public class TextMover : MonoBehaviour
             skull.color = new Color32(230, 230, 230, 230);
             inRange = false;
         }
-        if (minDistance < 50f && minDistance > 25f && checkingLocation && closestisFound == 0)
+        if (minDistance < 50f && minDistance > 30f && checkingLocation && closestisFound == 0)
         {
             skull.color = new Color32(235, 235, 235, 235);
             inRange = false;
         }
-        if (minDistance < 25f && minDistance > 10f && checkingLocation && closestisFound == 0)
+        if (minDistance < 30f && minDistance > 20f && checkingLocation && closestisFound == 0)
         {
             skull.color = new Color32(240, 240, 240, 240);
             inRange = false;
         }
-        if (minDistance < 15f && checkingLocation && closestisFound == 0)
+        if (minDistance < 20f && checkingLocation && closestisFound == 0)
         {
             skull.color = new Color32(255, 255, 255, 255);
             inRange = true;
+            switch (closest)
+            {
+                case 1:
+                    PlayerPrefs.SetInt("Found1", 1);
+                    break;
+                case 2:
+                    PlayerPrefs.SetInt("Found2", 1);
+                    break;
+                case 3:
+                    PlayerPrefs.SetInt("Found3", 1);
+                    break;
+                case 4:
+                    PlayerPrefs.SetInt("Found4", 1);
+                    break;
+                case 5:
+                    PlayerPrefs.SetInt("Found5", 1);
+                    break;
+                case 6:
+                    PlayerPrefs.SetInt("Found6", 1);
+                    break;
+                case 7:
+                    PlayerPrefs.SetInt("Found7", 1);
+                    break;
+                case 8:
+                    PlayerPrefs.SetInt("Found8", 1);
+                    break;
+                case 9:
+                    PlayerPrefs.SetInt("Found9", 1);
+                    break;
+                case 10:
+                    PlayerPrefs.SetInt("Found10", 1);
+                    break;
+                case 11:
+                    PlayerPrefs.SetInt("Found11", 1);
+                    break;
+                case 12:
+                    PlayerPrefs.SetInt("Found12", 1);
+                    break;
+                case 13:
+                    PlayerPrefs.SetInt("Found13", 1);
+                    break;
+                case 14:
+                    PlayerPrefs.SetInt("Found14", 1);
+                    break;
+
+            }
+            checkingLocation = false;
+            if (journeyProgress > 0)
+            {
+                
+                    StartCoroutine(FlyOut());
+
+
+            }
+            else
+            {
+                StartCoroutine(CGFadeIn(catBluePrint, 1.0f));
+                // messageText.text = "You find a page from an artist's sketch book\nThey have drawn a fearsome beast!";
+                journeyProgress = 1;
+                PlayerPrefs.SetInt("journeyProgress", 1);
+            }
             //cameraAnimator.Play("CameraMove3");  //Put up a message or just move camera?
             //messageText.text = "Press the skull to discover it's secrets";
             //checkingLocation = false;
-           
+
 
         }
 

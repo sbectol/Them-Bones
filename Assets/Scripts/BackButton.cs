@@ -18,8 +18,17 @@ public class BackButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     //Detect if clicks are no longer registering
     public void OnPointerUp(PointerEventData pointerEventData)
     {
-        
+
+
+        if (PlayerPrefs.GetInt("journeyProgress") == 14)
+        {
+            PlayerPrefs.SetString("anmationToPlay", "14");
+            SceneManager.LoadScene("Twirly");
+        } else
+        {
             SceneManager.LoadScene(scene);
+        }
+        
         
     }
 }

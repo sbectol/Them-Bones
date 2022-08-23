@@ -18,7 +18,7 @@ public class TextMover : MonoBehaviour
     private SpriteRenderer[] slide = new SpriteRenderer[15];
     private int slideIndex = 1;
     private string[] slideAnimations = new string[16];
-    private Vector2[] coordsCB = new Vector2[13];
+    private Vector2[] coordsCB = new Vector2[15];
     private Vector2[] coordsCresswell = new Vector2[15];
     private Vector2[] coordsSean = new Vector2[15];
     private Transform endMarker1;
@@ -102,21 +102,40 @@ public class TextMover : MonoBehaviour
 
 
 
+        coordsCB[1] = new Vector2(53.29181669894783f, -3.726929018816448f); 
+        coordsCB[2] = new Vector2(53.291048960315216f, -3.7248343819867595f);  //Home
+        coordsCB[3] = new Vector2(53.29135f, -3.71566f);  //Corner of Leisure Centre
+        coordsCB[4] = new Vector2(53.29301f, -3.71410f);  //Stone Circle
+        coordsCB[5] = new Vector2(53.29302f, -3.712158f); //Moel Eirias
+        coordsCB[6] = new Vector2(53.29172f, -3.71059f); //Lego
+        coordsCB[7] = new Vector2(53.28918f, -3.71349f);  //Lorry
+        coordsCB[8] = new Vector2(53.29522328468637f, -3.716254282301825f);  //Porth Eirias Roof
+        coordsCB[9] = new Vector2(53.29592243145316f, -3.7201209658271615f); //Crazy Seats
 
-        coordsCB[1] = new Vector2(53.291048960315216f, -3.7248343819867595f);  //Home
-        coordsCB[2] = new Vector2(53.29135f, -3.71566f);  //Corner of Leisure Centre
-        coordsCB[3] = new Vector2(53.29301f, -3.71410f);  //Stone Circle
-        coordsCB[4] = new Vector2(53.29302f, -3.712158f); //Moel Eirias
-        coordsCB[5] = new Vector2(53.29172f, -3.71059f); //Lego
-        coordsCB[6] = new Vector2(53.28918f, -3.71349f);  //Lorry
-        coordsCB[7] = new Vector2(53.29522328468637f, -3.716254282301825f);  //Porth Eirias Roof
-        coordsCB[8] = new Vector2(53.29592243145316f, -3.7201209658271615f); //Crazy Seats
+        coordsCB[10] = new Vector2(53.2968343881184f, -3.7229468536380628f);  //Pier
+        coordsCB[11] = new Vector2(53.295990779479716f, -3.720529407297063f);  //Near Seats
+        coordsCB[12] = new Vector2(53.297953888903734f, -3.727067838982684f);  //Colwyn Sign
+        coordsCB[13] = new Vector2(53.29979923676437f, -3.7315745163052583f);  // The Toad
+        coordsCB[14] = new Vector2(53.29641334528825f, -3.7318060268120283f);   //War Memorial
 
-        //private Vector2 lionEiriasCoords = new Vector2(53.2968343881184f, -3.7229468536380628f);  //Pier
-        coordsCB[9] = new Vector2(53.295990779479716f, -3.720529407297063f);  //Near Seats
-        coordsCB[10] = new Vector2(53.297953888903734f, -3.727067838982684f);  //Colwyn Sign
-        coordsCB[11] = new Vector2(53.29979923676437f, -3.7315745163052583f);  // The Toad
-        coordsCB[12] = new Vector2(53.29641334528825f, -3.7318060268120283f);   //War Memorial
+
+
+
+
+        coordsCB[1] = new Vector2(53.2909471f, -3.7244838f);
+        coordsCB[2] = new Vector2(53.2912213f, -3.7255084f);
+        coordsCB[3] = new Vector2(53.2914826f, -3.7263854f);
+        coordsCB[4] = new Vector2(53.2918001f, -3.7274959f);
+        coordsCB[5] = new Vector2(53.2920084f, -3.7281906f);
+        coordsCB[6] = new Vector2(53.2925759f, -3.7283703f);
+        coordsCB[7] = new Vector2(53.2922299f, -3.7269906f);
+        coordsCB[8] = new Vector2(53.2918889f, -3.7259538f);
+        coordsCB[9] = new Vector2(53.2915442f, -3.724905f);
+        coordsCB[10] = new Vector2(53.2913301f, -3.7236626f);
+        coordsCB[11] = new Vector2(53.2915127f, -3.722724f);
+        coordsCB[12] = new Vector2(53.2909933f, -3.7229611f);
+        coordsCB[13] = new Vector2(53.2907288f, -3.7232991f);
+        coordsCB[14] = new Vector2(53.2908202f, -3.7237819f);
         frame = GameObject.Find("frame");
         cameraAnimator = GameObject.Find("Main Camera").GetComponent<Animator>();
         boxAnimator = GameObject.Find("BoxTop").GetComponent<Animator>();
@@ -241,7 +260,7 @@ public class TextMover : MonoBehaviour
     IEnumerator FlyOut()
     {
         
-        messageText.text = "";
+        
        
         
         
@@ -275,6 +294,15 @@ public class TextMover : MonoBehaviour
         
         
 
+    }
+
+    IEnumerator GPSLoop()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            //move gps logc here once per second
+            }
     }
     IEnumerator OpenBox()
     {
@@ -461,37 +489,34 @@ public class TextMover : MonoBehaviour
             }
         }
 
-        if (checkingLocation)
-        {
-            latitude = Input.location.lastData.latitude;
-            longitude = Input.location.lastData.longitude;
-        }
-        //else
-        //{
-        //    latitude = 0f;
-        //    longitude = 0f;
-        //}
-        //Debug.Log(Distance(latitude, longitude, coordsCB[1].x, coordsCB[1].y));
-        //find closest
-        
+        latitude = Input.location.lastData.latitude;
+        longitude = Input.location.lastData.longitude;
+        messageText.text = "GPS Loop Started";
         for (int i = 1; i < 15; i++)
         {
-           
-        //if(Distance(latitude, longitude, coordsCresswell[i].x, coordsCresswell[i].y) <= minDistance)
-        //    {
-        //        closest = i;
-        //    }
-        if (Distance(latitude, longitude, coordsSean[i].x, coordsSean[i].y) <= minDistance)
+
+            //if(Distance(latitude, longitude, coordsCresswell[i].x, coordsCresswell[i].y) <= minDistance)
+            //    {
+            //        closest = i;
+            //    }
+            //if (Distance(latitude, longitude, coordsSean[i].x, coordsSean[i].y) <= minDistance)
+            //    {
+            //        closest = i;
+            //    }
+            //}
+            if (Distance(latitude, longitude, coordsCB[i].x, coordsCB[i].y) <= minDistance)
             {
                 closest = i;
+                minDistance = Distance(latitude, longitude, coordsCB[closest].x, coordsCB[closest].y);
             }
         }
 
 
 
         //minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
-        minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
-        debugText.text = "minDistance is " + minDistance.ToString() +"m, The closest is " + closest.ToString() + " and Journey Progress is " + journeyProgress.ToString();
+        //minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
+
+
 
         int closestisFound = 0;
 
@@ -541,118 +566,142 @@ public class TextMover : MonoBehaviour
                 break;
 
         }
-
-    
-
-
-        if (closestisFound ==1)
+        string isFound = " not been found";
+        if (closestisFound == 1)
         {
-            skull.color = new Color32(220, 220, 220, 220);
-            messageText.text = "";
+            isFound = " has been found";
         }
+        else
+        {
+            isFound = " has not been found";
+        }
+        debugText.text = "The closest is " + minDistance.ToString("F1") + "m away, it is " + closest.ToString() + "\nIt" + isFound + " and you have found " + journeyProgress.ToString() + " locations";
+        messageText.text = "Latttude: " + latitude.ToString() + " Longitude:" + longitude.ToString();
+        messageText.text += "\n";
+        messageText.text += "Found 1:" + PlayerPrefs.GetInt("Found1").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[1].x, coordsCB[1].y);
+        messageText.text += "\n";
+        messageText.text += "Found 2:" + PlayerPrefs.GetInt("Found2").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[2].x, coordsCB[2].y);
+        messageText.text += "\n";
+        messageText.text += "Found 3:" + PlayerPrefs.GetInt("Found3").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[3].x, coordsCB[3].y);
+        messageText.text += "\n";
+        messageText.text += "Found 4:" + PlayerPrefs.GetInt("Found4").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[4].x, coordsCB[4].y);
+        messageText.text += "\n";
+        messageText.text += "Found 5:" + PlayerPrefs.GetInt("Found5").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[5].x, coordsCB[5].y);
+        messageText.text += "\n";
+        messageText.text += "Found 6:" + PlayerPrefs.GetInt("Found6").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[6].x, coordsCB[6].y);
+        messageText.text += "\n";
+        messageText.text += "Found 7:" + PlayerPrefs.GetInt("Found7").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[7].x, coordsCB[7].y);
+        messageText.text += "\n";
+        messageText.text += "Found 8:" + PlayerPrefs.GetInt("Found8").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[8].x, coordsCB[8].y);
+        messageText.text += "\n";
+        messageText.text += "Found 9:" + PlayerPrefs.GetInt("Found9").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[9].x, coordsCB[9].y);
+        messageText.text += "\n";
+        messageText.text += "Found 10:" + PlayerPrefs.GetInt("Found10").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[10].x, coordsCB[10].y);
+        messageText.text += "\n";
+        messageText.text += "Found 11:" + PlayerPrefs.GetInt("Found11").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[11].x, coordsCB[11].y);
+        messageText.text += "\n";
+        messageText.text += "Found 12:" + PlayerPrefs.GetInt("Found12").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[12].x, coordsCB[12].y);
+        messageText.text += "\n";
+        messageText.text += "Found 13:" + PlayerPrefs.GetInt("Found13").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[13].x, coordsCB[13].y);
+        messageText.text += "\n";
+        messageText.text += "Found 14:" + PlayerPrefs.GetInt("Found14").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[14].x, coordsCB[14].y);
 
-        
-        
-        if (minDistance > 100f && checkingLocation)
+        if (closest != 0)
         {
-            skull.color = new Color32(220, 220, 220, 220);
-            inRange = false;
 
-
-        }
-
-        if (minDistance < 100f && minDistance > 75f && checkingLocation && closestisFound == 0 )
-        {
-            skull.color = new Color32(230, 225, 225, 225);
-            inRange = false;
-        }
-        if (minDistance < 75f && minDistance > 50f  && checkingLocation && closestisFound == 0)
-        {
-            skull.color = new Color32(230, 230, 230, 230);
-            inRange = false;
-        }
-        if (minDistance < 50f && minDistance > 30f && checkingLocation && closestisFound == 0)
-        {
-            skull.color = new Color32(235, 235, 235, 235);
-            inRange = false;
-        }
-        if (minDistance < 30f && minDistance > 20f && checkingLocation && closestisFound == 0)
-        {
-            skull.color = new Color32(240, 240, 240, 240);
-            inRange = false;
-        }
-        if (minDistance < 20f && checkingLocation && closestisFound == 0)
-        {
-            skull.color = new Color32(255, 255, 255, 255);
-            inRange = true;
-            switch (closest)
+            if (closestisFound == 1)
             {
-                case 1:
-                    PlayerPrefs.SetInt("Found1", 1);
-                    break;
-                case 2:
-                    PlayerPrefs.SetInt("Found2", 1);
-                    break;
-                case 3:
-                    PlayerPrefs.SetInt("Found3", 1);
-                    break;
-                case 4:
-                    PlayerPrefs.SetInt("Found4", 1);
-                    break;
-                case 5:
-                    PlayerPrefs.SetInt("Found5", 1);
-                    break;
-                case 6:
-                    PlayerPrefs.SetInt("Found6", 1);
-                    break;
-                case 7:
-                    PlayerPrefs.SetInt("Found7", 1);
-                    break;
-                case 8:
-                    PlayerPrefs.SetInt("Found8", 1);
-                    break;
-                case 9:
-                    PlayerPrefs.SetInt("Found9", 1);
-                    break;
-                case 10:
-                    PlayerPrefs.SetInt("Found10", 1);
-                    break;
-                case 11:
-                    PlayerPrefs.SetInt("Found11", 1);
-                    break;
-                case 12:
-                    PlayerPrefs.SetInt("Found12", 1);
-                    break;
-                case 13:
-                    PlayerPrefs.SetInt("Found13", 1);
-                    break;
-                case 14:
-                    PlayerPrefs.SetInt("Found14", 1);
-                    break;
-
+                skull.color = new Color32(220, 220, 220, 220);
+                messageText.text = "";
             }
-            checkingLocation = false;
-            if (journeyProgress > 0)
+
+            if (minDistance > 100f && checkingLocation)
             {
-                
+                skull.color = new Color32(220, 220, 220, 220);
+                inRange = false;
+            }
+            if (minDistance < 100f && minDistance > 75f && checkingLocation && closestisFound == 0)
+            {
+                skull.color = new Color32(230, 225, 225, 225);
+                inRange = false;
+            }
+            if (minDistance < 75f && minDistance > 50f && checkingLocation && closestisFound == 0)
+            {
+                skull.color = new Color32(230, 230, 230, 230);
+                inRange = false;
+            }
+            if (minDistance < 50f && minDistance > 30f && checkingLocation && closestisFound == 0)
+            {
+                skull.color = new Color32(235, 235, 235, 235);
+                inRange = false;
+            }
+            if (minDistance < 30f && minDistance > 20f && checkingLocation && closestisFound == 0)
+            {
+                skull.color = new Color32(240, 240, 240, 240);
+                inRange = false;
+            }
+            if (minDistance < 20f && checkingLocation && closestisFound == 0)
+            {
+                skull.color = new Color32(255, 255, 255, 255);
+                inRange = true;
+                switch (closest)
+                {
+                    case 1:
+                        PlayerPrefs.SetInt("Found1", 1);
+                        break;
+                    case 2:
+                        PlayerPrefs.SetInt("Found2", 1);
+                        break;
+                    case 3:
+                        PlayerPrefs.SetInt("Found3", 1);
+                        break;
+                    case 4:
+                        PlayerPrefs.SetInt("Found4", 1);
+                        break;
+                    case 5:
+                        PlayerPrefs.SetInt("Found5", 1);
+                        break;
+                    case 6:
+                        PlayerPrefs.SetInt("Found6", 1);
+                        break;
+                    case 7:
+                        PlayerPrefs.SetInt("Found7", 1);
+                        break;
+                    case 8:
+                        PlayerPrefs.SetInt("Found8", 1);
+                        break;
+                    case 9:
+                        PlayerPrefs.SetInt("Found9", 1);
+                        break;
+                    case 10:
+                        PlayerPrefs.SetInt("Found10", 1);
+                        break;
+                    case 11:
+                        PlayerPrefs.SetInt("Found11", 1);
+                        break;
+                    case 12:
+                        PlayerPrefs.SetInt("Found12", 1);
+                        break;
+                    case 13:
+                        PlayerPrefs.SetInt("Found13", 1);
+                        break;
+                    case 14:
+                        PlayerPrefs.SetInt("Found14", 1);
+                        break;
+
+                }
+                if (journeyProgress > 0)
+                {
                     StartCoroutine(FlyOut());
-
-
+                }
+                else
+                {
+                    StartCoroutine(CGFadeIn(catBluePrint, 1.0f));
+                    journeyProgress = 1;
+                    PlayerPrefs.SetInt("journeyProgress", 1);
+                }
             }
-            else
-            {
-                StartCoroutine(CGFadeIn(catBluePrint, 1.0f));
-                // messageText.text = "You find a page from an artist's sketch book\nThey have drawn a fearsome beast!";
-                journeyProgress = 1;
-                PlayerPrefs.SetInt("journeyProgress", 1);
-            }
-            //cameraAnimator.Play("CameraMove3");  //Put up a message or just move camera?
-            //messageText.text = "Press the skull to discover it's secrets";
-            //checkingLocation = false;
-
-
         }
-
 
 
 
@@ -660,14 +709,20 @@ public class TextMover : MonoBehaviour
 
     private IEnumerator GetLocation()
     {
-        Input.location.Start();
+
+        //if (Input.location.status != LocationServiceStatus.Running)
+        //{
+        //    debugText.text = "GPS Not Running Startng it";
+            Input.location.Start(2f, 2f);
+        //}
         while (Input.location.status == LocationServiceStatus.Initializing)
         {
             yield return new WaitForSeconds(0.5f);
         }
         checkingLocation = true;
-        latitude = Input.location.lastData.latitude;
-        longitude = Input.location.lastData.longitude;
+        //latitude = Input.location.lastData.latitude;
+        //longitude = Input.location.lastData.longitude;
+        StartCoroutine(GPSLoop());
         yield break;
     }
     private float Distance(float lat1, float lon1, float lat2, float lon2)

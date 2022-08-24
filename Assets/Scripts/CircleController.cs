@@ -69,7 +69,7 @@ public class CircleController : MonoBehaviour
         var tinyScale = new Vector3(0.1f, 0.1f, 0.1f);
         var scaleTo = new Vector3(0.34f,0.34f, 0.34f);
         var toothScale = new Vector3(0.2f, 0.2f, 0.2f);
-        var finalToothScale = new Vector3(0.3f, 0.3f, 0.3f);
+        var finalToothScale = new Vector3(0.4f, 0.4f, 0.34f);
         StartCoroutine(ScaleOverSeconds(beastHolder, scaleTo, 14));
         yield return new WaitForSeconds(14);
         StartCoroutine(ScaleOverSeconds(toothShadow, toothScale, 10));
@@ -84,11 +84,11 @@ public class CircleController : MonoBehaviour
         StartCoroutine(FadeOut(2f, page1));
         yield return new WaitForSeconds(2);
         StartCoroutine(FadeIn(2f, page2));
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(10);
         StartCoroutine(FadeOut(2f, page2));
         yield return new WaitForSeconds(2);
         StartCoroutine(FadeIn(2f, page3));
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(10);
         StartCoroutine(FadeOut(2f, page3));
         yield return new WaitForSeconds(2);
         StartCoroutine(FadeIn(2f, page4));

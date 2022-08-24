@@ -22,7 +22,8 @@ public class BackButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (PlayerPrefs.GetInt("journeyProgress") == 14)
         {
-            PlayerPrefs.SetString("anmationToPlay", "14");
+            PlayerPrefs.SetString("AnimationToPlay", "14");
+            PlayerPrefs.SetInt("journeyProgress", 15);
             SceneManager.LoadScene("Twirly");
         } else
         {

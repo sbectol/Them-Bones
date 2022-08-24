@@ -351,11 +351,11 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 13";
                 break;
             case "14":
-                messageText.text = "WELL DONE!\n<size=75%>YOU HAVE BROUGHT THE TRUTH MACHINE BACK TO LIFE AGAIN!</size>";
+                messageText.text = "<align=center><size=80%>WELL DONE!\n<size=75%>YOU HAVE BROUGHT THE TRUTH MACHINE BACK TO LIFE AGAIN!</size></align>";
                 showText.alpha = 0;
                 break;
             case "15":
-                messageText.text = "<size=75%>BRING ERNIE BACK TO LIFE!\nAnd when you are ready, click then button and set off round the lake.</size>";
+                messageText.text = "<size=80%>BRING ERNIE BACK TO LIFE!\n\nAnd when you are ready, click then button and set off round the lake.</size>";
                 showText.alpha = 0;
                 goBack.alpha = 0;
                 
@@ -404,6 +404,22 @@ public class Twirly : MonoBehaviour
         longTooth.transform.SetPositionAndRotation(Camera.main.ScreenToWorldPoint(disc.rectTransform.transform.position), Quaternion.Euler(0, 0, 0));
         molarTooth.transform.SetPositionAndRotation(Camera.main.ScreenToWorldPoint(disc.rectTransform.transform.position), Quaternion.Euler(0, 0, 0));
         //middleCatHolder.transform.SetPositionAndRotation(Camera.main.ScreenToWorldPoint(disc.rectTransform.transform.position), Quaternion.Euler(0, 0, 0));
+
+        if(animationToPlay == "15")
+        {
+            middleCatHolder.transform.localScale = new Vector3(0.45f, 0.45f, 0.45f);
+            middleCatHolder.transform.localPosition = new Vector3(0f, 1f, 0f);
+        }
+        if (animationToPlay == "2" || animationToPlay == "5")
+        {
+            middleCatHolder.transform.localScale = new Vector3(0.45f, 0.45f, 0.45f);
+            
+        }
+        if (animationToPlay == "6" )
+        {
+            middleCatHolder.transform.localScale = new Vector3(0.38f, 0.38f, 0.38f);
+
+        }
         Debug.Log(Screen.height);
         Debug.Log(Screen.width);
         Debug.Log((float)Screen.height / (float)Screen.width);

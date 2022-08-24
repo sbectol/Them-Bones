@@ -9,20 +9,37 @@ public class SceneLoader : MonoBehaviour
     void Start()
     {
         Debug.Log("Loading");
-        StartCoroutine(LoadScene("Text"));
-    }
+        Input.compass.enabled = true;
+        if (Input.location.isEnabledByUser)
+        {
+            StartCoroutine(GetLocation());
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     public IEnumerator LoadScene(string sceneName)
     {
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(sceneName);
 
     }
+
+    private IEnumerator GetLocation()
+    {
+        Debug.Log("Getting Location");
+
+        Input.location.Start();
+
+        while (Input.location.status == LocationServiceStatus.Initializing)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        Debug.Log("Got Location");
+        StartCoroutine(LoadScene("Intro"));
+
+        yield break;
+    }
+
 }
-    
+

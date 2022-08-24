@@ -36,7 +36,7 @@ public class TextMover : MonoBehaviour
     private SpriteRenderer skull;
     private bool inRange = false;
     private bool SlideHolderZoomed = false;
-    
+
 
     private Vector2 fingerDownPosition;
     private Vector2 fingerUpPosition;
@@ -44,20 +44,23 @@ public class TextMover : MonoBehaviour
     private bool stationary;
     private bool fingerStationary;
 
-    private bool checkingLocation = true;
+    private bool checkingLocation = false;
     private Animator cameraAnimator;
     private Animator boxAnimator;
     private Animator slideHolder;
-    
+    private int frameCounter;
+
     public Sprite[] spriteArray;
+    private int closestisFound = 0;
 
     void Start()
     {
-        Input.compass.enabled = true;
-        if (Input.location.isEnabledByUser)
-        {
-            StartCoroutine(GetLocation());
-        }
+        //Input.compass.enabled = true;
+        //if (Input.location.isEnabledByUser)
+        //{
+        //    StartCoroutine(GetLocation());
+        //}
+        checkingLocation = true;
         slideBoxCollider = GameObject.Find("slide disc").GetComponent<BoxCollider>();
         boxContents = GameObject.Find("boxContents").GetComponent<SpriteRenderer>();
         skull = GameObject.Find("frame").GetComponent<SpriteRenderer>();
@@ -102,7 +105,7 @@ public class TextMover : MonoBehaviour
 
 
 
-        coordsCB[1] = new Vector2(53.29181669894783f, -3.726929018816448f); 
+        coordsCB[1] = new Vector2(53.29181669894783f, -3.726929018816448f);
         coordsCB[2] = new Vector2(53.291048960315216f, -3.7248343819867595f);  //Home
         coordsCB[3] = new Vector2(53.29135f, -3.71566f);  //Corner of Leisure Centre
         coordsCB[4] = new Vector2(53.29301f, -3.71410f);  //Stone Circle
@@ -139,10 +142,10 @@ public class TextMover : MonoBehaviour
         frame = GameObject.Find("frame");
         cameraAnimator = GameObject.Find("Main Camera").GetComponent<Animator>();
         boxAnimator = GameObject.Find("BoxTop").GetComponent<Animator>();
-      
+
         slideHolder = GameObject.Find("SlideHolder").GetComponent<Animator>();
         //skull = GameObject.Find("frame").GetComponent<SpriteGlowEffect>();
-        
+
 
 
 
@@ -155,7 +158,7 @@ public class TextMover : MonoBehaviour
         endMarker1 = startMarker1;
         speed = 25f;
         catBluePrint = GameObject.Find("CatBluePrint").GetComponent<CanvasGroup>();
-        
+
         parts[1] = GameObject.Find("Part1").GetComponent<CanvasGroup>();
         parts[2] = GameObject.Find("Part2").GetComponent<CanvasGroup>();
         parts[3] = GameObject.Find("Part3").GetComponent<CanvasGroup>();
@@ -171,7 +174,7 @@ public class TextMover : MonoBehaviour
         parts[13] = GameObject.Find("Part13").GetComponent<CanvasGroup>();
 
 
-        //PlayerPrefs.SetInt("journeyProgress", 0);
+        PlayerPrefs.SetInt("journeyProgress", 14);
         //PlayerPrefs.SetInt("Found1", 0);
         //PlayerPrefs.SetInt("Found2", 0);
         //PlayerPrefs.SetInt("Found3", 0);
@@ -195,7 +198,7 @@ public class TextMover : MonoBehaviour
         int j = 1;
         foreach (AnimationClip animClip in animationClips)
         {
-            
+
             if (animClip.name != "SlideHolderZoomIn" && animClip.name != "SlideHolderZoomOut")
             {
                 //Debug.Log(animClip.name + ": " + j);
@@ -214,7 +217,7 @@ public class TextMover : MonoBehaviour
                 parts[i].alpha = 0;
             }
         }
-        
+
         if (journeyProgress > 0)
         {
             catBluePrint.alpha = 1;
@@ -225,7 +228,8 @@ public class TextMover : MonoBehaviour
         }
         checkingLocation = true;
         Debug.Log(journeyProgress);
-        
+        StartCoroutine(GPSLoop());
+
         //slideHolder.SetFloat("direction", 1);
         //if (journeyProgress > 1)
         //{
@@ -237,33 +241,33 @@ public class TextMover : MonoBehaviour
 
     }
 
-   
+
     IEnumerator RotateDisc() {
-        for(int i = 1; i < 14; i++)
+        for (int i = 1; i < 14; i++)
         {
             yield return new WaitForSeconds(1f);
             slideIndex = i;
             slideHolder.Play(slideAnimations[i]);
-            
+
         }
         for (int i = 1; i < 14; i++)
         {
             yield return new WaitForSeconds(1f);
             slideIndex = i;
             slideHolder.Play(slideAnimations[i]);
-            
+
         }
 
-       
+
     }
-    
+
     IEnumerator FlyOut()
     {
-        
-        
-       
-        
-        
+
+
+
+
+
         if (journeyProgress < 15)
 
         {
@@ -272,15 +276,15 @@ public class TextMover : MonoBehaviour
         }
         PlayerPrefs.SetInt("journeyProgress", journeyProgress);
 
-        
+
         Debug.Log("JouneyProgress " + journeyProgress.ToString());
-        PlayerPrefs.SetString("AnimationToPlay", ( journeyProgress-1).ToString());
-        
+        PlayerPrefs.SetString("AnimationToPlay", (journeyProgress - 1).ToString());
+
         StartCoroutine(LoadScene("Twirly"));
         yield return new WaitForSeconds(0);
-        
 
-        
+
+
 
     }
     IEnumerator ZoomSlideHolder()
@@ -289,20 +293,22 @@ public class TextMover : MonoBehaviour
         catBluePrint.alpha = 0;
         slideHolder.Play("SlideHolderZoomIn");
         slideBoxCollider.enabled = false;
-       
+
         yield return new WaitForSeconds(1);
-        
-        
+
+
 
     }
 
     IEnumerator GPSLoop()
     {
-        while (true)
+        while(true)
         {
-            yield return new WaitForSeconds(1);
-            //move gps logc here once per second
-            }
+            yield return new WaitForSeconds(0.5f);
+            CheckClosest();
+            DisplayLocationData();
+            UseLocation();
+        }
     }
     IEnumerator OpenBox()
     {
@@ -310,7 +316,7 @@ public class TextMover : MonoBehaviour
         yield return new WaitForSeconds(1);
         cameraAnimator.Play("IntoBox");
         //messageText.text = "Inside the box you discover...";
-        
+
     }
     public IEnumerator LoadScene(string sceneName)
     {
@@ -320,178 +326,8 @@ public class TextMover : MonoBehaviour
         SceneManager.LoadScene(sceneName);
 
     }
-    void Update()
+    private void CheckClosest()
     {
-        foreach (Touch touch in Input.touches)
-        {
-            if (touch.phase == TouchPhase.Began)
-            {
-                fingerUpPosition = touch.position;
-                fingerDownPosition = touch.position;
-                fingerUp = false;
-
-            }
-
-            //if (touch.phase == TouchPhase.Moved)
-            //{
-            //    fingerDownPosition = touch.position;
-            //    DetectSwipe();
-            //}
-
-            if (touch.phase == TouchPhase.Ended)
-            {
-                fingerDownPosition = touch.position;
-                fingerUp = true;
-                DetectSwipe();
-            }
-
-            if (touch.phase == TouchPhase.Stationary)
-            {
-                fingerStationary = true;
-            }
-        }
-
-        if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
-        {
-            Debug.Log("Touch");
-            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-            RaycastHit raycastHit;
-            if (Physics.Raycast(raycast, out raycastHit))
-            {
-                Debug.Log("Something Hit " + raycastHit.collider.name);
-
-                int found = raycastHit.collider.name.IndexOf("_");
-                string number = raycastHit.collider.name.Substring(found + 1);
-                string[] thing = raycastHit.collider.name.Split("_");
-                Debug.Log("The cat is " + number);
-
-               
-
-                if (thing[0] == "Slide" && SlideHolderZoomed)
-                {
-                    Color transparent = new(0, 0, 0, 0);
-                    Debug.Log(raycastHit.collider.GetComponent<SpriteRenderer>().color);
-                    if (raycastHit.collider.GetComponent<SpriteRenderer>().color != transparent)
-                    {
-                        PlayerPrefs.SetString("AnimationToPlay", number);
-                        StartCoroutine(LoadScene("Twirly"));
-                    }
-                    
-                   
-                }
-                if(raycastHit.collider.name == "slide disc" && SlideHolderZoomed == false)
-                {
-                    SlideHolderZoomed = true;
-                    StartCoroutine("ZoomSlideHolder");
-                   
-                }
-
-                if (raycastHit.collider.name == "boxContents")
-                {
-                    Debug.Log("Clicked box");
-
-                    StartCoroutine(FlyOut());
-                    
-                    
-                   
-                    switch (closest)
-                    {
-                        case 1:
-                            PlayerPrefs.SetInt("Found1", 1);
-                            break;
-                        case 2:
-                            PlayerPrefs.SetInt("Found2", 1);
-                            break;
-                        case 3:
-                            PlayerPrefs.SetInt("Found3", 1);
-                            break;
-                        case 4:
-                            PlayerPrefs.SetInt("Found4", 1);
-                            break;
-                        case 5:
-                            PlayerPrefs.SetInt("Found5", 1);
-                            break;
-                        case 6:
-                            PlayerPrefs.SetInt("Found6", 1);
-                            break;
-                        case 7:
-                            PlayerPrefs.SetInt("Found7", 1);
-                            break;
-                        case 8:
-                            PlayerPrefs.SetInt("Found8", 1);
-                            break;
-                        case 9:
-                            PlayerPrefs.SetInt("Found9", 1);
-                            break;
-                        case 10:
-                            PlayerPrefs.SetInt("Found10", 1);
-                            break;
-                        case 11:
-                            PlayerPrefs.SetInt("Found11", 1);
-                            break;
-                        case 12:
-                            PlayerPrefs.SetInt("Found12", 1);
-                            break;
-                        case 13:
-                            PlayerPrefs.SetInt("Found13", 1);
-                            break;
-                        case 14:
-                            PlayerPrefs.SetInt("Found14", 1);
-                            break;
-
-                    }
-                    checkingLocation = true;    
-                }
-                if (raycastHit.collider.name == "BoxTop")
-                {
-                    
-                    StartCoroutine(OpenBox());
-                }
-                if (raycastHit.collider.name == "frame")
-                {
-                    //we'd better look at the wheel
-
-                    Debug.Log("You touched the skull");
-                    if (inRange == true || journeyProgress == 15)
-                    {
-
-                        if (journeyProgress > 0)
-                        {
-                            StartCoroutine(FlyOut());
-
-
-                        }
-                        else
-                        {
-                            StartCoroutine(CGFadeIn(catBluePrint, 1.0f));
-                            // messageText.text = "You find a page from an artist's sketch book\nThey have drawn a fearsome beast!";
-                            journeyProgress = 1;
-                            PlayerPrefs.SetInt("journeyProgress", 1);
-                        }
-                    }
-
-
-
-
-
-
-
-
-
-
-                }
-
-
-
-
-
-
-            }
-        }
-
-        latitude = Input.location.lastData.latitude;
-        longitude = Input.location.lastData.longitude;
-        messageText.text = "GPS Loop Started";
         for (int i = 1; i < 15; i++)
         {
 
@@ -507,19 +343,17 @@ public class TextMover : MonoBehaviour
             if (Distance(latitude, longitude, coordsCB[i].x, coordsCB[i].y) <= minDistance)
             {
                 closest = i;
-                minDistance = Distance(latitude, longitude, coordsCB[closest].x, coordsCB[closest].y);
+                
+
             }
+            minDistance = Distance(latitude, longitude, coordsCB[closest].x, coordsCB[closest].y);
         }
+
 
 
 
         //minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
         //minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
-
-
-
-        int closestisFound = 0;
-
         switch (closest)
         {
             case 1:
@@ -566,6 +400,209 @@ public class TextMover : MonoBehaviour
                 break;
 
         }
+
+    }
+    void Update()
+    {
+
+        frameCounter++;
+        foreach (Touch touch in Input.touches)
+        {
+            if (touch.phase == TouchPhase.Began)
+            {
+                fingerUpPosition = touch.position;
+                fingerDownPosition = touch.position;
+                fingerUp = false;
+
+            }
+
+            //if (touch.phase == TouchPhase.Moved)
+            //{
+            //    fingerDownPosition = touch.position;
+            //    DetectSwipe();
+            //}
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                fingerDownPosition = touch.position;
+                fingerUp = true;
+                DetectSwipe();
+            }
+
+            if (touch.phase == TouchPhase.Stationary)
+            {
+                fingerStationary = true;
+            }
+        }
+
+        if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
+        {
+            Debug.Log("Touch");
+            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit raycastHit;
+            if (Physics.Raycast(raycast, out raycastHit))
+            {
+                Debug.Log("Something Hit " + raycastHit.collider.name);
+
+                int found = raycastHit.collider.name.IndexOf("_");
+                string number = raycastHit.collider.name.Substring(found + 1);
+                string[] thing = raycastHit.collider.name.Split("_");
+                Debug.Log("The cat is " + number);
+
+
+
+                if (thing[0] == "Slide" && SlideHolderZoomed)
+                {
+                    Color transparent = new(0, 0, 0, 0);
+                    Debug.Log(raycastHit.collider.GetComponent<SpriteRenderer>().color);
+                    if (raycastHit.collider.GetComponent<SpriteRenderer>().color != transparent)
+                    {
+                        PlayerPrefs.SetString("AnimationToPlay", number);
+                        StartCoroutine(LoadScene("Twirly"));
+                    }
+
+
+                }
+                if (raycastHit.collider.name == "slide disc" && SlideHolderZoomed == false)
+                {
+                    SlideHolderZoomed = true;
+                    StartCoroutine("ZoomSlideHolder");
+
+                }
+
+                if (raycastHit.collider.name == "boxContents")
+                {
+                    Debug.Log("Clicked box");
+
+                    StartCoroutine(FlyOut());
+
+
+
+                    switch (closest)
+                    {
+                        case 1:
+                            PlayerPrefs.SetInt("Found1", 1);
+                            break;
+                        case 2:
+                            PlayerPrefs.SetInt("Found2", 1);
+                            break;
+                        case 3:
+                            PlayerPrefs.SetInt("Found3", 1);
+                            break;
+                        case 4:
+                            PlayerPrefs.SetInt("Found4", 1);
+                            break;
+                        case 5:
+                            PlayerPrefs.SetInt("Found5", 1);
+                            break;
+                        case 6:
+                            PlayerPrefs.SetInt("Found6", 1);
+                            break;
+                        case 7:
+                            PlayerPrefs.SetInt("Found7", 1);
+                            break;
+                        case 8:
+                            PlayerPrefs.SetInt("Found8", 1);
+                            break;
+                        case 9:
+                            PlayerPrefs.SetInt("Found9", 1);
+                            break;
+                        case 10:
+                            PlayerPrefs.SetInt("Found10", 1);
+                            break;
+                        case 11:
+                            PlayerPrefs.SetInt("Found11", 1);
+                            break;
+                        case 12:
+                            PlayerPrefs.SetInt("Found12", 1);
+                            break;
+                        case 13:
+                            PlayerPrefs.SetInt("Found13", 1);
+                            break;
+                        case 14:
+                            PlayerPrefs.SetInt("Found14", 1);
+                            break;
+
+                    }
+                    checkingLocation = true;
+                }
+                if (raycastHit.collider.name == "BoxTop")
+                {
+
+                    StartCoroutine(OpenBox());
+                }
+                if (raycastHit.collider.name == "frame")
+                {
+                    //we'd better look at the wheel
+
+                    Debug.Log("You touched the skull");
+                    if (inRange == true || journeyProgress == 15)
+                    {
+
+                        if (journeyProgress > 0)
+                        {
+                            StartCoroutine(FlyOut());
+
+
+                        }
+                        else
+                        {
+                            StartCoroutine(CGFadeIn(catBluePrint, 1.0f));
+                            // messageText.text = "You find a page from an artist's sketch book\nThey have drawn a fearsome beast!";
+                            journeyProgress = 1;
+                            PlayerPrefs.SetInt("journeyProgress", 1);
+                        }
+                    }
+
+
+
+
+
+
+
+
+
+
+                }
+
+
+
+
+
+
+            }
+        }
+        if (checkingLocation == true)
+        {
+            latitude = Input.location.lastData.latitude;
+            longitude = Input.location.lastData.longitude;
+        }
+
+
+        
+
+    }
+
+    //private IEnumerator GetLocation()
+    //{
+
+    //    //if (Input.location.status != LocationServiceStatus.Running)
+    //    //{
+    //    //    debugText.text = "GPS Not Running Startng it";
+    //        Input.location.Start();
+    //    //}
+    //    while (Input.location.status == LocationServiceStatus.Initializing)
+    //    {
+    //        yield return new WaitForSeconds(0.5f);
+    //    }
+    //    checkingLocation = true;
+    //    //latitude = Input.location.lastData.latitude;
+    //    //longitude = Input.location.lastData.longitude;
+
+    //    yield break;
+    //}
+    private void DisplayLocationData()
+    {
         string isFound = " not been found";
         if (closestisFound == 1)
         {
@@ -575,44 +612,50 @@ public class TextMover : MonoBehaviour
         {
             isFound = " has not been found";
         }
-        debugText.text = "The closest is " + minDistance.ToString("F1") + "m away, it is " + closest.ToString() + "\nIt" + isFound + " and you have found " + journeyProgress.ToString() + " locations";
-        messageText.text = "Latttude: " + latitude.ToString() + " Longitude:" + longitude.ToString();
-        messageText.text += "\n";
-        messageText.text += "Found 1:" + PlayerPrefs.GetInt("Found1").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[1].x, coordsCB[1].y);
-        messageText.text += "\n";
-        messageText.text += "Found 2:" + PlayerPrefs.GetInt("Found2").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[2].x, coordsCB[2].y);
-        messageText.text += "\n";
-        messageText.text += "Found 3:" + PlayerPrefs.GetInt("Found3").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[3].x, coordsCB[3].y);
-        messageText.text += "\n";
-        messageText.text += "Found 4:" + PlayerPrefs.GetInt("Found4").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[4].x, coordsCB[4].y);
-        messageText.text += "\n";
-        messageText.text += "Found 5:" + PlayerPrefs.GetInt("Found5").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[5].x, coordsCB[5].y);
-        messageText.text += "\n";
-        messageText.text += "Found 6:" + PlayerPrefs.GetInt("Found6").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[6].x, coordsCB[6].y);
-        messageText.text += "\n";
-        messageText.text += "Found 7:" + PlayerPrefs.GetInt("Found7").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[7].x, coordsCB[7].y);
-        messageText.text += "\n";
-        messageText.text += "Found 8:" + PlayerPrefs.GetInt("Found8").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[8].x, coordsCB[8].y);
-        messageText.text += "\n";
-        messageText.text += "Found 9:" + PlayerPrefs.GetInt("Found9").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[9].x, coordsCB[9].y);
-        messageText.text += "\n";
-        messageText.text += "Found 10:" + PlayerPrefs.GetInt("Found10").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[10].x, coordsCB[10].y);
-        messageText.text += "\n";
-        messageText.text += "Found 11:" + PlayerPrefs.GetInt("Found11").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[11].x, coordsCB[11].y);
-        messageText.text += "\n";
-        messageText.text += "Found 12:" + PlayerPrefs.GetInt("Found12").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[12].x, coordsCB[12].y);
-        messageText.text += "\n";
-        messageText.text += "Found 13:" + PlayerPrefs.GetInt("Found13").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[13].x, coordsCB[13].y);
-        messageText.text += "\n";
-        messageText.text += "Found 14:" + PlayerPrefs.GetInt("Found14").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[14].x, coordsCB[14].y);
+        debugText.text = "The closest is " + minDistance.ToString("F1") + "m away, it is Point " + closest.ToString() + "\nIt" + isFound + " and you have found " + journeyProgress.ToString() + " locations";
+        debugText.text += "\nHorizontal Accuracy is " + Input.location.lastData.horizontalAccuracy.ToString();
+        //messageText.text = "Latttude: " + latitude.ToString() + " Longitude:" + longitude.ToString();
 
+        //messageText.text += "\n";
+        //messageText.text += "Horizontal Accuracy is " + Input.location.lastData.horizontalAccuracy.ToString();
+        //messageText.text += "Found 1:" + PlayerPrefs.GetInt("Found1").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[1].x, coordsCB[1].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 2:" + PlayerPrefs.GetInt("Found2").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[2].x, coordsCB[2].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 3:" + PlayerPrefs.GetInt("Found3").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[3].x, coordsCB[3].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 4:" + PlayerPrefs.GetInt("Found4").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[4].x, coordsCB[4].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 5:" + PlayerPrefs.GetInt("Found5").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[5].x, coordsCB[5].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 6:" + PlayerPrefs.GetInt("Found6").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[6].x, coordsCB[6].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 7:" + PlayerPrefs.GetInt("Found7").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[7].x, coordsCB[7].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 8:" + PlayerPrefs.GetInt("Found8").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[8].x, coordsCB[8].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 9:" + PlayerPrefs.GetInt("Found9").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[9].x, coordsCB[9].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 10:" + PlayerPrefs.GetInt("Found10").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[10].x, coordsCB[10].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 11:" + PlayerPrefs.GetInt("Found11").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[11].x, coordsCB[11].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 12:" + PlayerPrefs.GetInt("Found12").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[12].x, coordsCB[12].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 13:" + PlayerPrefs.GetInt("Found13").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[13].x, coordsCB[13].y);
+        //messageText.text += "\n";
+        //messageText.text += "Found 14:" + PlayerPrefs.GetInt("Found14").ToString() + " Distance: " + Distance(latitude, longitude, coordsCB[14].x, coordsCB[14].y);
+    }
+
+    private void UseLocation()
+    {
         if (closest != 0)
         {
 
             if (closestisFound == 1)
             {
                 skull.color = new Color32(220, 220, 220, 220);
-                messageText.text = "";
+
             }
 
             if (minDistance > 100f && checkingLocation)
@@ -702,28 +745,6 @@ public class TextMover : MonoBehaviour
                 }
             }
         }
-
-
-
-    }
-
-    private IEnumerator GetLocation()
-    {
-
-        //if (Input.location.status != LocationServiceStatus.Running)
-        //{
-        //    debugText.text = "GPS Not Running Startng it";
-            Input.location.Start(2f, 2f);
-        //}
-        while (Input.location.status == LocationServiceStatus.Initializing)
-        {
-            yield return new WaitForSeconds(0.5f);
-        }
-        checkingLocation = true;
-        //latitude = Input.location.lastData.latitude;
-        //longitude = Input.location.lastData.longitude;
-        StartCoroutine(GPSLoop());
-        yield break;
     }
     private float Distance(float lat1, float lon1, float lat2, float lon2)
     {

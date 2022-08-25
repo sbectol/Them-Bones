@@ -36,6 +36,7 @@ public class TextMover : MonoBehaviour
     private SpriteRenderer skull;
     private bool inRange = false;
     private bool SlideHolderZoomed = false;
+  
 
 
     private Vector2 fingerDownPosition;
@@ -53,6 +54,8 @@ public class TextMover : MonoBehaviour
     public Sprite[] spriteArray;
     private int closestisFound = 0;
 
+   
+
     void Start()
     {
         //Input.compass.enabled = true;
@@ -65,21 +68,22 @@ public class TextMover : MonoBehaviour
         boxContents = GameObject.Find("boxContents").GetComponent<SpriteRenderer>();
         skull = GameObject.Find("frame").GetComponent<SpriteRenderer>();
         fader = GameObject.Find("Fader").GetComponent<CanvasGroup>();
+        
         boxContents.sprite = spriteArray[5];
-        coordsCresswell[1] = new Vector2(53.26301182857125f, -1.193743944168091f);
-        coordsCresswell[2] = new Vector2(53.26306958489932f, -1.1971020698547366f);
-        coordsCresswell[3] = new Vector2(53.262569027464444f, -1.1982500553131106f);
-        coordsCresswell[4] = new Vector2(53.26229307662967f, -1.198915243148804f);
-        coordsCresswell[5] = new Vector2(53.26197861885664f, -1.2005996704101565f);
-        coordsCresswell[6] = new Vector2(53.26175400474593f, -1.2015652656555178f);
-        coordsCresswell[7] = new Vector2(53.261503719061544f, -1.20275616645813f);
-        coordsCresswell[8] = new Vector2(53.26099672562242f, -1.202058792114258f);
-        coordsCresswell[9] = new Vector2(53.26121492606713f, -1.2010395526885989f);
-        coordsCresswell[10] = new Vector2(53.261574312608026f, -1.2000739574432375f);
-        coordsCresswell[11] = new Vector2(53.2618053452181f, -1.19876503944397f);
-        coordsCresswell[12] = new Vector2(53.26202995905914f, -1.19776725769043f);
-        coordsCresswell[13] = new Vector2(53.26222248426966f, -1.1971557140350342f);
-        coordsCresswell[14] = new Vector2(53.26242784353887f, -1.1964797973632812f);
+        coordsCresswell[1] = new Vector2(53.26290105395153f, -1.1966601837793833f);
+        coordsCresswell[2] = new Vector2(53.26245825170634f, -1.1971322525337256f);
+        coordsCresswell[3] = new Vector2(53.26207320254887f, -1.198569916467404f);
+        coordsCresswell[4] = new Vector2(53.26188709421333f, -1.1991063582336894f);
+        coordsCresswell[5] = new Vector2(53.261797248520075f, -1.1999432073891145f);
+        coordsCresswell[6] = new Vector2(53.261573642314296f, -1.2006772584858334f);
+        coordsCresswell[7] = new Vector2(53.26136833495697f, -1.2017225470920287f);
+        coordsCresswell[8] = new Vector2(53.261178580310904f, -1.2026534260000337f);
+        coordsCresswell[9] = new Vector2(53.261502095922864f, -1.2021281814765226f);
+        coordsCresswell[10] = new Vector2(53.262047532481795f, -1.200629852849976f); 
+        coordsCresswell[11] = new Vector2(53.26227043569321f, -1.1993199434300275f);
+        coordsCresswell[12] = new Vector2(53.26231087424608f, -1.1988155006698238f);
+        coordsCresswell[13] = new Vector2(53.26277747016736f, -1.1981186415990268f);
+        coordsCresswell[14] = new Vector2(53.26310719488181f, -1.1972345666584634f);
 
         coordsSean[1] = new Vector2(52.824895f, -3.406880f);
         coordsSean[2] = new Vector2(52.822625f, -3.401272f);
@@ -174,7 +178,7 @@ public class TextMover : MonoBehaviour
         parts[13] = GameObject.Find("Part13").GetComponent<CanvasGroup>();
 
 
-        PlayerPrefs.SetInt("journeyProgress", 14);
+        //PlayerPrefs.SetInt("journeyProgress", 14);
         //PlayerPrefs.SetInt("Found1", 0);
         //PlayerPrefs.SetInt("Found2", 0);
         //PlayerPrefs.SetInt("Found3", 0);
@@ -331,29 +335,30 @@ public class TextMover : MonoBehaviour
         for (int i = 1; i < 15; i++)
         {
 
-            //if(Distance(latitude, longitude, coordsCresswell[i].x, coordsCresswell[i].y) <= minDistance)
-            //    {
-            //        closest = i;
-            //    }
+            if (Distance(latitude, longitude, coordsCresswell[i].x, coordsCresswell[i].y) <= minDistance)
+            {
+                closest = i;
+            }
             //if (Distance(latitude, longitude, coordsSean[i].x, coordsSean[i].y) <= minDistance)
             //    {
             //        closest = i;
             //    }
             //}
-            if (Distance(latitude, longitude, coordsCB[i].x, coordsCB[i].y) <= minDistance)
-            {
-                closest = i;
-                
+            //if (Distance(latitude, longitude, coordsCB[i].x, coordsCB[i].y) <= minDistance)
+            //{
+            //    closest = i;
 
-            }
-            minDistance = Distance(latitude, longitude, coordsCB[closest].x, coordsCB[closest].y);
+
+            //}
+            //minDistance = Distance(latitude, longitude, coordsCB[closest].x, coordsCB[closest].y);
+            minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
+            //minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
         }
 
 
 
 
-        //minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
-        //minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
+
         switch (closest)
         {
             case 1:

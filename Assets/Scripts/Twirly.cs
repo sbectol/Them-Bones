@@ -28,6 +28,18 @@ public class Twirly : MonoBehaviour
     private CanvasGroup goBack;
     private TMP_Text messageText;
 
+    private GameObject readHelp;
+    private GameObject spinHelp;
+    private GameObject listenHelp;
+    private GameObject backHelp;
+    private GameObject helpHelp;
+
+    private Vector3 readHelpInitialPosition;
+    private Vector3 spinHelpInitialPosition;
+    private Vector3 listenHelpInitialPosition;
+    private Vector3 backHelpInitialPosition;
+    private Vector3 helpHelpInitialPosition;
+
     private AudioClip audioClip;
     private AudioSource soundPlayer;
 
@@ -74,6 +86,22 @@ public class Twirly : MonoBehaviour
         messageText = GameObject.Find("MessageText").GetComponent<TextMeshProUGUI>();
         goBack = GameObject.Find("goBack").GetComponent<CanvasGroup>();
         showText = GameObject.Find("showText").GetComponent<CanvasGroup>();
+
+        readHelp = GameObject.Find("readHelp");
+        spinHelp = GameObject.Find("spinHelp");
+        listenHelp = GameObject.Find("listenHelp");
+        backHelp = GameObject.Find("backHelp");
+        helpHelp = GameObject.Find("helpHelp");
+        readHelpInitialPosition = readHelp.transform.position;
+        spinHelpInitialPosition = spinHelp.transform.position;
+        listenHelpInitialPosition = listenHelp.transform.position;
+        backHelpInitialPosition = backHelp.transform.position;
+        helpHelpInitialPosition = helpHelp.transform.position;
+
+        if (PlayerPrefs.GetString("ShowHelp") == "No")
+        {
+            HideHelp();
+        }
 
 
 
@@ -440,6 +468,26 @@ public class Twirly : MonoBehaviour
         middleCat.Play("therium" + animationToPlay);
         StartCoroutine(Friction(0.1f));
 
+    }
+
+    public void HideHelp()
+    {
+        readHelp.transform.position = new Vector3(-2000, 0, 0);
+        spinHelp.transform.position = new Vector3(-2000, 0, 0);
+        listenHelp.transform.position = new Vector3(-2000, 0, 0);
+        backHelp.transform.position = new Vector3(-2000, 0, 0);
+        helpHelp.transform.position = new Vector3(-2000, 0, 0);
+        PlayerPrefs.SetString("ShowHelp", "No");
+    }
+
+    public void ShowHelp()
+    {
+        Debug.Log("Showing Help");
+        readHelp.transform.position = readHelpInitialPosition;
+        spinHelp.transform.position = spinHelpInitialPosition;
+        listenHelp.transform.position = listenHelpInitialPosition;
+        backHelp.transform.position = backHelpInitialPosition;
+        helpHelp.transform.position = helpHelpInitialPosition;
     }
     private void PlaySqueak()
     {

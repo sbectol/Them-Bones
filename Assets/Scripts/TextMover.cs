@@ -100,35 +100,6 @@ public class TextMover : MonoBehaviour
         coordsSean[13] = new Vector2(52.827194f, -3.406417f);
         coordsSean[14] = new Vector2(52.827694f, -3.408333f);
 
-
-
-
-
-
-
-
-
-
-        coordsCB[1] = new Vector2(53.29181669894783f, -3.726929018816448f);
-        coordsCB[2] = new Vector2(53.291048960315216f, -3.7248343819867595f);  //Home
-        coordsCB[3] = new Vector2(53.29135f, -3.71566f);  //Corner of Leisure Centre
-        coordsCB[4] = new Vector2(53.29301f, -3.71410f);  //Stone Circle
-        coordsCB[5] = new Vector2(53.29302f, -3.712158f); //Moel Eirias
-        coordsCB[6] = new Vector2(53.29172f, -3.71059f); //Lego
-        coordsCB[7] = new Vector2(53.28918f, -3.71349f);  //Lorry
-        coordsCB[8] = new Vector2(53.29522328468637f, -3.716254282301825f);  //Porth Eirias Roof
-        coordsCB[9] = new Vector2(53.29592243145316f, -3.7201209658271615f); //Crazy Seats
-
-        coordsCB[10] = new Vector2(53.2968343881184f, -3.7229468536380628f);  //Pier
-        coordsCB[11] = new Vector2(53.295990779479716f, -3.720529407297063f);  //Near Seats
-        coordsCB[12] = new Vector2(53.297953888903734f, -3.727067838982684f);  //Colwyn Sign
-        coordsCB[13] = new Vector2(53.29979923676437f, -3.7315745163052583f);  // The Toad
-        coordsCB[14] = new Vector2(53.29641334528825f, -3.7318060268120283f);   //War Memorial
-
-
-
-
-
         coordsCB[1] = new Vector2(53.2909471f, -3.7244838f);
         coordsCB[2] = new Vector2(53.2912213f, -3.7255084f);
         coordsCB[3] = new Vector2(53.2914826f, -3.7263854f);

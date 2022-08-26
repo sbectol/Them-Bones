@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using SpriteGlow;
+using System.Linq;
 
 public class TextMover : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class TextMover : MonoBehaviour
     private float longitude;
     private int journeyProgress;
     private int closest;
+    private int location = 0;
     public float minDistance = 1000;
     //private SpriteGlowEffect skull;
     private SpriteRenderer boxContents;
@@ -114,6 +116,25 @@ public class TextMover : MonoBehaviour
         coordsCB[12] = new Vector2(53.2909933f, -3.7229611f);
         coordsCB[13] = new Vector2(53.2907288f, -3.7232991f);
         coordsCB[14] = new Vector2(53.2908202f, -3.7237819f);
+
+        //work out where we are
+        latitude = 53.231f;
+        longitude = -3.7244838f;
+        latitude = Input.location.lastData.latitude;
+        longitude = Input.location.lastData.longitude;
+        float[] locations = new float[3];
+        
+        locations[0] = Distance(latitude, longitude, coordsCB[1].x, coordsCB[1].y);
+        locations[1] = Distance(latitude, longitude, coordsCresswell[1].x, coordsCresswell[1].y);
+        locations[2] = Distance(latitude, longitude, coordsSean[1].x, coordsSean[1].y);
+
+        float minValue = locations.Min();
+        location= locations.ToList().IndexOf(minValue);
+        Debug.Log(locations[0]);
+        Debug.Log(locations[1]);
+        Debug.Log(locations[2]);
+        Debug.Log(location);
+
         frame = GameObject.Find("frame");
         cameraAnimator = GameObject.Find("Main Camera").GetComponent<Animator>();
         boxAnimator = GameObject.Find("BoxTop").GetComponent<Animator>();
@@ -305,26 +326,37 @@ public class TextMover : MonoBehaviour
     {
         for (int i = 1; i < 15; i++)
         {
-
-            if (Distance(latitude, longitude, coordsCresswell[i].x, coordsCresswell[i].y) <= minDistance)
+            if (location == 1)
             {
-                closest = i;
+                if (Distance(latitude, longitude, coordsCresswell[i].x, coordsCresswell[i].y) <= minDistance)
+                {
+                    closest = i;
+                }
+                minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
             }
-            //if (Distance(latitude, longitude, coordsSean[i].x, coordsSean[i].y) <= minDistance)
-            //    {
-            //        closest = i;
-            //    }
-            //}
-            //if (Distance(latitude, longitude, coordsCB[i].x, coordsCB[i].y) <= minDistance)
-            //{
-            //    closest = i;
+            if (location == 2)
+            {
+                if (Distance(latitude, longitude, coordsSean[i].x, coordsSean[i].y) <= minDistance)
+                {
+                    closest = i;
+                }
+                minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
+            }
+            if (location == 0)
+            {
+                if (Distance(latitude, longitude, coordsCB[i].x, coordsCB[i].y) <= minDistance)
+                {
+                    closest = i;
 
 
-            //}
-            //minDistance = Distance(latitude, longitude, coordsCB[closest].x, coordsCB[closest].y);
-            minDistance = Distance(latitude, longitude, coordsCresswell[closest].x, coordsCresswell[closest].y);
-            //minDistance = Distance(latitude, longitude, coordsSean[closest].x, coordsSean[closest].y);
+                }
+                minDistance = Distance(latitude, longitude, coordsCB[closest].x, coordsCB[closest].y);
+            }
+                
+
+            
         }
+        
 
 
 
@@ -579,6 +611,20 @@ public class TextMover : MonoBehaviour
     //}
     private void DisplayLocationData()
     {
+        string where = " Unknown";
+        switch (location) {
+            case 0:
+                where = " Colwyn Bay";
+                break;
+            case 1:
+                where = " Creswell Crags";
+                break;
+            case 2:
+                where = " Llangynog";
+                break;
+            
+
+        }
         string isFound = " not been found";
         if (closestisFound == 1)
         {
@@ -588,7 +634,7 @@ public class TextMover : MonoBehaviour
         {
             isFound = " has not been found";
         }
-        debugText.text = "The closest is " + minDistance.ToString("F1") + "m away, it is Point " + closest.ToString() + "\nIt" + isFound + " and you have found " + journeyProgress.ToString() + " locations";
+        debugText.text = "Location is" + where+ "\nThe closest is " + minDistance.ToString("F1") + "m away, it is Point " + closest.ToString() + "\nIt" + isFound + " and you have found " + journeyProgress.ToString() + " locations";
         debugText.text += "\nHorizontal Accuracy is " + Input.location.lastData.horizontalAccuracy.ToString();
         //messageText.text = "Latttude: " + latitude.ToString() + " Longitude:" + longitude.ToString();
 

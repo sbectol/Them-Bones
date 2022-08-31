@@ -379,8 +379,12 @@ public class Twirly : MonoBehaviour
                 audioFile = "Homotherium 13";
                 break;
             case "14":
-                messageText.text = "<align=center><size=80%>WELL DONE!\n<size=75%>YOU HAVE BROUGHT THE TRUTH MACHINE BACK TO LIFE AGAIN!</size></align>";
+                messageText.text = "<align=center><size=80%>WELL DONE!\n<size=75%>YOU HAVE BROUGHT THE TRUTH MACHINE BACK TO LIFE!</size></align>";
                 showText.alpha = 0;
+                audioFile = "Tiger";
+                audioClip = Resources.Load<AudioClip>("Audio/" + audioFile);
+                soundPlayer.clip = audioClip;
+                soundPlayer.Play();
                 break;
             case "15":
                 messageText.text = "<size=80%>BRING ERNIE BACK TO LIFE!\n\nAnd when you are ready, click then button and set off round the lake.</size>";

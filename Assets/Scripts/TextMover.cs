@@ -33,6 +33,8 @@ public class TextMover : MonoBehaviour
     private int closest;
     private int location = 0;
     public float minDistance = 1000;
+    private AudioSource roarPlayer;
+    private AudioClip audioClip;
     //private SpriteGlowEffect skull;
     private SpriteRenderer boxContents;
     private SpriteRenderer skull;
@@ -65,12 +67,13 @@ public class TextMover : MonoBehaviour
         //{
         //    StartCoroutine(GetLocation());
         //}
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         checkingLocation = true;
         slideBoxCollider = GameObject.Find("slide disc").GetComponent<BoxCollider>();
         boxContents = GameObject.Find("boxContents").GetComponent<SpriteRenderer>();
         skull = GameObject.Find("frame").GetComponent<SpriteRenderer>();
         fader = GameObject.Find("Fader").GetComponent<CanvasGroup>();
-        
+        roarPlayer = GameObject.Find("RoarPlayer").GetComponent<AudioSource>();
         boxContents.sprite = spriteArray[5];
         coordsCresswell[1] = new Vector2(53.26290105395153f, -1.1966601837793833f);
         coordsCresswell[2] = new Vector2(53.26245825170634f, -1.1971322525337256f);
@@ -703,11 +706,19 @@ public class TextMover : MonoBehaviour
             if (minDistance < 30f && minDistance > 20f && checkingLocation && closestisFound == 0)
             {
                 skull.color = new Color32(240, 240, 240, 240);
+                string audioFile = "Tiger";
+                audioClip = Resources.Load<AudioClip>("Audio/" + audioFile);
+                roarPlayer.clip = audioClip;
+                roarPlayer.Play();
                 inRange = false;
             }
             if (minDistance < 20f && checkingLocation && closestisFound == 0)
             {
                 skull.color = new Color32(255, 255, 255, 255);
+                string audioFile = "Tiger";
+                audioClip = Resources.Load<AudioClip>("Audio/" + audioFile);
+                roarPlayer.clip = audioClip;
+                roarPlayer.Play();
                 inRange = true;
                 switch (closest)
                 {

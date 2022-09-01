@@ -10,6 +10,7 @@ using System.Linq;
 public class TextMover : MonoBehaviour
 {
     // Start is called before the first frame update
+    private bool playedGrowl = false;
     private BoxCollider slideBoxCollider;
     private GameObject frame;
     private GameObject mainCamera;
@@ -706,19 +707,20 @@ public class TextMover : MonoBehaviour
             if (minDistance < 30f && minDistance > 20f && checkingLocation && closestisFound == 0)
             {
                 skull.color = new Color32(240, 240, 240, 240);
-                string audioFile = "Tiger";
-                audioClip = Resources.Load<AudioClip>("Audio/" + audioFile);
-                roarPlayer.clip = audioClip;
-                roarPlayer.Play();
                 inRange = false;
             }
             if (minDistance < 20f && checkingLocation && closestisFound == 0)
             {
                 skull.color = new Color32(255, 255, 255, 255);
-                string audioFile = "Tiger";
-                audioClip = Resources.Load<AudioClip>("Audio/" + audioFile);
-                roarPlayer.clip = audioClip;
-                roarPlayer.Play();
+                if (playedGrowl == false)
+                {
+                    string audioFile = "Tiger";
+                    audioClip = Resources.Load<AudioClip>("Audio/" + audioFile);
+                    roarPlayer.clip = audioClip;
+                    roarPlayer.Play();
+                    Handheld.Vibrate();
+                    playedGrowl = true;
+                }
                 inRange = true;
                 switch (closest)
                 {

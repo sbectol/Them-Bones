@@ -70,6 +70,7 @@ public class Twirly : MonoBehaviour
     private float phase = 0.0F;
     private double sampleRate = 0.0F;
     private int accent;
+    
   
     private Image disc;
     private GameObject discRect;
@@ -80,6 +81,7 @@ public class Twirly : MonoBehaviour
     void Start()
     {
         //beastName = PlayerPrefs.GetString("BeastName");
+        holder = GameObject.Find("twirlHolder");
         scrollView.transform.localPosition = new Vector3(-2000, 0, 0);
         animationToPlay = PlayerPrefs.GetString("AnimationToPlay");
         soundPlayer = GameObject.Find("SoundManager").GetComponent<AudioSource>();
@@ -411,7 +413,7 @@ public class Twirly : MonoBehaviour
         running = true;
         squeakPlayer = GameObject.Find("SqueakPlayer").GetComponent<AudioSource>();
         SwipeDetector.OnSwipe += SwipeDetector_OnSwipe;
-        holder = GameObject.Find("Holder");
+        //holder = GameObject.Find("Holder");
         cat = GameObject.Find("Cat");
        
         outerTooth = GameObject.Find("OuterTooth");
@@ -452,20 +454,24 @@ public class Twirly : MonoBehaviour
             middleCatHolder.transform.localScale = new Vector3(0.38f, 0.38f, 0.38f);
 
         }
-        Debug.Log(Screen.height);
-        Debug.Log(Screen.width);
-        Debug.Log((float)Screen.height / (float)Screen.width);
-        float aspect = (float)Screen.height / (float)Screen.width;
-        Debug.Log(aspect);
-        if (aspect < 1.4)
-        {
-            r = 1.3f;
-        }
-        else
-        {
-            r = 1.1f;
-        }
+        //Debug.Log(Screen.height);
+        //Debug.Log(Screen.width);
+        //Debug.Log((float)Screen.height / (float)Screen.width);
+        //float aspect = (float)Screen.height / (float)Screen.width;
+        //Debug.Log(aspect);
+        //if (aspect < 1.4)
+        //{
+        //    r = 1.3f;
+        //    //
+        //}
+        //else
+        //{
+        //    r = 1.1f;
+        //}
+
+        r = 1.1f;
         StartCoroutine(Clone());
+       
         catAnimator = catHolder.GetComponentsInChildren<Animator>();
         middleCat = GameObject.Find("MiddleCat").GetComponent<Animator>();
         Debug.Log("Playing " + "therium " + animationToPlay);
@@ -516,7 +522,7 @@ public class Twirly : MonoBehaviour
             Debug.Log("Scroller");
             if (scrollView.transform.position.x < 0)
             {
-                scrollView.transform.localPosition = new Vector3(0, 500, 0);
+                scrollView.transform.localPosition = new Vector3(0, 250, 0);
             }
             else
             {

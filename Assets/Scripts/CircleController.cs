@@ -25,10 +25,12 @@ public class CircleController : MonoBehaviour
     private GameObject page4GO;
     private GameObject page5GO;
     private GameObject page6GO;
+    private GameObject skipIntro;
 
     // Start is called before the first frame update
     void Start()
     {
+        skipIntro = GameObject.Find("SkipIntro");
         beastlyCircle = GameObject.Find("beastlyCircle");
         beastHolder = GameObject.Find("beastHolder");
         tooth = GameObject.Find("tooth");
@@ -89,6 +91,7 @@ public class CircleController : MonoBehaviour
         yield return new WaitForSeconds(2);
         StartCoroutine(FadeIn(2f, page3));
         yield return new WaitForSeconds(10);
+        skipIntro.transform.localPosition = new Vector3(-2000, 0, 0);
         StartCoroutine(FadeOut(2f, page3));
         yield return new WaitForSeconds(2);
         StartCoroutine(FadeIn(2f, page4));
@@ -99,6 +102,10 @@ public class CircleController : MonoBehaviour
 
 
 
+    }
+    public void SkipIntro()
+    {
+        StartCoroutine(LoadScene("Text"));
     }
     public void Page5()
     {
@@ -157,7 +164,7 @@ public class CircleController : MonoBehaviour
         PlayerPrefs.SetString("AnimationToPlay", "15");
         StartCoroutine(LoadScene("Twirly"));
     }
-    public IEnumerator LoadScene(string sceneName)
+    public IEnumerator  LoadScene(string sceneName)
     {
 
         yield return new WaitForSeconds(2f);

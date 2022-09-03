@@ -1603,7 +1603,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The is Eric, the unfortunate hyaena pup, he's just a pile of bones, poor
+  m_text: This is Eric, the unfortunate hyaena pup. He's just a pile of bones, poor
     lad...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: df9b28bccb8c048cbbbf2adc06afe702, type: 2}
@@ -2693,7 +2693,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The other important agent in out story
+  m_text: 'The other important agent in our story
 
     is the hyaena which, <i>for
     six hundred thousand years</i> inhabited this landscape.'
@@ -3703,7 +3703,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'BUXTON MUSEUM AND ART GALLERY
 
-    CRESWELL CRAGS MUSEUM
+    CRESWELL CRAGS HERITAGE TRUST
 
     MANCHESTER
     MUSEUM

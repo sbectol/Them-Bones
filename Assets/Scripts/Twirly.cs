@@ -11,6 +11,7 @@ public class Twirly : MonoBehaviour
     // Start is called before the first frame update
     private Animator[] catAnimator;
     private Animator middleCat;
+    private Animator catButton;
     private GameObject cat;
     private GameObject holder;
     private GameObject outerTooth;
@@ -389,7 +390,7 @@ public class Twirly : MonoBehaviour
                 soundPlayer.Play();
                 break;
             case "15":
-                messageText.text = "<size=80%>BRING ERNIE BACK TO LIFE!\n\nAnd when you are ready, click then button and set off round the lake.</size>";
+                messageText.text = "<size=80%>BRING ERNIE BACK TO LIFE!\n\nAnd when you are ready, click the button and set off round the lake.</size>";
                 showText.alpha = 0;
                 goBack.alpha = 0;
                 
@@ -426,6 +427,7 @@ public class Twirly : MonoBehaviour
         molarTooth = GameObject.Find("MolarTooth");
         middleCatHolder = GameObject.Find("MiddleCat");
         catHolder = GameObject.Find("CatHolder");
+        catButton = GameObject.Find("CatButton").GetComponent<Animator>();
         
         button = GameObject.Find("CanvasDisc").GetComponent<Image>();
         buttonX = button.transform.position.x;
@@ -661,6 +663,7 @@ public class Twirly : MonoBehaviour
             anim.speed = rate;
         }
         middleCat.speed = rate/2;
+        
 
     }
     void OnAudioFilterRead(float[] data, int channels)

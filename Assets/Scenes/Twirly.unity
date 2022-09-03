@@ -1108,8 +1108,8 @@ Transform:
   m_LocalScale: {x: 0.32, y: 0.32, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 797849333}
-  m_RootOrder: 1
+  m_Father: {fileID: 1869072570}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &236820312
 SpriteRenderer:
@@ -2632,7 +2632,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1869072570}
-  - {fileID: 236820311}
   - {fileID: 819741124}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -2667,7 +2666,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 797849333}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &819741125
 AudioSource:
@@ -3195,7 +3194,7 @@ GameObject:
   - component: {fileID: 1270023307}
   - component: {fileID: 1270023310}
   m_Layer: 5
-  m_Name: Button
+  m_Name: CatButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3210,7 +3209,7 @@ RectTransform:
   m_GameObject: {fileID: 1270023305}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.75, y: 1.75, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 422915934}
@@ -3760,6 +3759,7 @@ Transform:
   - {fileID: 428548223}
   - {fileID: 1376924348}
   - {fileID: 419637612}
+  - {fileID: 236820311}
   m_Father: {fileID: 797849333}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
